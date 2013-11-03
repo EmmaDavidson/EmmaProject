@@ -1,0 +1,39 @@
+﻿<Window x:Class="TreasureHuntDesktopApplication.FullClient.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ignore="http://www.ignore.com"
+        mc:Ignorable="d ignore"
+        Height="600"
+        Width="600"
+        Title="MVVM Light Application"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+           
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <GridSplitter HorizontalAlignment="Left" Width="5" Grid.Column="1" Grid.Row="1"/>
+
+        <StackPanel Grid.Column="0">
+            <Button Content="Create Hunt" Command="{Binding NavigateToCreateHuntViewCommand}"></Button>
+        </StackPanel>
+        
+            
+        <ContentControl Grid.Column="2" Content="{Binding}"/>
+
+    </Grid>
+</Window>
