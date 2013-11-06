@@ -12,7 +12,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase, IMainViewModel
+    public class MainViewModel : ViewModelBase
     {
         //-http://www.codeproject.com/Articles/72724/Beginning-a-WPF-MVVM-application-Navigating-betwee
 

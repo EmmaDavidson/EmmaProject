@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TreasureHuntDesktopApplication.FullClient.ViewModel;
 
 namespace TreasureHuntDesktopApplication.FullClient.Views
 {
@@ -19,9 +20,12 @@ namespace TreasureHuntDesktopApplication.FullClient.Views
     /// </summary>
     public partial class CreateHuntView : UserControl
     {
+        private CreateHuntViewModel  viewModel = new CreateHuntViewModel();
         public CreateHuntView()
         {
             InitializeComponent();
+            this.Loaded += (s, e) => { this.DataContext = this.viewModel; };
+
         }
     }
 }

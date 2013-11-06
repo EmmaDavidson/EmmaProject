@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="treasurehuntdbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TreasureHuntEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="hunts" EntityType="treasurehuntdbModel.hunt" />
+    <EntitySet Name="huntquestions" EntityType="treasurehuntdbModel.huntquestion" />
+    <EntitySet Name="questions" EntityType="treasurehuntdbModel.question" />
+    <EntitySet Name="roles" EntityType="treasurehuntdbModel.role" />
+    <EntitySet Name="users" EntityType="treasurehuntdbModel.user" />
+    <EntitySet Name="userroles" EntityType="treasurehuntdbModel.userrole" />
+    <AssociationSet Name="huntquestions_ibfk_1" Association="treasurehuntdbModel.huntquestions_ibfk_1">
+      <End Role="hunt" EntitySet="hunts" />
+      <End Role="huntquestions" EntitySet="huntquestions" />
+    </AssociationSet>
+    <AssociationSet Name="huntquestions_ibfk_2" Association="treasurehuntdbModel.huntquestions_ibfk_2">
+      <End Role="questions" EntitySet="questions" />
+      <End Role="huntquestions" EntitySet="huntquestions" />
+    </AssociationSet>
+    <AssociationSet Name="userrole_ibfk_1" Association="treasurehuntdbModel.userrole_ibfk_1">
+      <End Role="role" EntitySet="roles" />
+      <End Role="userrole" EntitySet="userroles" />
+    </AssociationSet>
+    <AssociationSet Name="userrole_ibfk_2" Association="treasurehuntdbModel.userrole_ibfk_2">
+      <End Role="user" EntitySet="users" />
+      <End Role="userrole" EntitySet="userroles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="hunt">
+    <Key>
+      <PropertyRef Name="HuntId" />
+    </Key>
+    <Property Name="HuntId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="HuntName" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="huntquestions" Relationship="treasurehuntdbModel.huntquestions_ibfk_1" FromRole="hunt" ToRole="huntquestions" />
+  </EntityType>
+  <EntityType Name="huntquestion">
+    <Key>
+      <PropertyRef Name="HuntQuestionId" />
+    </Key>
+    <Property Name="HuntQuestionId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="HuntId" Type="Int64" Nullable="false" />
+    <Property Name="QuestionId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="hunt" Relationship="treasurehuntdbModel.huntquestions_ibfk_1" FromRole="huntquestions" ToRole="hunt" />
+    <NavigationProperty Name="question" Relationship="treasurehuntdbModel.huntquestions_ibfk_2" FromRole="huntquestions" ToRole="questions" />
+  </EntityType>
+  <EntityType Name="question">
+    <Key>
+      <PropertyRef Name="QuestionId" />
+    </Key>
+    <Property Name="QuestionId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Question1" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="URL" Type="String" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="huntquestions" Relationship="treasurehuntdbModel.huntquestions_ibfk_2" FromRole="questions" ToRole="huntquestions" />
+  </EntityType>
+  <EntityType Name="role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="userroles" Relationship="treasurehuntdbModel.userrole_ibfk_1" FromRole="role" ToRole="userrole" />
+  </EntityType>
+  <EntityType Name="user">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="userroles" Relationship="treasurehuntdbModel.userrole_ibfk_2" FromRole="user" ToRole="userrole" />
+  </EntityType>
+  <EntityType Name="userrole">
+    <Key>
+      <PropertyRef Name="UserRoleId" />
+    </Key>
+    <Property Name="UserRoleId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleId" Type="Int64" Nullable="false" />
+    <Property Name="UserId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="role" Relationship="treasurehuntdbModel.userrole_ibfk_1" FromRole="userrole" ToRole="role" />
+    <NavigationProperty Name="user" Relationship="treasurehuntdbModel.userrole_ibfk_2" FromRole="userrole" ToRole="user" />
+  </EntityType>
+  <Association Name="huntquestions_ibfk_1">
+    <End Role="hunt" Type="treasurehuntdbModel.hunt" Multiplicity="1" />
+    <End Role="huntquestions" Type="treasurehuntdbModel.huntquestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="hunt">
+        <PropertyRef Name="HuntId" />
+      </Principal>
+      <Dependent Role="huntquestions">
+        <PropertyRef Name="HuntId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="huntquestions_ibfk_2">
+    <End Role="questions" Type="treasurehuntdbModel.question" Multiplicity="1" />
+    <End Role="huntquestions" Type="treasurehuntdbModel.huntquestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="questions">
+        <PropertyRef Name="QuestionId" />
+      </Principal>
+      <Dependent Role="huntquestions">
+        <PropertyRef Name="QuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="userrole_ibfk_1">
+    <End Role="role" Type="treasurehuntdbModel.role" Multiplicity="1" />
+    <End Role="userrole" Type="treasurehuntdbModel.userrole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="userrole">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="userrole_ibfk_2">
+    <End Role="user" Type="treasurehuntdbModel.user" Multiplicity="1" />
+    <End Role="userrole" Type="treasurehuntdbModel.userrole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="userrole">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="treasurehuntdbModelStoreContainer" CdmEntityContainer="TreasureHuntEntities">
+    <EntitySetMapping Name="hunts">
+      <EntityTypeMapping TypeName="treasurehuntdbModel.hunt">
+        <MappingFragment StoreEntitySet="hunt">
+          <ScalarProperty Name="HuntId" ColumnName="HuntId" />
+          <ScalarProperty Name="HuntName" ColumnName="HuntName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="huntquestions">
+      <EntityTypeMapping TypeName="treasurehuntdbModel.huntquestion">
+        <MappingFragment StoreEntitySet="huntquestions">
+          <ScalarProperty Name="HuntQuestionId" ColumnName="HuntQuestionId" />
+          <ScalarProperty Name="HuntId" ColumnName="HuntId" />
+          <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="questions">
+      <EntityTypeMapping TypeName="treasurehuntdbModel.question">
+        <MappingFragment StoreEntitySet="questions">
+          <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+          <ScalarProperty Name="Question1" ColumnName="Question" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="roles">
+      <EntityTypeMapping TypeName="treasurehuntdbModel.role">
+        <MappingFragment StoreEntitySet="role">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="treasurehuntdbModel.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="userroles">
+      <EntityTypeMapping TypeName="treasurehuntdbModel.userrole">
+        <MappingFragment StoreEntitySet="userrole">
+          <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

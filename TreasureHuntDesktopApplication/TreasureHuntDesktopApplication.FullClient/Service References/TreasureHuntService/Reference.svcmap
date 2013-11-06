@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="befb8dcf-09a0-442c-ad2b-5e71ebe1d879" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:51416/TreasureHuntService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TreasureHuntService.xsd" MetadataType="Schema" ID="ae35312f-53e7-416a-b440-d46351c789fe" SourceId="1" SourceUrl="http://localhost:51416/TreasureHuntService.svc?xsd=xsd0" />
+    <MetadataFile FileName="TreasureHuntService.wsdl" MetadataType="Wsdl" ID="1830fc8a-0887-434e-ad7b-54e5a759e7ac" SourceId="1" SourceUrl="http://localhost:51416/TreasureHuntService.svc?wsdl" />
+    <MetadataFile FileName="TreasureHuntService.disco" MetadataType="Disco" ID="f196bdba-a479-4e83-941e-12ee4e23d24b" SourceId="1" SourceUrl="http://localhost:51416/TreasureHuntService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
