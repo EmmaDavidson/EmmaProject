@@ -6,28 +6,18 @@ using TreasureHuntDesktopApplication.FullClient.Model;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
     public class MainViewModel : ViewModelBase
     {
         //-http://www.codeproject.com/Articles/72724/Beginning-a-WPF-MVVM-application-Navigating-betwee
 
         private ViewModelBase currentViewModel;
-        public RelayCommand NavigateToCreateHuntViewCommand;
-        private CreateHuntViewModel newViewModel = new CreateHuntViewModel();
 
-        public MainViewModel()
-        {
-            NavigateToCreateHuntViewCommand = new RelayCommand(() => NavigateToView(newViewModel));
-        }
+        public RelayCommand NavigateToCreateHuntViewCommand { get; private set; }
+        public RelayCommand NavigateToViewHuntsViewCommand { get; private set; }
 
-        /// <summary>
-        /// Gets the current view model that is being shown
-        /// </summary>
+        readonly static CreateHuntViewModel createHuntViewModel = new CreateHuntViewModel();
+        readonly static ViewHuntViewModel viewHuntViewModel = new ViewHuntViewModel();
+
         public ViewModelBase CurrentViewModel
         {
             get
@@ -43,13 +33,23 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             }
         }
 
-
-
-     
-
-        public void NavigateToView(ViewModelBase viewToNavigate)
+        public MainViewModel()
         {
-            CurrentViewModel = viewToNavigate;
+            CurrentViewModel = MainViewModel.createHuntViewModel;
+            NavigateToCreateHuntViewCommand = new RelayCommand(() => ExecuteNavigateToCreateHuntCommand());
+            NavigateToViewHuntsViewCommand = new RelayCommand(() => ExecuteNavigateToViewHuntCommand());
         }
+
+
+        private void ExecuteNavigateToCreateHuntCommand()
+        {
+            CurrentViewModel = MainViewModel.createHuntViewModel;
+        }
+
+        private void ExecuteNavigateToViewHuntCommand()
+        {
+            CurrentViewModel = MainViewModel.viewHuntViewModel;
+        }
+
     }
 }

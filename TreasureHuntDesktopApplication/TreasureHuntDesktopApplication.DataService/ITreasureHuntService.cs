@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using TreasureHuntDesktopApplication.Data;
 
 namespace TreasureHuntDesktopApplication.DataService
 {
@@ -12,6 +13,22 @@ namespace TreasureHuntDesktopApplication.DataService
     public interface ITreasureHuntService
     {
         [OperationContract]
-        void DoWork();
+        long SaveQuestion(question newQuestion);
+
+        [OperationContract]
+        void SaveNewHuntQuestion(huntquestion huntQuestion);
+
+        [OperationContract]
+        void SaveNewHunt(hunt newHunt);
+
+        [OperationContract]
+        List<long> GetHuntQuestions(hunt hunt);
+
+        [OperationContract]
+        IEnumerable<hunt> GetTreasureHunts();
+
+        [OperationContract]
+        question GetQuestion(long questionId);
+
     }
 }

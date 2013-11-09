@@ -335,6 +335,19 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams>
+      <Diagram DiagramId="bea30ad2ea74482fa9b36af25800d472" Name="Diagram1">
+        <EntityTypeShape EntityType="treasurehuntdbModel.hunt" Width="1.5" PointX="2.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.huntquestion" Width="1.5" PointX="5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.question" Width="1.5" PointX="2.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.role" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.user" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.userrole" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="treasurehuntdbModel.huntquestions_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="treasurehuntdbModel.huntquestions_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="treasurehuntdbModel.userrole_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="treasurehuntdbModel.userrole_ibfk_2" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
   </Designer>
 </edmx:Edmx>

@@ -8,13 +8,15 @@ namespace TreasureHuntDesktopApplication.FullClient.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        /// <summary>
-        /// Initializes a new instance of the MainWindow class.
-        /// </summary>
+        private MainViewModel viewModel = new MainViewModel();
+
         public MainWindow()
         {
             InitializeComponent();
-            Closing += (s, e) => ViewModelLocator.Cleanup();
+            this.DataContext = viewModel;
+           // Closing += (s, e) => ViewModelLocator.Cleanup();
         }
+
+    
     }
 }

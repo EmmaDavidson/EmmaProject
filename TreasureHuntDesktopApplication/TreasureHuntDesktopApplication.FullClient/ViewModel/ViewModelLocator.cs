@@ -25,7 +25,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
     /// </summary>
     public class ViewModelLocator
     {
-        static ViewModelLocator()
+        public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
@@ -38,7 +38,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }*/
 
-            SimpleIoc.Default.Register<CreateHuntViewModel>();
+            SimpleIoc.Default.Register<MainViewModel>();
         }
 
         /// <summary>

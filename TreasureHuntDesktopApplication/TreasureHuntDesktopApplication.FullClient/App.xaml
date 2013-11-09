@@ -5,14 +5,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:TreasureHuntDesktopApplication.FullClient.ViewModel"
              xmlns:views="clr-namespace:TreasureHuntDesktopApplication.FullClient.Views"
-             StartupUri="Views/CreateHuntView.xaml"
+             StartupUri="Views/MainWindow.xaml"
              mc:Ignorable="d">
     
     <Application.Resources>
         <!--Global View Model Locator-->
-        <vm:ViewModelLocator x:Key="Locator"
-                             d:IsDataSource="True" />
-        
+        <vm:ViewModelLocator x:Key="Locator"  />
+
+        <DataTemplate DataType="{x:Type vm:CreateHuntViewModel}">
+            <views:CreateHuntView></views:CreateHuntView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:ViewHuntViewModel}">
+            <views:ViewHuntView></views:ViewHuntView>
+        </DataTemplate>
+
     </Application.Resources>
     
 </Application>

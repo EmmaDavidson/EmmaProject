@@ -3,24 +3,124 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:51416/TreasureHuntService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:51416/TreasureHuntService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:51416/TreasureHuntService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data" />
+      <xsd:import schemaLocation="http://localhost:51416/TreasureHuntService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
+      <xsd:import schemaLocation="http://localhost:51416/TreasureHuntService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+      <xsd:import schemaLocation="http://localhost:51416/TreasureHuntService.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="ITreasureHuntService_DoWork_InputMessage">
-    <wsdl:part name="parameters" element="tns:DoWork" />
+  <wsdl:message name="ITreasureHuntService_SaveQuestion_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveQuestion" />
   </wsdl:message>
-  <wsdl:message name="ITreasureHuntService_DoWork_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DoWorkResponse" />
+  <wsdl:message name="ITreasureHuntService_SaveQuestion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveQuestionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITreasureHuntService_SaveNewHuntQuestion_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveNewHuntQuestion" />
+  </wsdl:message>
+  <wsdl:message name="ITreasureHuntService_SaveNewHuntQuestion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveNewHuntQuestionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITreasureHuntService_SaveNewHunt_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveNewHunt" />
+  </wsdl:message>
+  <wsdl:message name="ITreasureHuntService_SaveNewHunt_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveNewHuntResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITreasureHuntService_GetHuntQuestions_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetHuntQuestions" />
+  </wsdl:message>
+  <wsdl:message name="ITreasureHuntService_GetHuntQuestions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetHuntQuestionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITreasureHuntService_GetTreasureHunts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTreasureHunts" />
+  </wsdl:message>
+  <wsdl:message name="ITreasureHuntService_GetTreasureHunts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTreasureHuntsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ITreasureHuntService_GetQuestion_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetQuestion" />
+  </wsdl:message>
+  <wsdl:message name="ITreasureHuntService_GetQuestion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetQuestionResponse" />
   </wsdl:message>
   <wsdl:portType name="ITreasureHuntService">
-    <wsdl:operation name="DoWork">
-      <wsdl:input wsaw:Action="http://tempuri.org/ITreasureHuntService/DoWork" message="tns:ITreasureHuntService_DoWork_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ITreasureHuntService/DoWorkResponse" message="tns:ITreasureHuntService_DoWork_OutputMessage" />
+    <wsdl:operation name="SaveQuestion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITreasureHuntService/SaveQuestion" message="tns:ITreasureHuntService_SaveQuestion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITreasureHuntService/SaveQuestionResponse" message="tns:ITreasureHuntService_SaveQuestion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveNewHuntQuestion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestion" message="tns:ITreasureHuntService_SaveNewHuntQuestion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestionResponse" message="tns:ITreasureHuntService_SaveNewHuntQuestion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveNewHunt">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITreasureHuntService/SaveNewHunt" message="tns:ITreasureHuntService_SaveNewHunt_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITreasureHuntService/SaveNewHuntResponse" message="tns:ITreasureHuntService_SaveNewHunt_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetHuntQuestions">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITreasureHuntService/GetHuntQuestions" message="tns:ITreasureHuntService_GetHuntQuestions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITreasureHuntService/GetHuntQuestionsResponse" message="tns:ITreasureHuntService_GetHuntQuestions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTreasureHunts">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITreasureHuntService/GetTreasureHunts" message="tns:ITreasureHuntService_GetTreasureHunts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITreasureHuntService/GetTreasureHuntsResponse" message="tns:ITreasureHuntService_GetTreasureHunts_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetQuestion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ITreasureHuntService/GetQuestion" message="tns:ITreasureHuntService_GetQuestion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ITreasureHuntService/GetQuestionResponse" message="tns:ITreasureHuntService_GetQuestion_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ITreasureHuntService" type="tns:ITreasureHuntService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="DoWork">
-      <soap:operation soapAction="http://tempuri.org/ITreasureHuntService/DoWork" style="document" />
+    <wsdl:operation name="SaveQuestion">
+      <soap:operation soapAction="http://tempuri.org/ITreasureHuntService/SaveQuestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveNewHuntQuestion">
+      <soap:operation soapAction="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveNewHunt">
+      <soap:operation soapAction="http://tempuri.org/ITreasureHuntService/SaveNewHunt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetHuntQuestions">
+      <soap:operation soapAction="http://tempuri.org/ITreasureHuntService/GetHuntQuestions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTreasureHunts">
+      <soap:operation soapAction="http://tempuri.org/ITreasureHuntService/GetTreasureHunts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetQuestion">
+      <soap:operation soapAction="http://tempuri.org/ITreasureHuntService/GetQuestion" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

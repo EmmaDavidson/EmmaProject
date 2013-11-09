@@ -9,17 +9,291 @@
 //------------------------------------------------------------------------------
 
 namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="question", Namespace="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data", IsReference=true)]
+    [System.SerializableAttribute()]
+    public partial class question : System.Data.Objects.DataClasses.EntityObject, System.Runtime.Serialization.IExtensibleDataObject {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Question1Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long QuestionIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string URLField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion[] huntquestionsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Question1 {
+            get {
+                return this.Question1Field;
+            }
+            set {
+                this.Question1Field = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long QuestionId {
+            get {
+                return this.QuestionIdField;
+            }
+            set {
+                this.QuestionIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string URL {
+            get {
+                return this.URLField;
+            }
+            set {
+                this.URLField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion[] huntquestions {
+            get {
+                return this.huntquestionsField;
+            }
+            set {
+                this.huntquestionsField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="huntquestion", Namespace="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data", IsReference=true)]
+    [System.SerializableAttribute()]
+    public partial class huntquestion : System.Data.Objects.DataClasses.EntityObject, System.Runtime.Serialization.IExtensibleDataObject {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long HuntIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long HuntQuestionIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long QuestionIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt huntField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt> huntReferenceField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question questionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question> questionReferenceField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long HuntId {
+            get {
+                return this.HuntIdField;
+            }
+            set {
+                this.HuntIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long HuntQuestionId {
+            get {
+                return this.HuntQuestionIdField;
+            }
+            set {
+                this.HuntQuestionIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long QuestionId {
+            get {
+                return this.QuestionIdField;
+            }
+            set {
+                this.QuestionIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt {
+            get {
+                return this.huntField;
+            }
+            set {
+                this.huntField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt> huntReference {
+            get {
+                return this.huntReferenceField;
+            }
+            set {
+                this.huntReferenceField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question question {
+            get {
+                return this.questionField;
+            }
+            set {
+                this.questionField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question> questionReference {
+            get {
+                return this.questionReferenceField;
+            }
+            set {
+                this.questionReferenceField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="hunt", Namespace="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data", IsReference=true)]
+    [System.SerializableAttribute()]
+    public partial class hunt : System.Data.Objects.DataClasses.EntityObject, System.Runtime.Serialization.IExtensibleDataObject {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long HuntIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HuntNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion[] huntquestionsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long HuntId {
+            get {
+                return this.HuntIdField;
+            }
+            set {
+                this.HuntIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HuntName {
+            get {
+                return this.HuntNameField;
+            }
+            set {
+                this.HuntNameField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion[] huntquestions {
+            get {
+                return this.huntquestionsField;
+            }
+            set {
+                this.huntquestionsField = value;
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="TreasureHuntService.ITreasureHuntService")]
     public interface ITreasureHuntService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/DoWork", ReplyAction="http://tempuri.org/ITreasureHuntService/DoWorkResponse")]
-        void DoWork();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/SaveQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveQuestionResponse")]
+        long SaveQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/DoWork", ReplyAction="http://tempuri.org/ITreasureHuntService/DoWorkResponse")]
-        System.Threading.Tasks.Task DoWorkAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/SaveQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveQuestionResponse")]
+        System.Threading.Tasks.Task<long> SaveQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestionResponse")]
+        void SaveNewHuntQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestionResponse")]
+        System.Threading.Tasks.Task SaveNewHuntQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/SaveNewHunt", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveNewHuntResponse")]
+        void SaveNewHunt(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/SaveNewHunt", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveNewHuntResponse")]
+        System.Threading.Tasks.Task SaveNewHuntAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/GetHuntQuestions", ReplyAction="http://tempuri.org/ITreasureHuntService/GetHuntQuestionsResponse")]
+        long[] GetHuntQuestions(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/GetHuntQuestions", ReplyAction="http://tempuri.org/ITreasureHuntService/GetHuntQuestionsResponse")]
+        System.Threading.Tasks.Task<long[]> GetHuntQuestionsAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/GetTreasureHunts", ReplyAction="http://tempuri.org/ITreasureHuntService/GetTreasureHuntsResponse")]
+        TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[] GetTreasureHunts();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/GetTreasureHunts", ReplyAction="http://tempuri.org/ITreasureHuntService/GetTreasureHuntsResponse")]
+        System.Threading.Tasks.Task<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[]> GetTreasureHuntsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/GetQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/GetQuestionResponse")]
+        TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question GetQuestion(long questionId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/GetQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/GetQuestionResponse")]
+        System.Threading.Tasks.Task<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question> GetQuestionAsync(long questionId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -49,12 +323,52 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
                 base(binding, remoteAddress) {
         }
         
-        public void DoWork() {
-            base.Channel.DoWork();
+        public long SaveQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion) {
+            return base.Channel.SaveQuestion(newQuestion);
         }
         
-        public System.Threading.Tasks.Task DoWorkAsync() {
-            return base.Channel.DoWorkAsync();
+        public System.Threading.Tasks.Task<long> SaveQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion) {
+            return base.Channel.SaveQuestionAsync(newQuestion);
+        }
+        
+        public void SaveNewHuntQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion) {
+            base.Channel.SaveNewHuntQuestion(huntQuestion);
+        }
+        
+        public System.Threading.Tasks.Task SaveNewHuntQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion) {
+            return base.Channel.SaveNewHuntQuestionAsync(huntQuestion);
+        }
+        
+        public void SaveNewHunt(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt) {
+            base.Channel.SaveNewHunt(newHunt);
+        }
+        
+        public System.Threading.Tasks.Task SaveNewHuntAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt) {
+            return base.Channel.SaveNewHuntAsync(newHunt);
+        }
+        
+        public long[] GetHuntQuestions(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt) {
+            return base.Channel.GetHuntQuestions(hunt);
+        }
+        
+        public System.Threading.Tasks.Task<long[]> GetHuntQuestionsAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt) {
+            return base.Channel.GetHuntQuestionsAsync(hunt);
+        }
+        
+        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[] GetTreasureHunts() {
+            return base.Channel.GetTreasureHunts();
+        }
+        
+        public System.Threading.Tasks.Task<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[]> GetTreasureHuntsAsync() {
+            return base.Channel.GetTreasureHuntsAsync();
+        }
+        
+        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question GetQuestion(long questionId) {
+            return base.Channel.GetQuestion(questionId);
+        }
+        
+        public System.Threading.Tasks.Task<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question> GetQuestionAsync(long questionId) {
+            return base.Channel.GetQuestionAsync(questionId);
         }
     }
 }
