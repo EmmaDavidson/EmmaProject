@@ -24,7 +24,7 @@ mc:Ignorable="d"
             </DataGrid.Columns>
         </DataGrid>
 
-        <TextBox  Text="{Binding Path=CurrentQuestion.Question1, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="10,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Text="{Binding Path=CurrentQuestion.Question1, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="10,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Selected Question:" HorizontalAlignment="Left" Margin="21,128,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
             <Label.RenderTransform>
                 <TransformGroup>

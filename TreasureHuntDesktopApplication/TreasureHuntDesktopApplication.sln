@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureHuntDesktopApplicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureHuntDesktopApplication.DataService", "TreasureHuntDesktopApplication.DataService\TreasureHuntDesktopApplication.DataService.csproj", "{5B3BB04E-FDA5-4FED-8889-5AADBE402FC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreasureHuntDesktopApplication.Test", "TreasureHuntDesktopApplication.Test\TreasureHuntDesktopApplication.Test.csproj", "{0DA85E35-FF6A-4FED-B56E-B3CC71A5ED31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{5B3BB04E-FDA5-4FED-8889-5AADBE402FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B3BB04E-FDA5-4FED-8889-5AADBE402FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B3BB04E-FDA5-4FED-8889-5AADBE402FC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DA85E35-FF6A-4FED-B56E-B3CC71A5ED31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DA85E35-FF6A-4FED-B56E-B3CC71A5ED31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DA85E35-FF6A-4FED-B56E-B3CC71A5ED31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DA85E35-FF6A-4FED-B56E-B3CC71A5ED31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

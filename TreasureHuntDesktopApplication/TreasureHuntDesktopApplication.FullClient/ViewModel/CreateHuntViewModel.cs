@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using TreasureHuntDesktopApplication.FullClient.Project_Utilities;
 using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
@@ -19,7 +20,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         public CreateHuntViewModel()
         {
             serviceClient = new TreasureHuntServiceClient();
-            SaveHuntNameCommand = new RelayCommand(() => ExecuteSaveHuntNameCommand(), ()=> IsValidName());
+            SaveHuntNameCommand = new RelayCommand(() => ExecuteSaveHuntNameCommand(), () => IsValidHuntName());
         }
         #endregion
 
@@ -39,10 +40,27 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #endregion
 
         #region Validation
-        private bool IsValidName()
+
+        public int HuntNameMaxLength
         {
-            return true;
-        
+            get 
+            {
+                return 20;
+            }
+        }
+
+        public bool IsValidHuntName()
+        {
+                //also checks that the new question field is not empty 
+            if (!Validation.IsNullOrWhiteSpace(HuntName))
+            {
+                if (Validation.IsValidLength(HuntName, HuntNameMaxLength))
+                {
+
+                    return true;
+                }
+            }
+            return false;
         }
         #endregion
 
@@ -51,6 +69,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             hunt newHunt = new hunt();
             newHunt.HuntName = this.huntName;
+            this.serviceClient.SaveNewHuntAsync(newHunt);
             this.serviceClient.SaveNewHunt(newHunt);
         }
 

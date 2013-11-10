@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using TreasureHuntDesktopApplication.FullClient.Project_Utilities;
 using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
@@ -19,8 +20,8 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         public ViewHuntViewModel()
         {
-            SaveQuestionCommand = new RelayCommand(() => ExecuteSaveQuestionCommand(), ()=> ValidQuestion());
-            UpdateQuestionCommand = new RelayCommand(()=> ExecuteUpdateQuestionCommand(), ()=> ValidQuestion());
+            SaveQuestionCommand = new RelayCommand(() => ExecuteSaveQuestionCommand(), ()=> IsValidNewQuestion());
+            UpdateQuestionCommand = new RelayCommand(()=> ExecuteUpdateQuestionCommand(), ()=> IsValidUpdateQuestion());
             this.RefreshTreasureHunts();
         }
 
@@ -28,10 +29,46 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         #region Validation
 
-        private bool ValidQuestion()
+        public int NewQuestionMaxLength
         {
-            //here will do validation to check on the boxes to ensure they're filled
-            return true;
+            get
+            {
+                return 30;
+
+            }
+        }
+
+        public int UpdateQuestionMaxLength
+        {
+            get
+            {
+                return 30;
+
+            }
+        }
+
+        public bool IsValidNewQuestion()
+        {
+            if (currentTreasureHunt != null && Validation.IsValidLength(newQuestion, NewQuestionMaxLength))
+            {
+                if (!Validation.IsNullOrWhiteSpace(newQuestion))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool IsValidUpdateQuestion()
+        {
+            if (currentQuestion != null && Validation.IsValidLength(CurrentQuestion.Question1, UpdateQuestionMaxLength))
+            {
+                if (!Validation.IsNullOrWhiteSpace(CurrentQuestion.Question1) && !Validation.IsNullOrEmpty(CurrentQuestion.Question1))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         #endregion
 
@@ -65,70 +102,55 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #endregion
 
         #region Variable getters and setters
-        //Questions from the DB
+
         private IEnumerable<question> questions;
         public IEnumerable<question> Questions
         {
-
             get { return this.questions; }
-            set {
-                
+            set {              
                 this.questions = value;
                 RaisePropertyChanged("Questions");
-            }
-        
+            }       
         }
 
-        //Treasure hunts from the DB
         private IEnumerable<hunt> treasureHunts;
         public IEnumerable<hunt> TreasureHunts
         {
-
             get { return this.treasureHunts; }
             set {
                 
                 this.treasureHunts = value;
                 RaisePropertyChanged("TreasureHunts");
-            }
-        
+                //RefreshTreasureHunts(); - to refresh again the list of treasure hunts...not working!
+
+            }        
         }
 
-        //The current treasure hunt that has been selected on the dropdown
         private hunt currentTreasureHunt;
         public hunt CurrentTreasureHunt
         {
-
             get { return this.currentTreasureHunt; }
-            set {
-                
+            set {                
                 this.currentTreasureHunt = value;
                 RaisePropertyChanged("CurrentTreasureHunt");
                 RefreshQuestions();
-
-            }
-        
+            }        
         }
 
-        //The question that is being added to the DB from the text box
         public string newQuestion;
         public string NewQuestion
         {
-
             get { return this.newQuestion; }
             set
             {
-
                 this.newQuestion = value;
                 RaisePropertyChanged("NewQuestion");
             }
-
         }
 
-        //Current question that has been selected on the data grid
         private question currentQuestion;
         public question CurrentQuestion
         {
-
             get { return this.currentQuestion; }
             set
             {
@@ -136,7 +158,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 this.currentQuestion = value;
                 RaisePropertyChanged("CurrentQuestion");
             }
-
         }
 
         #endregion
@@ -149,13 +170,17 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             brandNewQuestion.Question1 = this.newQuestion;
             brandNewQuestion.URL = "empty URL";
             long questionId = this.serviceClient.SaveQuestion(brandNewQuestion); //return the new question's ID
+            SaveHuntQuestion(questionId);
+            
+            this.RefreshQuestions();
+        }
 
+        private void SaveHuntQuestion(long questionId)
+        {
             huntquestion newHuntQuestion = new huntquestion();
             newHuntQuestion.QuestionId = questionId;
-            newHuntQuestion.HuntId = currentTreasureHunt.HuntId; 
+            newHuntQuestion.HuntId = currentTreasureHunt.HuntId;
             serviceClient.SaveNewHuntQuestion(newHuntQuestion);
-
-            this.RefreshQuestions();
         }
 
         private void ExecuteUpdateQuestionCommand()
@@ -166,9 +191,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         #endregion
 
+        #region ETC
         public void Dispose()
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }

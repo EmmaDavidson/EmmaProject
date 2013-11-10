@@ -16,28 +16,21 @@ namespace TreasureHuntDesktopApplication.DataService
             using (var context = new TreasureHuntEntities())
             {
                 var returnedHunts = context.hunts.ToList();
-                //do i need to detach here?
-                context.ObjectStateManager.ChangeObjectState(returnedHunts, System.Data.EntityState.Detached);
-                returnedHunts.ForEach(e => context.ObjectStateManager.ChangeObjectState(e,System.Data.EntityState.Detached));
-               
+                returnedHunts.ForEach(e => context.ObjectStateManager.ChangeObjectState(e,System.Data.EntityState.Detached));        
                 return returnedHunts;
             }
         }
 
-        //Need to refactor - not sure the best way to do this
-        //returns a list of hunt questions ids
         public List<long> GetHuntQuestions(hunt hunt)
         { 
             using (var context = new TreasureHuntEntities())
             {
-                //Selects all of the question ids
                 var returnedquestionIds = context.huntquestions.Where(c => c.HuntId == hunt.HuntId).Select(s => s.QuestionId).ToList();
                 returnedquestionIds.ForEach(e => context.ObjectStateManager.ChangeObjectState(e, System.Data.EntityState.Detached));
                 return returnedquestionIds;
             }
         }
 
-        //Returns a list of questions for a given question Id
         public question GetQuestion(long questionId)
         {
             using (var context = new TreasureHuntEntities())
@@ -54,6 +47,7 @@ namespace TreasureHuntDesktopApplication.DataService
             {
                 context.questions.AddObject(newQuestion);
                 context.SaveChanges();
+                context.ObjectStateManager.ChangeObjectState(newQuestion, System.Data.EntityState.Added);
                 return newQuestion.QuestionId;
             }
         }
@@ -64,6 +58,7 @@ namespace TreasureHuntDesktopApplication.DataService
             {
                 context.huntquestions.AddObject(huntQuestion);
                 context.SaveChanges();
+                context.ObjectStateManager.ChangeObjectState(huntQuestion, System.Data.EntityState.Added);
             }
         }
 
@@ -73,6 +68,7 @@ namespace TreasureHuntDesktopApplication.DataService
             {
                 context.hunts.AddObject(newHunt);
                 context.SaveChanges();
+                context.ObjectStateManager.ChangeObjectState(newHunt, System.Data.EntityState.Added);
             }
         }
 
@@ -81,8 +77,8 @@ namespace TreasureHuntDesktopApplication.DataService
             using (var context = new TreasureHuntEntities())
             {
                 context.questions.AddObject(updatedQuestion);
-                context.ObjectStateManager.ChangeObjectState(updatedQuestion, System.Data.EntityState.Modified);
                 context.SaveChanges();
+                context.ObjectStateManager.ChangeObjectState(updatedQuestion, System.Data.EntityState.Modified);
             }
         }
     }

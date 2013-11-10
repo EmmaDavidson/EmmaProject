@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Height="600"
-        Width="600"
+        Width="900"
         Title="Treasure Hunt"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     
