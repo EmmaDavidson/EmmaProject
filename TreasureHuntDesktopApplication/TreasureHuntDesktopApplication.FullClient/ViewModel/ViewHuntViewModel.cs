@@ -49,11 +49,14 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         public bool IsValidNewQuestion()
         {
-            if (currentTreasureHunt != null && Validation.IsValidLength(newQuestion, NewQuestionMaxLength))
+            if (currentTreasureHunt != null)
             {
                 if (!Validation.IsNullOrWhiteSpace(newQuestion))
                 {
-                    return true;
+                    if (Validation.IsValidLength(newQuestion, NewQuestionMaxLength))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -61,11 +64,14 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         public bool IsValidUpdateQuestion()
         {
-            if (currentQuestion != null && Validation.IsValidLength(CurrentQuestion.Question1, UpdateQuestionMaxLength))
+            if (currentQuestion != null)
             {
-                if (!Validation.IsNullOrWhiteSpace(CurrentQuestion.Question1) && !Validation.IsNullOrEmpty(CurrentQuestion.Question1))
+                if (!Validation.IsNullOrWhiteSpace(CurrentQuestion.Question1))
                 {
-                    return true;
+                    if (Validation.IsValidLength(CurrentQuestion.Question1, UpdateQuestionMaxLength))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;

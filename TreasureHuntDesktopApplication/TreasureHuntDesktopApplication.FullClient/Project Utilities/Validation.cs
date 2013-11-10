@@ -10,9 +10,12 @@ namespace TreasureHuntDesktopApplication.FullClient.Project_Utilities
     {
         public static bool IsNullOrWhiteSpace(String stringToCheck)
         {
-            if(String.IsNullOrWhiteSpace(stringToCheck))
+            if (stringToCheck != null)
             {
-                return true;
+                if (String.IsNullOrWhiteSpace(stringToCheck))
+                {
+                    return true;
+                }
             }
             return false;
         }

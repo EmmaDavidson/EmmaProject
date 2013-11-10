@@ -74,9 +74,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CreateHuntViewModelTest.cs" />
+    <Compile Include="ViewModel\CreateHuntViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewHuntViewModelTest.cs" />
+    <Compile Include="ViewModel\ViewHuntViewModelTest.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>

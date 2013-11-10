@@ -61,7 +61,7 @@ namespace TreasureHuntDesktopApplication.Test
         [Test]
         public void HuntNameInvalidWhenGreaterThanMaxLength()
         {
-            String LongHuntName = "abcdefghijklmnopqrstuvwxyzabcdefg";
+            String LongHuntName = "abcdefghijklmnopqrstu";
             HuntName = LongHuntName;
             Assert.False(viewModel.IsValidHuntName());
             Assert.False(viewModel.SaveHuntNameCommand.CanExecute(""));
