@@ -30,5 +30,7 @@ namespace TreasureHuntDesktopApplication.DataService
         [OperationContract]
         question GetQuestion(long questionId);
 
+        [OperationContract]
+        void UpdateQuestion(question updatedQuestion);
     }
 }

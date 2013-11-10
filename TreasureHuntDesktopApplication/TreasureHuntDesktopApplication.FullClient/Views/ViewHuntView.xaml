@@ -17,13 +17,14 @@ mc:Ignorable="d"
         <TextBox HorizontalAlignment="Left" Height="23" Margin="10,48,0,0" TextWrapping="Wrap" Text="{Binding NewQuestion}" VerticalAlignment="Top" Width="120"/>
         <Button Content="Add Question" HorizontalAlignment="Left" Margin="24,92,0,0" VerticalAlignment="Top" Width="84" Command="{Binding SaveQuestionCommand}"/>
 
-        <DataGrid Grid.Column="1" AutoGenerateColumns="false" ItemsSource="{Binding Path=Questions}" SelectedItem="{Binding Path=CurrentQuestion}" Margin="0,46,0,0">
+        <DataGrid Grid.Column="1" AutoGenerateColumns="false" ItemsSource="{Binding Path=Questions}" SelectedItem="{Binding Path=CurrentQuestion}" Margin="0,41,0,5">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=Questions.question1}" Header="Question"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=Question1}" Header="Question"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Path=URL}" Header="URL"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <TextBox  Text="{Binding Path=CurrentQuestion.Question, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="10,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox  Text="{Binding Path=CurrentQuestion.Question1, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="10,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Selected Question:" HorizontalAlignment="Left" Margin="21,128,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
             <Label.RenderTransform>
                 <TransformGroup>

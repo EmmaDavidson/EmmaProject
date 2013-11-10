@@ -13,17 +13,15 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
     public class ViewHuntViewModel : ViewModelBase
     {
         #region Setup
-        TreasureHuntServiceClient serviceClient;
+        TreasureHuntServiceClient serviceClient = new TreasureHuntServiceClient();
         public RelayCommand SaveQuestionCommand { get; set; }
         public RelayCommand UpdateQuestionCommand { get; set; }
 
         public ViewHuntViewModel()
         {
-            serviceClient = new TreasureHuntServiceClient();
-
             SaveQuestionCommand = new RelayCommand(() => ExecuteSaveQuestionCommand(), ()=> ValidQuestion());
             UpdateQuestionCommand = new RelayCommand(()=> ExecuteUpdateQuestionCommand(), ()=> ValidQuestion());
-            RefreshTreasureHunts();
+            this.RefreshTreasureHunts();
         }
 
         #endregion
@@ -41,26 +39,26 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         private void RefreshTreasureHunts()
         {
-            //Issue here
-            //this.serviceClient.GetTreasureHuntsAsync();
-            //this.treasureHunts = this.serviceClient.GetTreasureHunts();
+            this.serviceClient.GetTreasureHuntsAsync();
+            this.TreasureHunts = this.serviceClient.GetTreasureHunts();
         }
 
         private void RefreshQuestions()
         {
+            this.serviceClient.GetHuntQuestionsAsync(currentTreasureHunt);
             List<long> questionIds = this.serviceClient.GetHuntQuestions(currentTreasureHunt).ToList();
+            List<question> listOfQuestionsFromHunt = new List<question>();
 
             using (var questionIdNumbers = questionIds.GetEnumerator())
             {
-                List<question> listOfQuestionsFromHunt = new List<question>();
-
                 while (questionIdNumbers.MoveNext())
                 {
-                    question currentQuestionInList = serviceClient.GetQuestion(questionIdNumbers.Current);
+                    this.serviceClient.GetQuestionAsync(questionIdNumbers.Current);
+                    question currentQuestionInList = this.serviceClient.GetQuestion(questionIdNumbers.Current);
                     listOfQuestionsFromHunt.Add(currentQuestionInList);
                 }
 
-                questions = listOfQuestionsFromHunt.AsEnumerable();
+                this.Questions = listOfQuestionsFromHunt.AsEnumerable();
             }
         }
 
@@ -74,7 +72,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
             get { return this.questions; }
             set {
-
+                
                 this.questions = value;
                 RaisePropertyChanged("Questions");
             }
@@ -149,20 +147,21 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             question brandNewQuestion = new question();
             brandNewQuestion.Question1 = this.newQuestion;
-            //brandNewQuestion.URL has not been generated yet!
+            brandNewQuestion.URL = "empty URL";
             long questionId = this.serviceClient.SaveQuestion(brandNewQuestion); //return the new question's ID
 
             huntquestion newHuntQuestion = new huntquestion();
             newHuntQuestion.QuestionId = questionId;
             newHuntQuestion.HuntId = currentTreasureHunt.HuntId; 
             serviceClient.SaveNewHuntQuestion(newHuntQuestion);
+
+            this.RefreshQuestions();
         }
 
         private void ExecuteUpdateQuestionCommand()
         {
-            this.serviceClient.SaveQuestionAsync(this.CurrentQuestion);
-            RefreshQuestions();
-            //object state manager to update to say that this has been modifiedc
+            this.serviceClient.UpdateQuestion(this.currentQuestion);
+            this.RefreshQuestions();
         }
 
         #endregion

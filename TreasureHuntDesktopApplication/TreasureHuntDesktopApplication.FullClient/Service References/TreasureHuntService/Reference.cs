@@ -262,38 +262,58 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/SaveQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveQuestionResponse")]
         long SaveQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/SaveQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveQuestionResponse")]
-        System.Threading.Tasks.Task<long> SaveQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ITreasureHuntService/SaveQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveQuestionResponse")]
+        System.IAsyncResult BeginSaveQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion, System.AsyncCallback callback, object asyncState);
+        
+        long EndSaveQuestion(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestionResponse")]
         void SaveNewHuntQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestionResponse")]
-        System.Threading.Tasks.Task SaveNewHuntQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveNewHuntQuestionResponse")]
+        System.IAsyncResult BeginSaveNewHuntQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion, System.AsyncCallback callback, object asyncState);
+        
+        void EndSaveNewHuntQuestion(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/SaveNewHunt", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveNewHuntResponse")]
         void SaveNewHunt(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/SaveNewHunt", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveNewHuntResponse")]
-        System.Threading.Tasks.Task SaveNewHuntAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ITreasureHuntService/SaveNewHunt", ReplyAction="http://tempuri.org/ITreasureHuntService/SaveNewHuntResponse")]
+        System.IAsyncResult BeginSaveNewHunt(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt, System.AsyncCallback callback, object asyncState);
+        
+        void EndSaveNewHunt(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/GetHuntQuestions", ReplyAction="http://tempuri.org/ITreasureHuntService/GetHuntQuestionsResponse")]
         long[] GetHuntQuestions(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/GetHuntQuestions", ReplyAction="http://tempuri.org/ITreasureHuntService/GetHuntQuestionsResponse")]
-        System.Threading.Tasks.Task<long[]> GetHuntQuestionsAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ITreasureHuntService/GetHuntQuestions", ReplyAction="http://tempuri.org/ITreasureHuntService/GetHuntQuestionsResponse")]
+        System.IAsyncResult BeginGetHuntQuestions(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt, System.AsyncCallback callback, object asyncState);
+        
+        long[] EndGetHuntQuestions(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/GetTreasureHunts", ReplyAction="http://tempuri.org/ITreasureHuntService/GetTreasureHuntsResponse")]
         TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[] GetTreasureHunts();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/GetTreasureHunts", ReplyAction="http://tempuri.org/ITreasureHuntService/GetTreasureHuntsResponse")]
-        System.Threading.Tasks.Task<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[]> GetTreasureHuntsAsync();
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ITreasureHuntService/GetTreasureHunts", ReplyAction="http://tempuri.org/ITreasureHuntService/GetTreasureHuntsResponse")]
+        System.IAsyncResult BeginGetTreasureHunts(System.AsyncCallback callback, object asyncState);
+        
+        TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[] EndGetTreasureHunts(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/GetQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/GetQuestionResponse")]
         TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question GetQuestion(long questionId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/GetQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/GetQuestionResponse")]
-        System.Threading.Tasks.Task<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question> GetQuestionAsync(long questionId);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ITreasureHuntService/GetQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/GetQuestionResponse")]
+        System.IAsyncResult BeginGetQuestion(long questionId, System.AsyncCallback callback, object asyncState);
+        
+        TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question EndGetQuestion(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ITreasureHuntService/UpdateQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/UpdateQuestionResponse")]
+        void UpdateQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question updatedQuestion);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ITreasureHuntService/UpdateQuestion", ReplyAction="http://tempuri.org/ITreasureHuntService/UpdateQuestionResponse")]
+        System.IAsyncResult BeginUpdateQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question updatedQuestion, System.AsyncCallback callback, object asyncState);
+        
+        void EndUpdateQuestion(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -302,7 +322,125 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SaveQuestionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SaveQuestionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public long Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((long)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetHuntQuestionsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetHuntQuestionsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public long[] Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((long[])(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetTreasureHuntsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetTreasureHuntsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[] Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[])(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetQuestionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetQuestionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class TreasureHuntServiceClient : System.ServiceModel.ClientBase<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.ITreasureHuntService>, TreasureHuntDesktopApplication.FullClient.TreasureHuntService.ITreasureHuntService {
+        
+        private BeginOperationDelegate onBeginSaveQuestionDelegate;
+        
+        private EndOperationDelegate onEndSaveQuestionDelegate;
+        
+        private System.Threading.SendOrPostCallback onSaveQuestionCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSaveNewHuntQuestionDelegate;
+        
+        private EndOperationDelegate onEndSaveNewHuntQuestionDelegate;
+        
+        private System.Threading.SendOrPostCallback onSaveNewHuntQuestionCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSaveNewHuntDelegate;
+        
+        private EndOperationDelegate onEndSaveNewHuntDelegate;
+        
+        private System.Threading.SendOrPostCallback onSaveNewHuntCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetHuntQuestionsDelegate;
+        
+        private EndOperationDelegate onEndGetHuntQuestionsDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetHuntQuestionsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetTreasureHuntsDelegate;
+        
+        private EndOperationDelegate onEndGetTreasureHuntsDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetTreasureHuntsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetQuestionDelegate;
+        
+        private EndOperationDelegate onEndGetQuestionDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetQuestionCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginUpdateQuestionDelegate;
+        
+        private EndOperationDelegate onEndUpdateQuestionDelegate;
+        
+        private System.Threading.SendOrPostCallback onUpdateQuestionCompletedDelegate;
         
         public TreasureHuntServiceClient() {
         }
@@ -323,52 +461,363 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
                 base(binding, remoteAddress) {
         }
         
+        public event System.EventHandler<SaveQuestionCompletedEventArgs> SaveQuestionCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SaveNewHuntQuestionCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SaveNewHuntCompleted;
+        
+        public event System.EventHandler<GetHuntQuestionsCompletedEventArgs> GetHuntQuestionsCompleted;
+        
+        public event System.EventHandler<GetTreasureHuntsCompletedEventArgs> GetTreasureHuntsCompleted;
+        
+        public event System.EventHandler<GetQuestionCompletedEventArgs> GetQuestionCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> UpdateQuestionCompleted;
+        
         public long SaveQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion) {
             return base.Channel.SaveQuestion(newQuestion);
         }
         
-        public System.Threading.Tasks.Task<long> SaveQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion) {
-            return base.Channel.SaveQuestionAsync(newQuestion);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginSaveQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveQuestion(newQuestion, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public long EndSaveQuestion(System.IAsyncResult result) {
+            return base.Channel.EndSaveQuestion(result);
+        }
+        
+        private System.IAsyncResult OnBeginSaveQuestion(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion = ((TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question)(inValues[0]));
+            return this.BeginSaveQuestion(newQuestion, callback, asyncState);
+        }
+        
+        private object[] OnEndSaveQuestion(System.IAsyncResult result) {
+            long retVal = this.EndSaveQuestion(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnSaveQuestionCompleted(object state) {
+            if ((this.SaveQuestionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SaveQuestionCompleted(this, new SaveQuestionCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SaveQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion) {
+            this.SaveQuestionAsync(newQuestion, null);
+        }
+        
+        public void SaveQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question newQuestion, object userState) {
+            if ((this.onBeginSaveQuestionDelegate == null)) {
+                this.onBeginSaveQuestionDelegate = new BeginOperationDelegate(this.OnBeginSaveQuestion);
+            }
+            if ((this.onEndSaveQuestionDelegate == null)) {
+                this.onEndSaveQuestionDelegate = new EndOperationDelegate(this.OnEndSaveQuestion);
+            }
+            if ((this.onSaveQuestionCompletedDelegate == null)) {
+                this.onSaveQuestionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveQuestionCompleted);
+            }
+            base.InvokeAsync(this.onBeginSaveQuestionDelegate, new object[] {
+                        newQuestion}, this.onEndSaveQuestionDelegate, this.onSaveQuestionCompletedDelegate, userState);
         }
         
         public void SaveNewHuntQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion) {
             base.Channel.SaveNewHuntQuestion(huntQuestion);
         }
         
-        public System.Threading.Tasks.Task SaveNewHuntQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion) {
-            return base.Channel.SaveNewHuntQuestionAsync(huntQuestion);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginSaveNewHuntQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveNewHuntQuestion(huntQuestion, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public void EndSaveNewHuntQuestion(System.IAsyncResult result) {
+            base.Channel.EndSaveNewHuntQuestion(result);
+        }
+        
+        private System.IAsyncResult OnBeginSaveNewHuntQuestion(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion = ((TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion)(inValues[0]));
+            return this.BeginSaveNewHuntQuestion(huntQuestion, callback, asyncState);
+        }
+        
+        private object[] OnEndSaveNewHuntQuestion(System.IAsyncResult result) {
+            this.EndSaveNewHuntQuestion(result);
+            return null;
+        }
+        
+        private void OnSaveNewHuntQuestionCompleted(object state) {
+            if ((this.SaveNewHuntQuestionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SaveNewHuntQuestionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SaveNewHuntQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion) {
+            this.SaveNewHuntQuestionAsync(huntQuestion, null);
+        }
+        
+        public void SaveNewHuntQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion huntQuestion, object userState) {
+            if ((this.onBeginSaveNewHuntQuestionDelegate == null)) {
+                this.onBeginSaveNewHuntQuestionDelegate = new BeginOperationDelegate(this.OnBeginSaveNewHuntQuestion);
+            }
+            if ((this.onEndSaveNewHuntQuestionDelegate == null)) {
+                this.onEndSaveNewHuntQuestionDelegate = new EndOperationDelegate(this.OnEndSaveNewHuntQuestion);
+            }
+            if ((this.onSaveNewHuntQuestionCompletedDelegate == null)) {
+                this.onSaveNewHuntQuestionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveNewHuntQuestionCompleted);
+            }
+            base.InvokeAsync(this.onBeginSaveNewHuntQuestionDelegate, new object[] {
+                        huntQuestion}, this.onEndSaveNewHuntQuestionDelegate, this.onSaveNewHuntQuestionCompletedDelegate, userState);
         }
         
         public void SaveNewHunt(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt) {
             base.Channel.SaveNewHunt(newHunt);
         }
         
-        public System.Threading.Tasks.Task SaveNewHuntAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt) {
-            return base.Channel.SaveNewHuntAsync(newHunt);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginSaveNewHunt(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveNewHunt(newHunt, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public void EndSaveNewHunt(System.IAsyncResult result) {
+            base.Channel.EndSaveNewHunt(result);
+        }
+        
+        private System.IAsyncResult OnBeginSaveNewHunt(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt = ((TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt)(inValues[0]));
+            return this.BeginSaveNewHunt(newHunt, callback, asyncState);
+        }
+        
+        private object[] OnEndSaveNewHunt(System.IAsyncResult result) {
+            this.EndSaveNewHunt(result);
+            return null;
+        }
+        
+        private void OnSaveNewHuntCompleted(object state) {
+            if ((this.SaveNewHuntCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SaveNewHuntCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SaveNewHuntAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt) {
+            this.SaveNewHuntAsync(newHunt, null);
+        }
+        
+        public void SaveNewHuntAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt newHunt, object userState) {
+            if ((this.onBeginSaveNewHuntDelegate == null)) {
+                this.onBeginSaveNewHuntDelegate = new BeginOperationDelegate(this.OnBeginSaveNewHunt);
+            }
+            if ((this.onEndSaveNewHuntDelegate == null)) {
+                this.onEndSaveNewHuntDelegate = new EndOperationDelegate(this.OnEndSaveNewHunt);
+            }
+            if ((this.onSaveNewHuntCompletedDelegate == null)) {
+                this.onSaveNewHuntCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveNewHuntCompleted);
+            }
+            base.InvokeAsync(this.onBeginSaveNewHuntDelegate, new object[] {
+                        newHunt}, this.onEndSaveNewHuntDelegate, this.onSaveNewHuntCompletedDelegate, userState);
         }
         
         public long[] GetHuntQuestions(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt) {
             return base.Channel.GetHuntQuestions(hunt);
         }
         
-        public System.Threading.Tasks.Task<long[]> GetHuntQuestionsAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt) {
-            return base.Channel.GetHuntQuestionsAsync(hunt);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginGetHuntQuestions(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetHuntQuestions(hunt, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public long[] EndGetHuntQuestions(System.IAsyncResult result) {
+            return base.Channel.EndGetHuntQuestions(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetHuntQuestions(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt = ((TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt)(inValues[0]));
+            return this.BeginGetHuntQuestions(hunt, callback, asyncState);
+        }
+        
+        private object[] OnEndGetHuntQuestions(System.IAsyncResult result) {
+            long[] retVal = this.EndGetHuntQuestions(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetHuntQuestionsCompleted(object state) {
+            if ((this.GetHuntQuestionsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetHuntQuestionsCompleted(this, new GetHuntQuestionsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetHuntQuestionsAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt) {
+            this.GetHuntQuestionsAsync(hunt, null);
+        }
+        
+        public void GetHuntQuestionsAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt, object userState) {
+            if ((this.onBeginGetHuntQuestionsDelegate == null)) {
+                this.onBeginGetHuntQuestionsDelegate = new BeginOperationDelegate(this.OnBeginGetHuntQuestions);
+            }
+            if ((this.onEndGetHuntQuestionsDelegate == null)) {
+                this.onEndGetHuntQuestionsDelegate = new EndOperationDelegate(this.OnEndGetHuntQuestions);
+            }
+            if ((this.onGetHuntQuestionsCompletedDelegate == null)) {
+                this.onGetHuntQuestionsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetHuntQuestionsCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetHuntQuestionsDelegate, new object[] {
+                        hunt}, this.onEndGetHuntQuestionsDelegate, this.onGetHuntQuestionsCompletedDelegate, userState);
         }
         
         public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[] GetTreasureHunts() {
             return base.Channel.GetTreasureHunts();
         }
         
-        public System.Threading.Tasks.Task<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[]> GetTreasureHuntsAsync() {
-            return base.Channel.GetTreasureHuntsAsync();
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginGetTreasureHunts(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetTreasureHunts(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[] EndGetTreasureHunts(System.IAsyncResult result) {
+            return base.Channel.EndGetTreasureHunts(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetTreasureHunts(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return this.BeginGetTreasureHunts(callback, asyncState);
+        }
+        
+        private object[] OnEndGetTreasureHunts(System.IAsyncResult result) {
+            TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt[] retVal = this.EndGetTreasureHunts(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetTreasureHuntsCompleted(object state) {
+            if ((this.GetTreasureHuntsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetTreasureHuntsCompleted(this, new GetTreasureHuntsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetTreasureHuntsAsync() {
+            this.GetTreasureHuntsAsync(null);
+        }
+        
+        public void GetTreasureHuntsAsync(object userState) {
+            if ((this.onBeginGetTreasureHuntsDelegate == null)) {
+                this.onBeginGetTreasureHuntsDelegate = new BeginOperationDelegate(this.OnBeginGetTreasureHunts);
+            }
+            if ((this.onEndGetTreasureHuntsDelegate == null)) {
+                this.onEndGetTreasureHuntsDelegate = new EndOperationDelegate(this.OnEndGetTreasureHunts);
+            }
+            if ((this.onGetTreasureHuntsCompletedDelegate == null)) {
+                this.onGetTreasureHuntsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetTreasureHuntsCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetTreasureHuntsDelegate, null, this.onEndGetTreasureHuntsDelegate, this.onGetTreasureHuntsCompletedDelegate, userState);
         }
         
         public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question GetQuestion(long questionId) {
             return base.Channel.GetQuestion(questionId);
         }
         
-        public System.Threading.Tasks.Task<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question> GetQuestionAsync(long questionId) {
-            return base.Channel.GetQuestionAsync(questionId);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginGetQuestion(long questionId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetQuestion(questionId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question EndGetQuestion(System.IAsyncResult result) {
+            return base.Channel.EndGetQuestion(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetQuestion(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            long questionId = ((long)(inValues[0]));
+            return this.BeginGetQuestion(questionId, callback, asyncState);
+        }
+        
+        private object[] OnEndGetQuestion(System.IAsyncResult result) {
+            TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question retVal = this.EndGetQuestion(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetQuestionCompleted(object state) {
+            if ((this.GetQuestionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetQuestionCompleted(this, new GetQuestionCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetQuestionAsync(long questionId) {
+            this.GetQuestionAsync(questionId, null);
+        }
+        
+        public void GetQuestionAsync(long questionId, object userState) {
+            if ((this.onBeginGetQuestionDelegate == null)) {
+                this.onBeginGetQuestionDelegate = new BeginOperationDelegate(this.OnBeginGetQuestion);
+            }
+            if ((this.onEndGetQuestionDelegate == null)) {
+                this.onEndGetQuestionDelegate = new EndOperationDelegate(this.OnEndGetQuestion);
+            }
+            if ((this.onGetQuestionCompletedDelegate == null)) {
+                this.onGetQuestionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetQuestionCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetQuestionDelegate, new object[] {
+                        questionId}, this.onEndGetQuestionDelegate, this.onGetQuestionCompletedDelegate, userState);
+        }
+        
+        public void UpdateQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question updatedQuestion) {
+            base.Channel.UpdateQuestion(updatedQuestion);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginUpdateQuestion(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question updatedQuestion, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUpdateQuestion(updatedQuestion, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public void EndUpdateQuestion(System.IAsyncResult result) {
+            base.Channel.EndUpdateQuestion(result);
+        }
+        
+        private System.IAsyncResult OnBeginUpdateQuestion(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question updatedQuestion = ((TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question)(inValues[0]));
+            return this.BeginUpdateQuestion(updatedQuestion, callback, asyncState);
+        }
+        
+        private object[] OnEndUpdateQuestion(System.IAsyncResult result) {
+            this.EndUpdateQuestion(result);
+            return null;
+        }
+        
+        private void OnUpdateQuestionCompleted(object state) {
+            if ((this.UpdateQuestionCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.UpdateQuestionCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void UpdateQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question updatedQuestion) {
+            this.UpdateQuestionAsync(updatedQuestion, null);
+        }
+        
+        public void UpdateQuestionAsync(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question updatedQuestion, object userState) {
+            if ((this.onBeginUpdateQuestionDelegate == null)) {
+                this.onBeginUpdateQuestionDelegate = new BeginOperationDelegate(this.OnBeginUpdateQuestion);
+            }
+            if ((this.onEndUpdateQuestionDelegate == null)) {
+                this.onEndUpdateQuestionDelegate = new EndOperationDelegate(this.OnEndUpdateQuestion);
+            }
+            if ((this.onUpdateQuestionCompletedDelegate == null)) {
+                this.onUpdateQuestionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnUpdateQuestionCompleted);
+            }
+            base.InvokeAsync(this.onBeginUpdateQuestionDelegate, new object[] {
+                        updatedQuestion}, this.onEndUpdateQuestionDelegate, this.onUpdateQuestionCompletedDelegate, userState);
         }
     }
 }
