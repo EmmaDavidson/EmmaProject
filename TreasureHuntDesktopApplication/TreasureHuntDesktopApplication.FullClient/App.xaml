@@ -14,5 +14,10 @@
             <views:AddQuestionView>
             </views:AddQuestionView>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:SearchHuntViewModel}">
+            <views:SearchHuntView>
+            </views:SearchHuntView>
+        </DataTemplate>
     </Application.Resources>
 </Application>

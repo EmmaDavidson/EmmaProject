@@ -118,6 +118,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Messages\SelectedHuntMessage.cs" />
+    <Compile Include="Messages\SelectedQuestionMessage.cs" />
+    <Compile Include="Messages\UpdateViewMessage.cs" />
     <Compile Include="Project Utilities\StringValidationRule.cs" />
     <Compile Include="Project Utilities\Validation.cs" />
     <Compile Include="Service References\TreasureHuntService\Reference.cs">
@@ -127,17 +130,25 @@
     </Compile>
     <Compile Include="ViewModel\AddQuestionViewModel.cs" />
     <Compile Include="ViewModel\CreateHuntViewModel.cs" />
+    <Compile Include="ViewModel\SearchHuntViewModel.cs" />
     <Compile Include="ViewModel\ViewHuntViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="ViewModel\ViewQRCodeViewModel.cs" />
     <Compile Include="Views\AddQuestionView.xaml.cs">
       <DependentUpon>AddQuestionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateHuntView.xaml.cs">
       <DependentUpon>CreateHuntView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SearchHuntView.xaml.cs">
+      <DependentUpon>SearchHuntView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewHuntView.xaml.cs">
       <DependentUpon>ViewHuntView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewQRCodeView.xaml.cs">
+      <DependentUpon>ViewQRCodeView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\AddQuestionView.xaml">
       <SubType>Designer</SubType>
@@ -164,7 +175,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\SearchHuntView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ViewHuntView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewQRCodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

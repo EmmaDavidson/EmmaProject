@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:validation="clr-namespace:TreasureHuntDesktopApplication.FullClient.Project_Utilities"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Button Command="{Binding SaveHuntNameCommand}" Content="Save" HorizontalAlignment="Left" Margin="115,151,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBox Text="{Binding HuntName}" HorizontalAlignment="Left" Height="23" Margin="98,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="192">
+             d:DesignHeight="250" d:DesignWidth="300">
+    <Grid Margin="0,0,0,120">
+        <Button Command="{Binding SaveHuntNameCommand}" Content="Save" HorizontalAlignment="Left" Margin="107,88,0,-26" VerticalAlignment="Top" Width="75" Height="26"/>
+        <TextBox Text="{Binding HuntName}" HorizontalAlignment="Left" Height="23" Margin="55,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="192" RenderTransformOrigin="0.547,0.478">
         </TextBox>
-        <Label Content="Hunt Name:" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Width="83"/>
+        <Label Content="Hunt Name:" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="83"/>
 
 
     </Grid>

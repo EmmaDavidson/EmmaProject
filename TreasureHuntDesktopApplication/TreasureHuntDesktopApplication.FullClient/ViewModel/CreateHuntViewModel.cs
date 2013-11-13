@@ -11,6 +11,8 @@ using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 {
+    //Need to add messaging to pass forward a call to refresh the treasure hunt list
+
     public class CreateHuntViewModel : ViewModelBase
     {
         #region Setup

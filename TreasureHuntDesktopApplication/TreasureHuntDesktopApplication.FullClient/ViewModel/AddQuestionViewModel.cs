@@ -66,17 +66,17 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             //-http://www.youtube.com/watch?v=3CSifXK62Tk
             QRCodeEncoder encoder = new QRCodeEncoder();
-            Bitmap qrCodeImage = encoder.Encode(this.newQuestion);
+            Bitmap generatedQrCodeImage = encoder.Encode(this.newQuestion);
             String location ="C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\" + this.newQuestion + ".jpg";
             //Saves the image to the file system, allow the user to print it out.
-            qrCodeImage.Save(location, ImageFormat.Png);
+            generatedQrCodeImage.Save(location, ImageFormat.Png);
 
             //-http://stackoverflow.com/questions/16246284/images-not-displaying-in-wpf-mvvm
             if (string.IsNullOrEmpty(location)) return;
-            Stream reader = File.OpenRead(location);
-            Image photo = Image.FromStream(reader);
+            Stream fileReader = File.OpenRead(location);
+            Image onScreenQrCode = Image.FromStream(fileReader);
             var finalStream = new MemoryStream();
-            photo.Save(finalStream, ImageFormat.Png);
+            onScreenQrCode.Save(finalStream, ImageFormat.Png);
             var decoder = new PngBitmapDecoder(finalStream, BitmapCreateOptions.PreservePixelFormat,
                                                BitmapCacheOption.Default);
 

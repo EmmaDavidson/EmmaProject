@@ -8,10 +8,10 @@
     <Grid>
         <TextBox HorizontalAlignment="Left" Height="50" Margin="101,20,0,0" TextWrapping="Wrap" Text="{Binding NewQuestion}" VerticalAlignment="Top" Width="179"/>
         <Label Content="New question:" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top"/>
-        <Button Content="Save" HorizontalAlignment="Left" Margin="69,268,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="75,80,0,0" VerticalAlignment="Top" Width="134"/>
         <Image Source="{Binding Path=QRCode, Mode=TwoWay}" HorizontalAlignment="Left" Height="161" Margin="59,102,0,0" VerticalAlignment="Top" Width="191"/>
-        <Button Command="{Binding GenerateQRCodeCommand}" Content="Generate" HorizontalAlignment="Left" Margin="111,75,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Print" Margin="160,268,65,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding GenerateQRCodeCommand}" Content="Generate" HorizontalAlignment="Left" Margin="59,268,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Print" Margin="160,268,20,0" VerticalAlignment="Top"/>
         
 
     </Grid>

@@ -76,3 +76,7 @@ C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\Treasu
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\zxing.xml
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\zxing.presentation.pdb
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\zxing.presentation.xml
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\SearchHuntView.baml
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\SearchHuntView.g.cs
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\ViewQRCodeView.baml
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\ViewQRCodeView.g.cs

@@ -10,14 +10,14 @@
        <Types>
         <Type Name="AddQuestionViewModel" Kind="Class" Accessibility="Assembly" ExternallyVisible="False">
          <Messages>
-          <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Active" Created="2013-11-13 17:04:46Z" FixCategory="NonBreaking">
+          <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Active" Created="2013-11-13 22:19:56Z" FixCategory="NonBreaking">
            <Issue Name="NonBreaking" Certainty="95" Level="CriticalError">Implement IDisposable on 'AddQuestionViewModel' because it creates members of the following IDisposable types: 'TreasureHuntServiceClient'.</Issue>
           </Message>
          </Messages>
         </Type>
         <Type Name="CreateHuntViewModel" Kind="Class" Accessibility="Public" ExternallyVisible="True">
          <Messages>
-          <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Active" Created="2013-11-13 17:04:46Z" FixCategory="DependsOnFix">
+          <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Active" Created="2013-11-13 22:19:56Z" FixCategory="DependsOnFix">
            <Issue Name="DependsOnFix" Certainty="95" Level="CriticalError">Implement IDisposable on 'CreateHuntViewModel' because it creates members of the following IDisposable types: 'TreasureHuntServiceClient'. If 'CreateHuntViewModel' has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Issue>
           </Message>
          </Messages>
@@ -26,8 +26,24 @@
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-11-13 17:04:46Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="MainViewModel.cs" Line="38">'MainViewModel.MainViewModel()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;MainViewModel..ctor()&#xD;&#xA;MainViewModel.set_CurrentViewModel(ViewModelBase):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-11-13 22:19:56Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="MainViewModel.cs" Line="44">'MainViewModel.MainViewModel()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;MainViewModel..ctor()&#xD;&#xA;MainViewModel.set_CurrentViewModel(ViewModelBase):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="SearchHuntViewModel" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Active" Created="2013-11-13 22:19:56Z" FixCategory="DependsOnFix">
+           <Issue Name="DependsOnFix" Certainty="95" Level="CriticalError">Implement IDisposable on 'SearchHuntViewModel' because it creates members of the following IDisposable types: 'TreasureHuntServiceClient'. If 'SearchHuntViewModel' has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-11-13 22:19:56Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="SearchHuntViewModel.cs" Line="17">'SearchHuntViewModel.SearchHuntViewModel()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;SearchHuntViewModel..ctor()&#xD;&#xA;SearchHuntViewModel.RefreshTreasureHunts():Void&#xD;&#xA;SearchHuntViewModel.set_TreasureHunts(IEnumerable&lt;hunt&gt;):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
             </Message>
            </Messages>
           </Member>
@@ -35,15 +51,31 @@
         </Type>
         <Type Name="ViewHuntViewModel" Kind="Class" Accessibility="Public" ExternallyVisible="True">
          <Messages>
-          <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Active" Created="2013-11-13 17:04:46Z" FixCategory="DependsOnFix">
+          <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Active" Created="2013-11-13 22:19:56Z" FixCategory="DependsOnFix">
            <Issue Name="DependsOnFix" Certainty="95" Level="CriticalError">Implement IDisposable on 'ViewHuntViewModel' because it creates members of the following IDisposable types: 'TreasureHuntServiceClient'. If 'ViewHuntViewModel' has previously shipped, adding new members that implement IDisposable to this type is considered a breaking change to existing consumers.</Issue>
           </Message>
          </Messages>
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-11-13 17:04:46Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="ViewHuntViewModel.cs" Line="17">'ViewHuntViewModel.ViewHuntViewModel()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;ViewHuntViewModel..ctor()&#xD;&#xA;ViewHuntViewModel.RefreshTreasureHunts():Void&#xD;&#xA;ViewHuntViewModel.set_TreasureHunts(IEnumerable&lt;hunt&gt;):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-11-13 22:19:56Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="ViewHuntViewModel.cs" Line="23">'ViewHuntViewModel.ViewHuntViewModel()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;ViewHuntViewModel..ctor()&#xD;&#xA;ViewHuntViewModel.RefreshQuestions():Void&#xD;&#xA;ViewHuntViewModel.set_Questions(IEnumerable&lt;question&gt;):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="ViewQRCodeViewModel" Kind="Class" Accessibility="Assembly" ExternallyVisible="False">
+         <Messages>
+          <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Active" Created="2013-11-13 22:19:56Z" FixCategory="NonBreaking">
+           <Issue Name="NonBreaking" Certainty="95" Level="CriticalError">Implement IDisposable on 'ViewQRCodeViewModel' because it creates members of the following IDisposable types: 'TreasureHuntServiceClient'.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-11-13 22:19:56Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="ViewQRCodeViewModel.cs" Line="21">'ViewQRCodeViewModel.ViewQRCodeViewModel()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;ViewQRCodeViewModel..ctor()&#xD;&#xA;ViewQRCodeViewModel.GenerateQRCode():Void&#xD;&#xA;ViewQRCodeViewModel.set_QRCode(ImageSource):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
             </Message>
            </Messages>
           </Member>

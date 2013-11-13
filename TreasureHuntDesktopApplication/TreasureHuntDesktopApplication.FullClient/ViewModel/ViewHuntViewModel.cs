@@ -1,11 +1,17 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using MessagingToolkit.QRCode.Codec;
+using MessagingToolkit.QRCode.Codec.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using TreasureHuntDesktopApplication.FullClient.Messages;
 using TreasureHuntDesktopApplication.FullClient.Project_Utilities;
 using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
 
@@ -16,15 +22,32 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #region Setup
         TreasureHuntServiceClient serviceClient = new TreasureHuntServiceClient();
         public RelayCommand SaveQuestionCommand { get; set; }
-        public RelayCommand UpdateQuestionCommand { get; set; }
+        //public RelayCommand UpdateQuestionCommand { get; set; }
+        public RelayCommand ViewQrCodeCommand { get; set; }
 
         public ViewHuntViewModel()
         {
             SaveQuestionCommand = new RelayCommand(() => ExecuteSaveQuestionCommand(), ()=> IsValidNewQuestion());
-            UpdateQuestionCommand = new RelayCommand(()=> ExecuteUpdateQuestionCommand(), ()=> IsValidUpdateQuestion());
-            this.RefreshTreasureHunts();
+            //UpdateQuestionCommand = new RelayCommand(()=> ExecuteUpdateQuestionCommand(), ()=> IsValidUpdateQuestion());
+            ViewQrCodeCommand = new RelayCommand(() => ExecuteViewQrCodeCommand(), () => IsSingleQuestionSelected());
+            this.RefreshQuestions();
+
+             Messenger.Default.Register<SelectedHuntMessage>
+             (
+
+             this,
+             (action) => ReceiveSelectedHuntMessage(action.CurrentHunt)
+
+             );
         }
 
+        #endregion
+
+        #region Received Message Methods
+        private void ReceiveSelectedHuntMessage(hunt currentHunt)
+        {
+            this.currentTreasureHunt = currentHunt;
+        }
         #endregion
 
         #region Validation
@@ -62,7 +85,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             return false;
         }
 
-        public bool IsValidUpdateQuestion()
+        /*public bool IsValidUpdateQuestion()
         {
             if (currentQuestion != null)
             {
@@ -75,16 +98,19 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 }
             }
             return false;
+        }*/
+
+        public bool IsSingleQuestionSelected()
+        {
+            if (currentQuestion != null)
+            {
+                return true;
+            }
+            return false;
         }
         #endregion
 
         #region Refreshing Data
-
-        private void RefreshTreasureHunts()
-        {
-            this.serviceClient.GetTreasureHuntsAsync();
-            this.TreasureHunts = this.serviceClient.GetTreasureHunts();
-        }
 
         private void RefreshQuestions()
         {
@@ -117,19 +143,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 this.questions = value;
                 RaisePropertyChanged("Questions");
             }       
-        }
-
-        private IEnumerable<hunt> treasureHunts;
-        public IEnumerable<hunt> TreasureHunts
-        {
-            get { return this.treasureHunts; }
-            set {
-                
-                this.treasureHunts = value;
-                RaisePropertyChanged("TreasureHunts");
-                //RefreshTreasureHunts(); - to refresh again the list of treasure hunts...not working!
-
-            }        
         }
 
         private hunt currentTreasureHunt;
@@ -172,12 +185,20 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         //Excutes when the save button has been pressed so new question is saved to DB
         private void ExecuteSaveQuestionCommand()
         {
+            String locationOfQrCodeImage = "C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\" + this.newQuestion + ".jpg";
+
             question brandNewQuestion = new question();
             brandNewQuestion.Question1 = this.newQuestion;
-            brandNewQuestion.URL = "empty URL";
+            brandNewQuestion.URL = locationOfQrCodeImage;
             long questionId = this.serviceClient.SaveQuestion(brandNewQuestion); //return the new question's ID
-            SaveHuntQuestion(questionId);
             
+            SaveHuntQuestion(questionId);
+
+            //-http://www.youtube.com/watch?v=3CSifXK62Tk
+            QRCodeEncoder encoder = new QRCodeEncoder();
+            Bitmap generatedQrCodeImage = encoder.Encode(this.newQuestion);
+            generatedQrCodeImage.Save(locationOfQrCodeImage, ImageFormat.Png);
+
             this.RefreshQuestions();
         }
 
@@ -193,6 +214,12 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             this.serviceClient.UpdateQuestion(this.currentQuestion);
             this.RefreshQuestions();
+        }
+
+        private void ExecuteViewQrCodeCommand()
+        {
+            Messenger.Default.Send<SelectedQuestionMessage>(new SelectedQuestionMessage() { SelectedQuestion = this.currentQuestion });
+            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "ViewQRCodeViewModel" });
         }
 
         #endregion
