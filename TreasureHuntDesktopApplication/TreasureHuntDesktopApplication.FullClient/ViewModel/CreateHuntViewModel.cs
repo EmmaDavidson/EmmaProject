@@ -15,7 +15,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
     {
         #region Setup
         TreasureHuntServiceClient serviceClient;
-        public RelayCommand SaveHuntNameCommand { get; set; }
+        public RelayCommand SaveHuntNameCommand { get; private set; }
 
         public CreateHuntViewModel()
         {

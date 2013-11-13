@@ -21,6 +21,7 @@
         <StackPanel>
             <Button Content="Create Hunt" Command="{Binding NavigateToCreateHuntViewCommand}"></Button>
             <Button Content="View Hunts" Command="{Binding NavigateToViewHuntsViewCommand}"></Button>
+            <Button Content="Add Question" Command="{Binding NavigateToAddQuestionViewCommand}"></Button>
         </StackPanel>
         
             

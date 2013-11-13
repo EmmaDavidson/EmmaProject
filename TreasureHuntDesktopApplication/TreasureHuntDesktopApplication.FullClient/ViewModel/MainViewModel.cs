@@ -14,9 +14,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         public RelayCommand NavigateToCreateHuntViewCommand { get; private set; }
         public RelayCommand NavigateToViewHuntsViewCommand { get; private set; }
+        public RelayCommand NavigateToAddQuestionViewCommand { get; private set; }
 
         readonly static CreateHuntViewModel createHuntViewModel = new CreateHuntViewModel();
         readonly static ViewHuntViewModel viewHuntViewModel = new ViewHuntViewModel();
+        readonly static AddQuestionViewModel addQuestionViewModel = new AddQuestionViewModel();
 
         public ViewModelBase CurrentViewModel
         {
@@ -38,6 +40,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             CurrentViewModel = MainViewModel.createHuntViewModel;
             NavigateToCreateHuntViewCommand = new RelayCommand(() => ExecuteNavigateToCreateHuntCommand());
             NavigateToViewHuntsViewCommand = new RelayCommand(() => ExecuteNavigateToViewHuntCommand());
+            NavigateToAddQuestionViewCommand = new RelayCommand(() => ExecuteNavigateToAddQuestionCommand());
         }
 
 
@@ -51,5 +54,9 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             CurrentViewModel = MainViewModel.viewHuntViewModel;
         }
 
+        private void ExecuteNavigateToAddQuestionCommand()
+        {
+            CurrentViewModel = MainViewModel.addQuestionViewModel;
+        }
     }
 }

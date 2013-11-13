@@ -10,5 +10,9 @@
       <views:ViewHuntView>
       </views:ViewHuntView>
     </DataTemplate>
-  </Application.Resources>
+        <DataTemplate DataType="{x:Type vm:AddQuestionViewModel}">
+            <views:AddQuestionView>
+            </views:AddQuestionView>
+        </DataTemplate>
+    </Application.Resources>
 </Application>
