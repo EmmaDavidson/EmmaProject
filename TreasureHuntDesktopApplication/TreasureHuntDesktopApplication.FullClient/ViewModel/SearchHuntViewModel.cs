@@ -19,10 +19,28 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         public SearchHuntViewModel()
         {
-            RefreshTreasureHunts();
             SearchHuntCommand = new RelayCommand(() => ExecuteSearchHuntCommand(), () => IsValidHunt());
+            RefreshTreasureHunts();
+
+            Messenger.Default.Register<ViewUpdatedMessage>
+             (
+
+             this,
+             (action) => ReceiveViewUpdatedMessage(action.UpdatedView)
+
+             );
         }
 
+        #endregion
+
+        #region Received Message Methods
+        private void ReceiveViewUpdatedMessage(bool updatedView)
+        {
+            if (updatedView)
+            {
+                RefreshTreasureHunts();
+            }
+        }
         #endregion
 
         #region Variables
@@ -57,7 +75,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         private void RefreshTreasureHunts()
         {
-            this.serviceClient.GetTreasureHuntsAsync();
+            //this.serviceClient.GetTreasureHuntsAsync();
             this.TreasureHunts = this.serviceClient.GetTreasureHunts();
         }
         #endregion

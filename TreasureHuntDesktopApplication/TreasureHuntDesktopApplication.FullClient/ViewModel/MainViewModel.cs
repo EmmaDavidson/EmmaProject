@@ -17,13 +17,13 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         public RelayCommand NavigateToCreateHuntViewCommand { get; private set; }
         public RelayCommand NavigateToViewHuntsViewCommand { get; private set; }
-        public RelayCommand NavigateToAddQuestionViewCommand { get; private set; }
         public RelayCommand NavigateToSearchHuntViewCommand { get; private set; }
+        public RelayCommand NavigateToViewQRCodeCommand { get; private set; }
 
         readonly static CreateHuntViewModel createHuntViewModel = new CreateHuntViewModel();
         readonly static ViewHuntViewModel viewHuntViewModel = new ViewHuntViewModel();
-        readonly static AddQuestionViewModel addQuestionViewModel = new AddQuestionViewModel();
         readonly static SearchHuntViewModel searchHuntViewModel = new SearchHuntViewModel();
+        readonly static ViewQRCodeViewModel viewQRCodeViewModel = new ViewQRCodeViewModel();
 
 
         public ViewModelBase CurrentViewModel
@@ -46,8 +46,8 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             CurrentViewModel = MainViewModel.createHuntViewModel;
             NavigateToCreateHuntViewCommand = new RelayCommand(() => ExecuteNavigateToCreateHuntCommand());
             NavigateToViewHuntsViewCommand = new RelayCommand(() => ExecuteNavigateToViewHuntCommand());
-            NavigateToAddQuestionViewCommand = new RelayCommand(() => ExecuteNavigateToAddQuestionCommand());
             NavigateToSearchHuntViewCommand = new RelayCommand(() => ExecuteNavigateToSearchHuntCommand());
+            NavigateToViewQRCodeCommand = new RelayCommand(() => ExecuteNavigateToQRCodeCommand());
 
             Messenger.Default.Register<UpdateViewMessage>
                 (
@@ -62,11 +62,25 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             if (requestedUpdateViewModel == "ViewHuntViewModel")
             {
-                CurrentViewModel = viewHuntViewModel;
+                CurrentViewModel = MainViewModel.viewHuntViewModel;
             }
+            else if (requestedUpdateViewModel == "ViewQRCodeViewModel")
+            {
+                CurrentViewModel = MainViewModel.viewQRCodeViewModel;
+            }
+            else if (requestedUpdateViewModel == "SearchHuntViewModel")
+            {
+                CurrentViewModel = MainViewModel.searchHuntViewModel;
+            } 
+            
+
         
         }
 
+        private void ExecuteNavigateToQRCodeCommand()
+        {
+           // CurrentViewModel = MainViewModel.viewQRCodeViewModel;
+        }
 
         private void ExecuteNavigateToCreateHuntCommand()
         {
@@ -76,11 +90,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         private void ExecuteNavigateToViewHuntCommand()
         {
             CurrentViewModel = MainViewModel.viewHuntViewModel;
-        }
-
-        private void ExecuteNavigateToAddQuestionCommand()
-        {
-            CurrentViewModel = MainViewModel.addQuestionViewModel;
         }
 
         private void ExecuteNavigateToSearchHuntCommand()

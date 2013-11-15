@@ -6,9 +6,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
         <Grid>
-            <Label Content="{Binding CurrentQuestion.Question1}" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" Height="24" Width="270"/>
+            <Label Content="{Binding CurrentQuestion.Question1}" HorizontalAlignment="Left" Margin="112,20,0,0" VerticalAlignment="Top" Height="24" Width="168"/>
            <Image Source="{Binding Path=QRCode, Mode=TwoWay}" HorizontalAlignment="Left" Height="161" Margin="50,61,0,0" VerticalAlignment="Top" Width="191"/>
-            <Button Command="{Binding GenerateQRCodeCommand}" Content="Generate" HorizontalAlignment="Left" Margin="59,268,0,0" VerticalAlignment="Top" Width="75"/>
-            <Button Content="Print" Margin="160,268,20,0" VerticalAlignment="Top"/>
-        </Grid>
+           <Button Content="Back" Margin="24,268,20,0" VerticalAlignment="Top"/>
+        <Label Content="Question:" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top"/>
+    </Grid>
 </UserControl>

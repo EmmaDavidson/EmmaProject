@@ -52,6 +52,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.Words">
+      <HintPath>..\packages\Aspose.Words.13.10.0\lib\net3.5\Aspose.Words.dll</HintPath>
+    </Reference>
+    <Reference Include="DocX">
+      <HintPath>..\packages\DocX.1.0.0.12\lib\DocX.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.WPF45, Version=4.2.30.23246, Culture=neutral, PublicKeyToken=0e27b6f8be9b2ef7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\net45\GalaSoft.MvvmLight.Extras.WPF45.dll</HintPath>
@@ -121,6 +127,7 @@
     <Compile Include="Messages\SelectedHuntMessage.cs" />
     <Compile Include="Messages\SelectedQuestionMessage.cs" />
     <Compile Include="Messages\UpdateViewMessage.cs" />
+    <Compile Include="Messages\ViewUpdatedMessage.cs" />
     <Compile Include="Project Utilities\StringValidationRule.cs" />
     <Compile Include="Project Utilities\Validation.cs" />
     <Compile Include="Service References\TreasureHuntService\Reference.cs">
@@ -128,16 +135,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\AddQuestionViewModel.cs" />
     <Compile Include="ViewModel\CreateHuntViewModel.cs" />
     <Compile Include="ViewModel\SearchHuntViewModel.cs" />
     <Compile Include="ViewModel\ViewHuntViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="ViewModel\ViewQRCodeViewModel.cs" />
-    <Compile Include="Views\AddQuestionView.xaml.cs">
-      <DependentUpon>AddQuestionView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\CreateHuntView.xaml.cs">
       <DependentUpon>CreateHuntView.xaml</DependentUpon>
     </Compile>
@@ -150,10 +153,6 @@
     <Compile Include="Views\ViewQRCodeView.xaml.cs">
       <DependentUpon>ViewQRCodeView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\AddQuestionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\CreateHuntView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

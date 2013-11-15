@@ -16,8 +16,9 @@ using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 {
-    class ViewQRCodeViewModel : ViewModelBase
+    public class ViewQRCodeViewModel : ViewModelBase
     {
+        #region Setup
         TreasureHuntServiceClient serviceClient = new TreasureHuntServiceClient();
         //public RelayCommand GenerateQRCodeCommand { get; set; }
 
@@ -32,16 +33,20 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
              (action) => ReceiveSelectedQuestionMessage(action.SelectedQuestion)
 
              );
-
-            GenerateQRCode();
+            
         }
+        #endregion
 
+        #region Receiving Messages
         private void ReceiveSelectedQuestionMessage(question selectedQuestion)
         {
             this.currentQuestion = selectedQuestion;
+            GenerateQRCode();
         }
+        #endregion
 
-        public question currentQuestion;
+        #region Variables
+        private question currentQuestion;
         public question CurrentQuestion
         {
             get { return this.currentQuestion; }
@@ -49,10 +54,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             {
                 this.currentQuestion = value;
                 RaisePropertyChanged("CurrentQuestion");
+                GenerateQRCode();
             }
         }
 
-        public ImageSource qrCode;
+        private ImageSource qrCode;
         public ImageSource QRCode
         {
             get { return this.qrCode; }
@@ -62,23 +68,29 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 RaisePropertyChanged("QRCode");
             }
         }
+        #endregion
 
+        #region Commands
         private void GenerateQRCode()
         {
-            //-http://stackoverflow.com/questions/16246284/images-not-displaying-in-wpf-mvvm
-            String locationOfQrCode = this.currentQuestion.URL;
-            if (string.IsNullOrEmpty(locationOfQrCode)) return;
-            Stream fileReader = File.OpenRead(locationOfQrCode);
-            Image onScreenQrCode = Image.FromStream(fileReader);
-            var finalStream = new MemoryStream();
-            onScreenQrCode.Save(finalStream, ImageFormat.Png);
-            var decoder = new PngBitmapDecoder(finalStream, BitmapCreateOptions.PreservePixelFormat,
-                                               BitmapCacheOption.Default);
+            if (this.currentQuestion != null)
+            {
+                //-http://stackoverflow.com/questions/16246284/images-not-displaying-in-wpf-mvvm
+                String locationOfQrCode = this.currentQuestion.URL;
+                if (string.IsNullOrEmpty(locationOfQrCode)) return;
+                Stream fileReader = File.OpenRead(locationOfQrCode);
+                Image onScreenQrCode = Image.FromStream(fileReader);
+                var finalStream = new MemoryStream();
+                onScreenQrCode.Save(finalStream, ImageFormat.Png);
+                var decoder = new PngBitmapDecoder(finalStream, BitmapCreateOptions.PreservePixelFormat,
+                                                   BitmapCacheOption.Default);
 
-            this.QRCode = decoder.Frames[0];
-            RaisePropertyChanged("QRCode");
-            
+                this.QRCode = decoder.Frames[0];
+                RaisePropertyChanged("QRCode");
+            }
+
         }
+        #endregion
 
     }
 }

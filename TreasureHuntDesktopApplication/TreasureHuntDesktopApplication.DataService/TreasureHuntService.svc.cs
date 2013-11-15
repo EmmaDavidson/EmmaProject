@@ -25,6 +25,7 @@ namespace TreasureHuntDesktopApplication.DataService
         { 
             using (var context = new TreasureHuntEntities())
             {
+                if (hunt == null) return null;
                 var returnedquestionIds = context.huntquestions.Where(c => c.HuntId == hunt.HuntId).Select(s => s.QuestionId).ToList();
                 returnedquestionIds.ForEach(e => context.ObjectStateManager.ChangeObjectState(e, System.Data.EntityState.Detached));
                 return returnedquestionIds;

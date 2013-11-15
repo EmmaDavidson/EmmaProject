@@ -2,22 +2,26 @@
   <Application.Resources>
     <!--Global View Model Locator-->
     <vm:ViewModelLocator x:Key="Locator" />
+      
     <DataTemplate DataType="{x:Type vm:CreateHuntViewModel}">
       <views:CreateHuntView>
       </views:CreateHuntView>
     </DataTemplate>
+      
     <DataTemplate DataType="{x:Type vm:ViewHuntViewModel}">
       <views:ViewHuntView>
       </views:ViewHuntView>
     </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:AddQuestionViewModel}">
-            <views:AddQuestionView>
-            </views:AddQuestionView>
-        </DataTemplate>
 
-        <DataTemplate DataType="{x:Type vm:SearchHuntViewModel}">
-            <views:SearchHuntView>
-            </views:SearchHuntView>
-        </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:SearchHuntViewModel}">
+        <views:SearchHuntView>
+        </views:SearchHuntView>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:ViewQRCodeViewModel}">
+        <views:ViewQRCodeView>
+        </views:ViewQRCodeView>
+    </DataTemplate>
+      
     </Application.Resources>
 </Application>

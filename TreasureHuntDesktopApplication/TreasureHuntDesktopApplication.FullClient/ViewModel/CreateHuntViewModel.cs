@@ -1,11 +1,13 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using TreasureHuntDesktopApplication.FullClient.Messages;
 using TreasureHuntDesktopApplication.FullClient.Project_Utilities;
 using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
 
@@ -71,8 +73,10 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             hunt newHunt = new hunt();
             newHunt.HuntName = this.huntName;
-            this.serviceClient.SaveNewHuntAsync(newHunt);
             this.serviceClient.SaveNewHunt(newHunt);
+
+            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "SearchHuntViewModel" });
+            Messenger.Default.Send<ViewUpdatedMessage>(new ViewUpdatedMessage() { UpdatedView = true});
         }
 
         #endregion

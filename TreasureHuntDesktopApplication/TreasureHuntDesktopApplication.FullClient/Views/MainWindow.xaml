@@ -7,7 +7,6 @@
         Title="Treasure Hunt"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -23,9 +22,9 @@
             <Button Content="View Hunts" Command="{Binding NavigateToViewHuntsViewCommand}"></Button>
             <Button Content="Add Question" Command="{Binding NavigateToAddQuestionViewCommand}"></Button>
             <Button Content="Search Hunts" Command="{Binding NavigateToSearchHuntViewCommand}"></Button>
+            <Button Content="QR Code" Command="{Binding NavigateToViewQRCodeCommand}"></Button>
         </StackPanel>
-        
-            
+               
         <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}"/>
 
     </Grid>

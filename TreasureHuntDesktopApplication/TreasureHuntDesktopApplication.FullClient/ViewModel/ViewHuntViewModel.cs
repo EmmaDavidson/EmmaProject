@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using MessagingToolkit.QRCode.Codec;
 using MessagingToolkit.QRCode.Codec.Data;
+using Novacode;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,14 +25,16 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         public RelayCommand SaveQuestionCommand { get; set; }
         //public RelayCommand UpdateQuestionCommand { get; set; }
         public RelayCommand ViewQrCodeCommand { get; set; }
+        public RelayCommand PrintQRCodesCommand { get; set; }
+        private String myFileDirectory = "C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\";
 
         public ViewHuntViewModel()
         {
             SaveQuestionCommand = new RelayCommand(() => ExecuteSaveQuestionCommand(), ()=> IsValidNewQuestion());
             //UpdateQuestionCommand = new RelayCommand(()=> ExecuteUpdateQuestionCommand(), ()=> IsValidUpdateQuestion());
             ViewQrCodeCommand = new RelayCommand(() => ExecuteViewQrCodeCommand(), () => IsSingleQuestionSelected());
-            this.RefreshQuestions();
-
+            PrintQRCodesCommand = new RelayCommand(() => ExecutePrintQRCodesCommand(), () => IsValidListOfQuestions());
+            
              Messenger.Default.Register<SelectedHuntMessage>
              (
 
@@ -39,6 +42,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
              (action) => ReceiveSelectedHuntMessage(action.CurrentHunt)
 
              );
+             RefreshQuestions();
         }
 
         #endregion
@@ -47,6 +51,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         private void ReceiveSelectedHuntMessage(hunt currentHunt)
         {
             this.currentTreasureHunt = currentHunt;
+            RefreshQuestions();
         }
         #endregion
 
@@ -85,6 +90,16 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             return false;
         }
 
+        public bool IsValidListOfQuestions()
+        {
+            if (this.questions != null)
+            {
+                return true;
+            }
+            return false;
+        
+        }
+
         /*public bool IsValidUpdateQuestion()
         {
             if (currentQuestion != null)
@@ -114,21 +129,24 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         private void RefreshQuestions()
         {
-            this.serviceClient.GetHuntQuestionsAsync(currentTreasureHunt);
-            List<long> questionIds = this.serviceClient.GetHuntQuestions(currentTreasureHunt).ToList();
-            List<question> listOfQuestionsFromHunt = new List<question>();
-
-            using (var questionIdNumbers = questionIds.GetEnumerator())
+            if(this.currentTreasureHunt != null)
             {
-                while (questionIdNumbers.MoveNext())
-                {
-                    this.serviceClient.GetQuestionAsync(questionIdNumbers.Current);
-                    question currentQuestionInList = this.serviceClient.GetQuestion(questionIdNumbers.Current);
-                    listOfQuestionsFromHunt.Add(currentQuestionInList);
-                }
+                this.serviceClient.GetHuntQuestionsAsync(this.currentTreasureHunt);
+                List<long> questionIds = this.serviceClient.GetHuntQuestions(this.currentTreasureHunt).ToList();
+                List<question> listOfQuestionsFromHunt = new List<question>();
 
-                this.Questions = listOfQuestionsFromHunt.AsEnumerable();
-            }
+                using (var questionIdNumbers = questionIds.GetEnumerator())
+                {
+                    while (questionIdNumbers.MoveNext())
+                    {
+                        this.serviceClient.GetQuestionAsync(questionIdNumbers.Current);
+                        question currentQuestionInList = this.serviceClient.GetQuestion(questionIdNumbers.Current);
+                        listOfQuestionsFromHunt.Add(currentQuestionInList);
+                    }
+
+                    this.Questions = listOfQuestionsFromHunt.AsEnumerable();
+                }
+             }
         }
 
         #endregion
@@ -152,7 +170,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             set {                
                 this.currentTreasureHunt = value;
                 RaisePropertyChanged("CurrentTreasureHunt");
-                RefreshQuestions();
+                
             }        
         }
 
@@ -185,7 +203,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         //Excutes when the save button has been pressed so new question is saved to DB
         private void ExecuteSaveQuestionCommand()
         {
-            String locationOfQrCodeImage = "C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\" + this.newQuestion + ".jpg";
+            String locationOfQrCodeImage = myFileDirectory + "QRCodes\\" + this.newQuestion + ".png";
 
             question brandNewQuestion = new question();
             brandNewQuestion.Question1 = this.newQuestion;
@@ -221,6 +239,36 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             Messenger.Default.Send<SelectedQuestionMessage>(new SelectedQuestionMessage() { SelectedQuestion = this.currentQuestion });
             Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "ViewQRCodeViewModel" });
         }
+
+        private void ExecutePrintQRCodesCommand()
+        {
+            using (DocX documentOfQRCodes = DocX.Create(myFileDirectory + "Documents\\" + this.currentTreasureHunt.HuntName + " QR Codes Sheet.docx"))
+            {
+                Paragraph p  = documentOfQRCodes.InsertParagraph(this.currentTreasureHunt.HuntName);
+
+                using (var currentQuestionQRCode = this.questions.GetEnumerator())
+                {
+                    while (currentQuestionQRCode.MoveNext())
+                    {
+                        if (currentQuestionQRCode.Current.URL != null && currentQuestionQRCode.Current.URL != "empty URL")
+                        {
+                            string locationOfImage = myFileDirectory + "QRCodes\\" + currentQuestionQRCode.Current.Question1 + ".png";
+                            Novacode.Image img = documentOfQRCodes.AddImage(@locationOfImage);
+
+                            Picture pic1 = img.CreatePicture();
+                            p.InsertPicture(pic1, 0);
+                            pic1.Width = 128;
+                            pic1.Height = 128;
+
+                        }
+                    }
+
+                }
+                documentOfQRCodes.Save();
+            }
+
+        }
+        
 
         #endregion
 
