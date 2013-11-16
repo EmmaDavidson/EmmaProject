@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         
         <Label Content="New Question: " HorizontalAlignment="Left" Margin="24,15,0,0" VerticalAlignment="Top"/>
-        <TextBox Text="{Binding NewQuestion}" HorizontalAlignment="Left" Height="23" Margin="115,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="345" Grid.ColumnSpan="2">
+        <TextBox Text="{Binding NewQuestion, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="115,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="345" Grid.ColumnSpan="2">
         </TextBox>
         <Button Content="Add Question" HorizontalAlignment="Left" Margin="333,19,0,0" VerticalAlignment="Top" Width="84" Command="{Binding SaveQuestionCommand}" Grid.Column="1"/>
 

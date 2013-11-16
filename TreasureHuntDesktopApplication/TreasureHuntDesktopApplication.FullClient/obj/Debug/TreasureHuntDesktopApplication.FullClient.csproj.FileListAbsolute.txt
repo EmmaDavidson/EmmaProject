@@ -80,3 +80,8 @@ C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\Treasu
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient.pdb
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\Aspose.Words.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\DocX.dll
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\ScipBe.Common.Office.dll
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Interop.XPS_SHL_DLLLib.dll
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient.csproj.ResolveComReference.cache
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\PrintView.baml
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\PrintView.g.cs

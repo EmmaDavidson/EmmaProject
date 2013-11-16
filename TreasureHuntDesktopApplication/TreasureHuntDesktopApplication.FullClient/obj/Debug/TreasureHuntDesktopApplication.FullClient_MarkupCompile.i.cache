@@ -10,11 +10,11 @@ none
 false
 CODE_ANALYSIS;DEBUG;TRACE
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\App.xaml
-6629516482
+7-24592656
 
-30-1720602440
-29-1573856787
-Views\CreateHuntView.xaml;Views\MainWindow.xaml;Skins\MainSkin.xaml;Views\SearchHuntView.xaml;Views\ViewHuntView.xaml;Views\ViewQRCodeView.xaml;
+33-1814515511
+33-26552515
+Views\CreateHuntView.xaml;Views\MainWindow.xaml;Skins\MainSkin.xaml;Views\PrintView.xaml;Views\SearchHuntView.xaml;Views\ViewHuntView.xaml;Views\ViewQRCodeView.xaml;
 
-True
+False
 

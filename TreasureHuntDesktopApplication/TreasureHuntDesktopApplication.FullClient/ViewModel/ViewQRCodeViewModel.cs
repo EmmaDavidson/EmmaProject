@@ -20,11 +20,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
     {
         #region Setup
         TreasureHuntServiceClient serviceClient = new TreasureHuntServiceClient();
-        //public RelayCommand GenerateQRCodeCommand { get; set; }
+        public RelayCommand BackToViewHuntCommand { get; set; }
 
         public ViewQRCodeViewModel()
         {
-            //GenerateQRCodeCommand = new RelayCommand(() => ExecuteGenerateQRCodeCommand());
+            BackToViewHuntCommand = new RelayCommand(() => ExecuteBackToViewHuntCommand());
 
             Messenger.Default.Register<SelectedQuestionMessage>
              (
@@ -90,6 +90,12 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             }
 
         }
+
+        private void ExecuteBackToViewHuntCommand()
+        {
+            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "ViewHuntViewModel" });
+        }
+
         #endregion
 
     }

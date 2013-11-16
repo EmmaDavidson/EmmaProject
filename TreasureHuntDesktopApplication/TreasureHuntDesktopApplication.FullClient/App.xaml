@@ -22,6 +22,11 @@
         <views:ViewQRCodeView>
         </views:ViewQRCodeView>
     </DataTemplate>
-      
+
+    <DataTemplate DataType="{x:Type vm:PrintViewModel}">
+            <views:PrintView>
+            </views:PrintView>
+        </DataTemplate>
+
     </Application.Resources>
 </Application>

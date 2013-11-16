@@ -19,11 +19,13 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         public RelayCommand NavigateToViewHuntsViewCommand { get; private set; }
         public RelayCommand NavigateToSearchHuntViewCommand { get; private set; }
         public RelayCommand NavigateToViewQRCodeCommand { get; private set; }
+        public RelayCommand NavigateToPrintViewCommand { get; private set; }
 
         readonly static CreateHuntViewModel createHuntViewModel = new CreateHuntViewModel();
         readonly static ViewHuntViewModel viewHuntViewModel = new ViewHuntViewModel();
         readonly static SearchHuntViewModel searchHuntViewModel = new SearchHuntViewModel();
         readonly static ViewQRCodeViewModel viewQRCodeViewModel = new ViewQRCodeViewModel();
+        readonly static PrintViewModel printViewModel = new PrintViewModel();
 
 
         public ViewModelBase CurrentViewModel
@@ -48,6 +50,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             NavigateToViewHuntsViewCommand = new RelayCommand(() => ExecuteNavigateToViewHuntCommand());
             NavigateToSearchHuntViewCommand = new RelayCommand(() => ExecuteNavigateToSearchHuntCommand());
             NavigateToViewQRCodeCommand = new RelayCommand(() => ExecuteNavigateToQRCodeCommand());
+            NavigateToPrintViewCommand = new RelayCommand(() => ExecuteNavigateToPrintCommand());
 
             Messenger.Default.Register<UpdateViewMessage>
                 (
@@ -71,7 +74,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             else if (requestedUpdateViewModel == "SearchHuntViewModel")
             {
                 CurrentViewModel = MainViewModel.searchHuntViewModel;
-            } 
+            }
+            else if (requestedUpdateViewModel == "PrintViewModel")
+            {
+                CurrentViewModel = MainViewModel.printViewModel;
+            }
             
 
         
@@ -95,6 +102,10 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         private void ExecuteNavigateToSearchHuntCommand()
         {
             CurrentViewModel = MainViewModel.searchHuntViewModel;
+        }
+        private void ExecuteNavigateToPrintCommand()
+        {
+            CurrentViewModel = MainViewModel.printViewModel;
         }
     }
 }

@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Documents;
 using TreasureHuntDesktopApplication.FullClient.Messages;
 using TreasureHuntDesktopApplication.FullClient.Project_Utilities;
 using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
@@ -117,7 +119,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         public bool IsSingleQuestionSelected()
         {
-            if (currentQuestion != null)
+            if (this.CurrentQuestion != null)
             {
                 return true;
             }
@@ -214,10 +216,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
             //-http://www.youtube.com/watch?v=3CSifXK62Tk
             QRCodeEncoder encoder = new QRCodeEncoder();
-            Bitmap generatedQrCodeImage = encoder.Encode(this.newQuestion);
-            generatedQrCodeImage.Save(locationOfQrCodeImage, ImageFormat.Png);
+            Bitmap generatedQrCodeImage = encoder.Encode(this.NewQuestion);
+            generatedQrCodeImage.Save(locationOfQrCodeImage, ImageFormat.Jpeg);
 
             this.RefreshQuestions();
+            this.NewQuestion = String.Empty;
         }
 
         private void SaveHuntQuestion(long questionId)
@@ -242,32 +245,38 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         private void ExecutePrintQRCodesCommand()
         {
-            using (DocX documentOfQRCodes = DocX.Create(myFileDirectory + "Documents\\" + this.currentTreasureHunt.HuntName + " QR Codes Sheet.docx"))
-            {
-                Paragraph p  = documentOfQRCodes.InsertParagraph(this.currentTreasureHunt.HuntName);
+            //-http://cathalscorner.blogspot.co.uk/2009/04/docx-version-1002-released.html
+            String newDocumentFileLocation = myFileDirectory + "Documents\\" + this.currentTreasureHunt.HuntName + " QR Codes Sheet.docx";
 
+            using (DocX documentOfQRCodes = DocX.Create(newDocumentFileLocation))
+            {
+                Novacode.Paragraph p = documentOfQRCodes.InsertParagraph(this.currentTreasureHunt.HuntName);
+                
                 using (var currentQuestionQRCode = this.questions.GetEnumerator())
                 {
                     while (currentQuestionQRCode.MoveNext())
                     {
                         if (currentQuestionQRCode.Current.URL != null && currentQuestionQRCode.Current.URL != "empty URL")
                         {
+                            Novacode.Paragraph q = documentOfQRCodes.InsertParagraph();
                             string locationOfImage = myFileDirectory + "QRCodes\\" + currentQuestionQRCode.Current.Question1 + ".png";
                             Novacode.Image img = documentOfQRCodes.AddImage(@locationOfImage);
 
                             Picture pic1 = img.CreatePicture();
-                            p.InsertPicture(pic1, 0);
-                            pic1.Width = 128;
-                            pic1.Height = 128;
-
+                            q.InsertPicture(pic1, 0);
+                            pic1.Width = 600;
+                            pic1.Height = 600;
                         }
                     }
-
                 }
-                documentOfQRCodes.Save();
+  
+                documentOfQRCodes.Save(); 
             }
 
-        }
+            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "PrintViewModel" });
+            Messenger.Default.Send<PrintMessage>(new PrintMessage() { FileLocation = newDocumentFileLocation });
+
+         }
         
 
         #endregion
