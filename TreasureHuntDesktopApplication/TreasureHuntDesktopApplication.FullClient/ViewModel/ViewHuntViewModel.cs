@@ -25,7 +25,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #region Setup
         TreasureHuntServiceClient serviceClient = new TreasureHuntServiceClient();
         public RelayCommand SaveQuestionCommand { get; set; }
-        //public RelayCommand UpdateQuestionCommand { get; set; }
         public RelayCommand ViewQrCodeCommand { get; set; }
         public RelayCommand PrintQRCodesCommand { get; set; }
         private String myFileDirectory = "C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\";
@@ -33,7 +32,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         public ViewHuntViewModel()
         {
             SaveQuestionCommand = new RelayCommand(() => ExecuteSaveQuestionCommand(), ()=> IsValidNewQuestion());
-            //UpdateQuestionCommand = new RelayCommand(()=> ExecuteUpdateQuestionCommand(), ()=> IsValidUpdateQuestion());
             ViewQrCodeCommand = new RelayCommand(() => ExecuteViewQrCodeCommand(), () => IsSingleQuestionSelected());
             PrintQRCodesCommand = new RelayCommand(() => ExecutePrintQRCodesCommand(), () => IsValidListOfQuestions());
             
@@ -44,6 +42,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
              (action) => ReceiveSelectedHuntMessage(action.CurrentHunt)
 
              );
+
              RefreshQuestions();
         }
 
@@ -63,16 +62,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             get
             {
-                return 30;
-
-            }
-        }
-
-        public int UpdateQuestionMaxLength
-        {
-            get
-            {
-                return 30;
+                return 100;
 
             }
         }
@@ -102,21 +92,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         
         }
 
-        /*public bool IsValidUpdateQuestion()
-        {
-            if (currentQuestion != null)
-            {
-                if (!Validation.IsNullOrWhiteSpace(CurrentQuestion.Question1))
-                {
-                    if (Validation.IsValidLength(CurrentQuestion.Question1, UpdateQuestionMaxLength))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }*/
-
         public bool IsSingleQuestionSelected()
         {
             if (this.CurrentQuestion != null)
@@ -129,11 +104,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         #region Refreshing Data
 
-        private void RefreshQuestions()
+        //make internal
+        public void RefreshQuestions()
         {
             if(this.currentTreasureHunt != null)
             {
-                this.serviceClient.GetHuntQuestionsAsync(this.currentTreasureHunt);
                 List<long> questionIds = this.serviceClient.GetHuntQuestions(this.currentTreasureHunt).ToList();
                 List<question> listOfQuestionsFromHunt = new List<question>();
 
@@ -141,7 +116,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 {
                     while (questionIdNumbers.MoveNext())
                     {
-                        this.serviceClient.GetQuestionAsync(questionIdNumbers.Current);
+                        //this.serviceClient.GetQuestionAsync(questionIdNumbers.Current);
                         question currentQuestionInList = this.serviceClient.GetQuestion(questionIdNumbers.Current);
                         listOfQuestionsFromHunt.Add(currentQuestionInList);
                     }
@@ -203,7 +178,8 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         #region Commands
         //Excutes when the save button has been pressed so new question is saved to DB
-        private void ExecuteSaveQuestionCommand()
+       //make internal
+        public void ExecuteSaveQuestionCommand()
         {
             String locationOfQrCodeImage = myFileDirectory + "QRCodes\\" + this.newQuestion + ".png";
 
@@ -211,19 +187,15 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             brandNewQuestion.Question1 = this.newQuestion;
             brandNewQuestion.URL = locationOfQrCodeImage;
             long questionId = this.serviceClient.SaveQuestion(brandNewQuestion); //return the new question's ID
-            
+
             SaveHuntQuestion(questionId);
-
-            //-http://www.youtube.com/watch?v=3CSifXK62Tk
-            QRCodeEncoder encoder = new QRCodeEncoder();
-            Bitmap generatedQrCodeImage = encoder.Encode(this.NewQuestion);
-            generatedQrCodeImage.Save(locationOfQrCodeImage, ImageFormat.Jpeg);
-
-            this.RefreshQuestions();
+            EncodeQRCode(locationOfQrCodeImage);
+            
             this.NewQuestion = String.Empty;
         }
 
-        private void SaveHuntQuestion(long questionId)
+        //internal
+        public void SaveHuntQuestion(long questionId)
         {
             huntquestion newHuntQuestion = new huntquestion();
             newHuntQuestion.QuestionId = questionId;
@@ -231,9 +203,14 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             serviceClient.SaveNewHuntQuestion(newHuntQuestion);
         }
 
-        private void ExecuteUpdateQuestionCommand()
+        //Make internal
+        public void EncodeQRCode(String locationOfQrCodeImage)
         {
-            this.serviceClient.UpdateQuestion(this.currentQuestion);
+            //-http://www.youtube.com/watch?v=3CSifXK62Tk
+            QRCodeEncoder encoder = new QRCodeEncoder();
+            Bitmap generatedQrCodeImage = encoder.Encode(this.NewQuestion);
+            generatedQrCodeImage.Save(locationOfQrCodeImage, ImageFormat.Jpeg);
+
             this.RefreshQuestions();
         }
 
@@ -243,7 +220,8 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "ViewQRCodeViewModel" });
         }
 
-        private void ExecutePrintQRCodesCommand()
+        //make internal
+        public void ExecutePrintQRCodesCommand()
         {
             //-http://cathalscorner.blogspot.co.uk/2009/04/docx-version-1002-released.html
             String newDocumentFileLocation = myFileDirectory + "Documents\\" + this.currentTreasureHunt.HuntName + " QR Codes Sheet.docx";
@@ -264,7 +242,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
                             Picture pic1 = img.CreatePicture();
                             q.InsertPicture(pic1, 0);
-                            pic1.Width = 600;
+                            pic1.Width = 600; //smaller codes sizes
                             pic1.Height = 600;
                         }
                     }

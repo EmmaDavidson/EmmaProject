@@ -50,11 +50,8 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             get { return this.treasureHunts; }
             set
             {
-
                 this.treasureHunts = value;
                 RaisePropertyChanged("TreasureHunts");
-                //RefreshTreasureHunts(); - to refresh again the list of treasure hunts...not working!
-
             }
         }
 
@@ -66,23 +63,23 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             {
                 this.currentTreasureHunt = value;
                 RaisePropertyChanged("CurrentTreasureHunt");
-                //RefreshQuestions();
             }
         }
         #endregion
 
         #region Refreshing Data
 
-        private void RefreshTreasureHunts()
+        //make internal
+        public void RefreshTreasureHunts()
         {
-            //this.serviceClient.GetTreasureHuntsAsync();
             this.TreasureHunts = this.serviceClient.GetTreasureHunts();
         }
         #endregion
 
         #region Validation
 
-        private bool IsValidHunt()
+        //Make internal
+        public bool IsValidHunt()
         {
             if (currentTreasureHunt != null)
             {

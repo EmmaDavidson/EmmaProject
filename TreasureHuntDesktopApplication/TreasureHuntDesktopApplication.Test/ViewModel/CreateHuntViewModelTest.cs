@@ -21,7 +21,7 @@ namespace TreasureHuntDesktopApplication.Test
         {
             viewModel = new CreateHuntViewModel();
             serviceClient = new Mock<ITreasureHuntService>();
-            HuntName = huntName;
+            viewModel.HuntName = huntName;
         }
 
         public String HuntName
@@ -59,9 +59,9 @@ namespace TreasureHuntDesktopApplication.Test
         }
 
         [Test]
-        public void HuntNameInvalidWhenGreaterThanMaxLength()
+        public void HuntNameInvalidWhenGreaterThanMaxLength() 
         {
-            String LongHuntName = "abcdefghijklmnopqrstu";
+            String LongHuntName = "abcdefghijklmnopqrstidshvfsdhkfhdskjfjdhfkhdsjhfjhdshfdsjfdshfhdjhfkjsdhfhdu";
             HuntName = LongHuntName;
             Assert.False(viewModel.IsValidHuntName());
             Assert.False(viewModel.SaveHuntNameCommand.CanExecute(""));

@@ -19,7 +19,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
     public class ViewQRCodeViewModel : ViewModelBase
     {
         #region Setup
-        TreasureHuntServiceClient serviceClient = new TreasureHuntServiceClient();
+
         public RelayCommand BackToViewHuntCommand { get; set; }
 
         public ViewQRCodeViewModel()

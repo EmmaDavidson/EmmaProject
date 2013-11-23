@@ -13,7 +13,6 @@ using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 {
-    //Need to add messaging to pass forward a call to refresh the treasure hunt list
 
     public class CreateHuntViewModel : ViewModelBase
     {
@@ -49,13 +48,12 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             get 
             {
-                return 20;
+                return 40;
             }
         }
 
         public bool IsValidHuntName()
         {
-                //also checks that the new question field is not empty 
             if (!Validation.IsNullOrWhiteSpace(HuntName))
             {
                 if (Validation.IsValidLength(HuntName, HuntNameMaxLength))

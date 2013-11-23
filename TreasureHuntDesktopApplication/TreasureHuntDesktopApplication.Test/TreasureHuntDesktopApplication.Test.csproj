@@ -76,9 +76,12 @@
   <ItemGroup>
     <Compile Include="ViewModel\CreateHuntViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\PrintViewModelTest.cs" />
+    <Compile Include="ViewModel\SearchHuntViewModelTest.cs" />
     <Compile Include="ViewModel\ViewHuntViewModelTest.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="ViewModel\ViewQRCodeViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
