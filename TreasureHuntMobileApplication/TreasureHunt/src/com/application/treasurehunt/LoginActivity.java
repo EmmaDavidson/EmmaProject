@@ -34,7 +34,8 @@ import android.widget.Toast;
 public class LoginActivity extends Activity {
 	//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
 	JSONParser jsonParser = new JSONParser();
-	private static final String myLoginUrl =  "http://127.0.0.1:80/webservice/login.php";
+	//http://stackoverflow.com/questions/5806220/how-to-connect-to-my-http-localhost-web-server-from-android-emulator-in-eclips
+	private static final String myLoginUrl =  "http://192.168.1.74:80/webservice/login.php";
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	
@@ -84,9 +85,9 @@ public class LoginActivity extends Activity {
 					}
 				}); */
 
-		mLoginFormView = findViewById(R.id.login_form);
-		mLoginStatusView = findViewById(R.id.login_status);
-		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
+		//mLoginFormView = findViewById(R.id.login_form);
+		//mLoginStatusView = findViewById(R.id.login_status);
+		//mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
@@ -129,8 +130,8 @@ public class LoginActivity extends Activity {
 		}
 
 		// Reset errors.
-		mEmailView.setError(null);
-		mPasswordView.setError(null);
+		//mEmailView.setError(null);
+		//mPasswordView.setError(null);
 
 		// Store values at the time of the login attempt.
 		mEmail = mEmailView.getText().toString();
@@ -138,9 +139,9 @@ public class LoginActivity extends Activity {
 
 		boolean cancel = false;
 		View focusView = null;
-
+		
 		// Check for a valid password.
-		if (TextUtils.isEmpty(mPassword)) {
+		/*if (TextUtils.isEmpty(mPassword)) {
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
 			cancel = true;
@@ -159,17 +160,17 @@ public class LoginActivity extends Activity {
 			mEmailView.setError(getString(R.string.error_invalid_email));
 			focusView = mEmailView;
 			cancel = true;
-		}
+		} */
 
 		if (cancel) {
 			// There was an error; don't attempt login and focus the first
 			// form field with an error.
-			focusView.requestFocus();
+			//focusView.requestFocus();
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-			showProgress(true);
+			//mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
+			//showProgress(true);
 			mAuthTask = new UserLoginTask();
 			mAuthTask.execute((String) null);
 		}
@@ -183,7 +184,7 @@ public class LoginActivity extends Activity {
 		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
 		// for very easy animations. If available, use these APIs to fade-in
 		// the progress spinner.
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+		/*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
 			int shortAnimTime = getResources().getInteger(
 					android.R.integer.config_shortAnimTime);
 
@@ -213,7 +214,7 @@ public class LoginActivity extends Activity {
 			// and hide the relevant UI components.
 			mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
 			mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-		}
+		} */
 	}
 
 	/**
@@ -221,6 +222,8 @@ public class LoginActivity extends Activity {
 	 * the user.
 	 */
 	public class UserLoginTask extends AsyncTask<String, String, String> {
+		
+		boolean failure = false;
 		
 		@Override
 		protected void onPreExecute()
@@ -244,8 +247,8 @@ public class LoginActivity extends Activity {
 			try {
 				List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 				
-				parameters.add(new BasicNameValuePair("Email", email));
-				parameters.add(new BasicNameValuePair("Password", password));
+				parameters.add(new BasicNameValuePair("email", email));
+				parameters.add(new BasicNameValuePair("password", password));
 				
 				Log.d("request", "starting");
 				JSONObject json = jsonParser.makeHttpRequest(myLoginUrl, "POST", parameters);
@@ -276,11 +279,11 @@ public class LoginActivity extends Activity {
 		@Override
 		protected void onPostExecute(final String fileUrl) {
 			mAuthTask = null;
-			showProgress(false);
+			//showProgress(false);
 			pDialog.dismiss();
 
 			if (fileUrl != null) {
-				finish();
+				//finish();
 				Toast.makeText(LoginActivity.this, fileUrl, Toast.LENGTH_LONG);
 			} else {
 				/*mPasswordView
