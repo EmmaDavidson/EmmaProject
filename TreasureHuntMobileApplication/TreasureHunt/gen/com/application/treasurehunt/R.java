@@ -26,24 +26,24 @@ public final class R {
     public static final class id {
         public static final int action_forgot_password=0x7f080014;
         public static final int action_settings=0x7f080013;
-        public static final int button1=0x7f08000c;
-        public static final int email=0x7f080003;
         public static final int linearLayout1=0x7f080010;
         public static final int listView1=0x7f080012;
-        public static final int login=0x7f080005;
-        public static final int login_form=0x7f080002;
-        public static final int login_status=0x7f080000;
-        public static final int login_status_message=0x7f080001;
-        public static final int new_user_email=0x7f08000b;
-        public static final int new_user_name=0x7f080009;
-        public static final int new_user_password=0x7f08000a;
-        public static final int password=0x7f080004;
-        public static final int register_label=0x7f080008;
-        public static final int register_on_login_button=0x7f080007;
+        public static final int login=0x7f08000b;
+        public static final int login_email_address=0x7f080004;
+        public static final int login_form_layout=0x7f080000;
+        public static final int login_label=0x7f080001;
+        public static final int login_password=0x7f080003;
+        public static final int register_email_address=0x7f080009;
+        public static final int register_form_layout=0x7f080006;
+        public static final int register_label=0x7f080007;
+        public static final int register_name=0x7f080008;
+        public static final int register_on_login_button=0x7f080005;
+        public static final int register_password=0x7f08000a;
+        public static final int register_save_button=0x7f08000c;
         public static final int scan_content_received=0x7f08000e;
         public static final int scan_qr_code_button=0x7f08000d;
         public static final int scrollView1=0x7f080011;
-        public static final int sign_in_button=0x7f080006;
+        public static final int sign_in_button=0x7f080002;
         public static final int textView1=0x7f08000f;
     }
     public static final class layout {
@@ -66,42 +66,45 @@ public final class R {
         public static final int view_treasure_hunts=0x7f070009;
     }
     public static final class string {
-        public static final int action_forgot_password=0x7f04001a;
+        public static final int action_forgot_password=0x7f04001d;
         public static final int action_settings=0x7f040001;
-        public static final int action_sign_in_register=0x7f040018;
-        public static final int action_sign_in_short=0x7f040019;
-        public static final int add_question_button=0x7f040004;
-        public static final int add_question_label=0x7f040007;
+        public static final int action_sign_in_register=0x7f04001b;
+        public static final int action_sign_in_short=0x7f04001c;
         public static final int app_name=0x7f040000;
-        public static final int error_field_required=0x7f04001f;
-        public static final int error_incorrect_password=0x7f04001e;
-        public static final int error_invalid_email=0x7f04001c;
-        public static final int error_invalid_password=0x7f04001d;
+        public static final int error_email_null=0x7f040012;
+        public static final int error_email_too_short=0x7f040014;
+        public static final int error_field_required=0x7f040022;
+        public static final int error_incorrect_password=0x7f040021;
+        public static final int error_invalid_email=0x7f04001f;
+        public static final int error_invalid_password=0x7f040020;
+        public static final int error_name_null=0x7f040016;
+        public static final int error_name_too_short=0x7f040017;
+        public static final int error_password_null=0x7f040013;
+        public static final int error_password_too_short=0x7f040015;
         public static final int hello_world=0x7f040002;
         public static final int hunt_name_label=0x7f040003;
-        public static final int login_progress_signing_in=0x7f04001b;
+        public static final int logging_in_spinner_info=0x7f040011;
+        public static final int login=0x7f040007;
+        public static final int login_progress_signing_in=0x7f04001e;
         /**  Strings related to login 
  Strings related to login 
          */
-        public static final int prompt_email=0x7f040016;
-        public static final int prompt_name=0x7f04000d;
-        public static final int prompt_password=0x7f040017;
-        public static final int radio_button_staff=0x7f04000e;
-        public static final int radio_button_student=0x7f04000f;
-        public static final int register=0x7f04000c;
-        public static final int register_user_type=0x7f040010;
-        public static final int save=0x7f040006;
-        public static final int scan_qr_code=0x7f040013;
-        public static final int title_activity_add_question=0x7f040008;
-        public static final int title_activity_generate_hunt=0x7f040009;
-        public static final int title_activity_login=0x7f040015;
-        public static final int title_activity_login_activity1=0x7f040020;
-        public static final int title_activity_register=0x7f04000b;
-        public static final int title_activity_scan_barcode=0x7f040012;
-        public static final int title_activity_scan_qrcode=0x7f040014;
-        public static final int title_activity_view_questions=0x7f04000a;
-        public static final int title_activity_view_treasure_hunts=0x7f040011;
-        public static final int view_questions_button=0x7f040005;
+        public static final int prompt_email=0x7f040019;
+        public static final int prompt_name=0x7f040009;
+        public static final int prompt_password=0x7f04001a;
+        public static final int radio_button_staff=0x7f04000a;
+        public static final int radio_button_student=0x7f04000b;
+        public static final int register=0x7f040008;
+        public static final int register_user_type=0x7f04000c;
+        public static final int save=0x7f040004;
+        public static final int scan_qr_code=0x7f04000f;
+        public static final int title_activity_generate_hunt=0x7f040005;
+        public static final int title_activity_login=0x7f040018;
+        public static final int title_activity_login_activity1=0x7f040023;
+        public static final int title_activity_register=0x7f040006;
+        public static final int title_activity_scan_barcode=0x7f04000e;
+        public static final int title_activity_scan_qrcode=0x7f040010;
+        public static final int title_activity_view_treasure_hunts=0x7f04000d;
     }
     public static final class style {
         /** 
