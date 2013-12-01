@@ -21,9 +21,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #region Setup
 
         public RelayCommand BackToViewHuntCommand { get; set; }
+        ITreasureHuntService serviceClient;
 
-        public ViewQRCodeViewModel()
+        public ViewQRCodeViewModel(ITreasureHuntService _serviceClient)
         {
+            serviceClient = _serviceClient;
             BackToViewHuntCommand = new RelayCommand(() => ExecuteBackToViewHuntCommand());
 
             Messenger.Default.Register<SelectedQuestionMessage>

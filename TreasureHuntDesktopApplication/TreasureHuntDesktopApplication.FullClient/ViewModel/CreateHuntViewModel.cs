@@ -17,12 +17,12 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
     public class CreateHuntViewModel : ViewModelBase
     {
         #region Setup
-        TreasureHuntServiceClient serviceClient;
+        ITreasureHuntService serviceClient;
         public RelayCommand SaveHuntNameCommand { get; private set; }
 
-        public CreateHuntViewModel()
+        public CreateHuntViewModel(ITreasureHuntService _serviceClient)
         {
-            serviceClient = new TreasureHuntServiceClient();
+            serviceClient = _serviceClient;
             SaveHuntNameCommand = new RelayCommand(() => ExecuteSaveHuntNameCommand(), () => IsValidHuntName());
         }
         #endregion

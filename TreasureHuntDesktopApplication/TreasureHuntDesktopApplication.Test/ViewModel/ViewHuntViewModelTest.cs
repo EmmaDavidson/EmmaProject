@@ -33,10 +33,9 @@ namespace TreasureHuntDesktopApplication.Test
         [SetUp]
         public void Setup()
         {
-            viewModel = new ViewHuntViewModel();
-
             serviceClient = new Mock<ITreasureHuntService>();
-            
+            viewModel = new ViewHuntViewModel(serviceClient.Object);
+
             NewQuestion = newQuestion;
 
             myFakeHunt = new hunt();
@@ -139,29 +138,31 @@ namespace TreasureHuntDesktopApplication.Test
 
         #region Service Call Tests
 
-        [Test]
+        [Test] 
         public void ShouldRefreshQuestions()
         {
-           serviceClient.Setup<long[]>(s => s.GetHuntQuestions(It.IsAny<hunt>())).Returns(returnedIds.ToArray);
-           serviceClient.Setup<question>(s => s.GetQuestion(It.IsAny<long>())).Returns(myFakeQuestion);
-           viewModel.RefreshQuestions();
-           serviceClient.Verify(s => s.GetHuntQuestions(It.IsAny<hunt>()), Times.AtLeastOnce());
-           serviceClient.Verify(s => s.GetQuestion(It.IsAny<long>()), Times.AtLeastOnce());
+           List<question> listOfQuestions = new List<question>();
+           listOfQuestions.Add(myFakeQuestion);
 
-           Assert.AreEqual(returnedIds, this.Questions, "They are not the same list of questions."); 
+           this.CurrentTreasureHunt = myFakeHunt;
+           serviceClient.Setup<long[]>(s => s.GetHuntQuestions(this.CurrentTreasureHunt)).Returns(returnedIds.ToArray());
+           serviceClient.Setup<question>(s => s.GetQuestion(It.IsAny<long>())).Returns(myFakeQuestion);
+           
+           viewModel.SaveQuestionCommand.Execute(new Object());
+
+           serviceClient.Verify(s => s.GetHuntQuestions(It.IsAny<hunt>()), Times.Exactly(1));
+           serviceClient.Verify(s => s.GetQuestion(It.IsAny<long>()), Times.Exactly(1));
+
+           Assert.AreEqual(listOfQuestions.ToArray(), this.Questions.ToArray()); 
         }
 
-        [Test] //PROBLEM TEST HERE
+        [Test]
         public void ShouldSaveNewQuestion()
         {
-           serviceClient.Setup<long>(s => s.SaveQuestion(It.IsAny<question>())).Returns(2); //doesnt return 2
+           serviceClient.Setup<long>(s => s.SaveQuestion(It.IsAny<question>())).Returns(2); 
            serviceClient.Setup(s => s.SaveNewHuntQuestion(It.IsAny<huntquestion>())).Verifiable();
 
            viewModel.SaveQuestionCommand.Execute(new object());
-
-          // huntquestion newHuntQuestion = new huntquestion();
-          // newHuntQuestion.HuntId = this.CurrentTreasureHunt.HuntId;
-          // newHuntQuestion.QuestionId = 2;
 
            serviceClient.Verify(s => s.SaveQuestion(It.IsAny<question>()), Times.Exactly(1));
            serviceClient.Verify(s => s.SaveNewHuntQuestion(It.IsAny<huntquestion>()), Times.Exactly(1));
@@ -170,15 +171,16 @@ namespace TreasureHuntDesktopApplication.Test
 
         [Test]
         public void ShouldCreateTreasureHuntDocument()
-        {   
-            viewModel.ExecutePrintQRCodesCommand();
+        {
+            viewModel.SaveQuestionCommand.Execute(new object());
             Assert.IsTrue(File.Exists("C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\Documents\\My Fake Hunt QR Codes Sheet.docx"), "The file does not exist");
         }
 
         [Test]
         public void ShouldCreateQRCodeImage()
-        {   //The questions are empty
-            viewModel.EncodeQRCode("C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\QRCodes\\My new treasure hunt question.png");
+        {   
+            this.NewQuestion = "My new treasure hunt question";
+            viewModel.SaveQuestionCommand.Execute(new object());
             Assert.IsTrue(File.Exists("C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\QRCodes\\My new treasure hunt question.png"), "The file does not exist");
         }
         #endregion

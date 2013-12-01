@@ -12,14 +12,19 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Xps.Packaging;
 using TreasureHuntDesktopApplication.FullClient.Messages;
+using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 {
     public class PrintViewModel : ViewModelBase
     {
-        public PrintViewModel()
+        ITreasureHuntService serviceClient;
+
+        public PrintViewModel(ITreasureHuntService _serviceClient)
         {
+            serviceClient = _serviceClient;
+
             Messenger.Default.Register<PrintMessage>
              (
 

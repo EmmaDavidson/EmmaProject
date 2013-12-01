@@ -14,11 +14,12 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
     public class SearchHuntViewModel : ViewModelBase
     {
         #region Setup
-        TreasureHuntServiceClient serviceClient = new TreasureHuntServiceClient();
+        ITreasureHuntService serviceClient;
         public RelayCommand SearchHuntCommand { get; set; }
 
-        public SearchHuntViewModel()
+        public SearchHuntViewModel(ITreasureHuntService _serviceClient)
         {
+            serviceClient = _serviceClient;
             SearchHuntCommand = new RelayCommand(() => ExecuteSearchHuntCommand(), () => IsValidHunt());
             RefreshTreasureHunts();
 

@@ -18,9 +18,8 @@ namespace TreasureHuntDesktopApplication.Test
 
         [SetUp]
         public void Setup()
-        {
-            viewModel = new CreateHuntViewModel();
-            serviceClient = new Mock<ITreasureHuntService>();
+        {   serviceClient = new Mock<ITreasureHuntService>();
+            viewModel = new CreateHuntViewModel(serviceClient.Object);
             viewModel.HuntName = huntName;
         }
 

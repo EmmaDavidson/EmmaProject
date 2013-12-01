@@ -23,14 +23,15 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
     public class ViewHuntViewModel : ViewModelBase
     {
         #region Setup
-        TreasureHuntServiceClient serviceClient = new TreasureHuntServiceClient();
+        ITreasureHuntService serviceClient;
         public RelayCommand SaveQuestionCommand { get; set; }
         public RelayCommand ViewQrCodeCommand { get; set; }
         public RelayCommand PrintQRCodesCommand { get; set; }
         private String myFileDirectory = "C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\";
 
-        public ViewHuntViewModel()
+        public ViewHuntViewModel(ITreasureHuntService _serviceClient)
         {
+            serviceClient = _serviceClient;
             SaveQuestionCommand = new RelayCommand(() => ExecuteSaveQuestionCommand(), ()=> IsValidNewQuestion());
             ViewQrCodeCommand = new RelayCommand(() => ExecuteViewQrCodeCommand(), () => IsSingleQuestionSelected());
             PrintQRCodesCommand = new RelayCommand(() => ExecutePrintQRCodesCommand(), () => IsValidListOfQuestions());
@@ -105,7 +106,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #region Refreshing Data
 
         //make internal
-        public void RefreshQuestions()
+        private void RefreshQuestions()
         {
             if(this.currentTreasureHunt != null)
             {
@@ -116,7 +117,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 {
                     while (questionIdNumbers.MoveNext())
                     {
-                        //this.serviceClient.GetQuestionAsync(questionIdNumbers.Current);
                         question currentQuestionInList = this.serviceClient.GetQuestion(questionIdNumbers.Current);
                         listOfQuestionsFromHunt.Add(currentQuestionInList);
                     }
@@ -177,16 +177,15 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #endregion
 
         #region Commands
-        //Excutes when the save button has been pressed so new question is saved to DB
-       //make internal
-        public void ExecuteSaveQuestionCommand()
+
+        private void ExecuteSaveQuestionCommand()
         {
             String locationOfQrCodeImage = myFileDirectory + "QRCodes\\" + this.newQuestion + ".png";
 
             question brandNewQuestion = new question();
             brandNewQuestion.Question1 = this.newQuestion;
             brandNewQuestion.URL = locationOfQrCodeImage;
-            long questionId = this.serviceClient.SaveQuestion(brandNewQuestion); //return the new question's ID
+            long questionId = this.serviceClient.SaveQuestion(brandNewQuestion); 
 
             SaveHuntQuestion(questionId);
             EncodeQRCode(locationOfQrCodeImage);
@@ -194,8 +193,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             this.NewQuestion = String.Empty;
         }
 
-        //internal
-        public void SaveHuntQuestion(long questionId)
+        private void SaveHuntQuestion(long questionId)
         {
             huntquestion newHuntQuestion = new huntquestion();
             newHuntQuestion.QuestionId = questionId;
@@ -203,8 +201,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             serviceClient.SaveNewHuntQuestion(newHuntQuestion);
         }
 
-        //Make internal
-        public void EncodeQRCode(String locationOfQrCodeImage)
+        private void EncodeQRCode(String locationOfQrCodeImage)
         {
             //-http://www.youtube.com/watch?v=3CSifXK62Tk
             QRCodeEncoder encoder = new QRCodeEncoder();

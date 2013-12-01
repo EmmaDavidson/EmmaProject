@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using TreasureHuntDesktopApplication.FullClient.Messages;
 using TreasureHuntDesktopApplication.FullClient.Model;
+using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 {
@@ -14,6 +15,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         //-http://www.codeproject.com/Articles/72724/Beginning-a-WPF-MVVM-application-Navigating-betwee
 
         private ViewModelBase currentViewModel;
+        private static readonly TreasureHuntServiceClient serviceClient = new TreasureHuntServiceClient();
 
         public RelayCommand NavigateToCreateHuntViewCommand { get; private set; }
         public RelayCommand NavigateToViewHuntsViewCommand { get; private set; }
@@ -21,11 +23,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         public RelayCommand NavigateToViewQRCodeCommand { get; private set; }
         public RelayCommand NavigateToPrintViewCommand { get; private set; }
 
-        readonly static CreateHuntViewModel createHuntViewModel = new CreateHuntViewModel();
-        readonly static ViewHuntViewModel viewHuntViewModel = new ViewHuntViewModel();
-        readonly static SearchHuntViewModel searchHuntViewModel = new SearchHuntViewModel();
-        readonly static ViewQRCodeViewModel viewQRCodeViewModel = new ViewQRCodeViewModel();
-        readonly static PrintViewModel printViewModel = new PrintViewModel();
+        readonly static CreateHuntViewModel createHuntViewModel = new CreateHuntViewModel(serviceClient);
+        readonly static ViewHuntViewModel viewHuntViewModel = new ViewHuntViewModel(serviceClient);
+        readonly static SearchHuntViewModel searchHuntViewModel = new SearchHuntViewModel(serviceClient);
+        readonly static ViewQRCodeViewModel viewQRCodeViewModel = new ViewQRCodeViewModel(serviceClient);
+        readonly static PrintViewModel printViewModel = new PrintViewModel(serviceClient);
 
 
         public ViewModelBase CurrentViewModel

@@ -24,9 +24,9 @@ namespace TreasureHuntDesktopApplication.Test.ViewModel
         [SetUp]
         public void Setup()
         {
-            viewModel = new SearchHuntViewModel();
             serviceClient = new Mock<ITreasureHuntService>();
-
+            viewModel = new SearchHuntViewModel(serviceClient.Object);
+            
             myFakeHunt1 = new hunt();
             myFakeHunt1.HuntName = "My Fake Hunt 1";
 
@@ -66,15 +66,25 @@ namespace TreasureHuntDesktopApplication.Test.ViewModel
 
         #endregion
 
-        #region RefreshingDataTests/ServiceCalls
-        
+        #region Validation Tests
         [Test]
-        public void AllTreasureHuntsReturnedFromDatabase()
+        public void ShouldReturnFalseIfCurrentTreasureHuntIsNull()
         {
-            serviceClient.Setup<IEnumerable<hunt>>(s => s.GetTreasureHunts()).Returns(returnedHunts.AsEnumerable());
+            this.CurrentTreasureHunt = null;
+            Assert.False(viewModel.IsValidHunt());
+            Assert.False(viewModel.SearchHuntCommand.CanExecute(""));
+        }
+        #endregion
+
+        #region RefreshingDataTests/ServiceCalls
+
+        [Test]
+        public void ShouldReturnAllTreasureHuntsFromDatabase()
+        {
+            serviceClient.Setup<hunt[]>(s => s.GetTreasureHunts()).Returns(returnedHunts.ToArray());
 
             viewModel.RefreshTreasureHunts(); 
-            serviceClient.Verify(s => s.GetTreasureHunts(), Times.Exactly(1));
+            serviceClient.Verify(s => s.GetTreasureHunts(), Times.Exactly(2));
             Assert.AreEqual(returnedHunts, this.TreasureHunts);
         }
         #endregion
