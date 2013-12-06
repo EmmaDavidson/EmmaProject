@@ -27,7 +27,7 @@ import android.widget.Toast;
 public class ChooseHuntActivity extends Activity {
 
 	JSONParser jsonParser = new JSONParser();
-	private static final String myLoginUrl =  "http://192.168.1.74:80/webservice/choosehunt.php";
+	private static final String myChooseHuntUrl =  "http://192.168.1.74:80/webservice/choosehunt.php";
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	private static JSONArray tagResult;
@@ -84,7 +84,10 @@ public class ReturnHuntsTask extends AsyncTask<String, String, String> {
 	
 	@Override
 	protected String doInBackground(String... args) {
-//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
+		//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
+		//http://www.php.net/manual/en/pdostatement.fetchall.php
+		//http://stackoverflow.com/questions/14491430/using-pdo-to-echo-display-all-rows-from-a-table
+
 		
 		int success;
 		
@@ -92,15 +95,16 @@ public class ReturnHuntsTask extends AsyncTask<String, String, String> {
 			
 			Log.d("request", "starting");
 			List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-			JSONObject json = jsonParser.makeHttpRequest(myLoginUrl, "GET", parameters);
+			JSONObject json = jsonParser.makeHttpRequest(myChooseHuntUrl, "GET", parameters);
+			
 			Log.d("Get hunts attempt", json.toString());
 			
 			success = json.getInt(tagSuccess);
 			if(success == 1)
 			{
 				Log.d("Returning of hunts successful!", json.toString());
-				finish(); 
-				tagResult = json.getJSONArray("result");
+				tagResult = json.getJSONArray("results");
+				//finish(); 
 				return tagResult.toString();
 			}
 			else
