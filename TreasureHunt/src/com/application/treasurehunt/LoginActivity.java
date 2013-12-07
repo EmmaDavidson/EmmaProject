@@ -48,6 +48,9 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		mEmailView = (EditText) findViewById(R.id.login_email_address);
 		mPasswordView = (EditText) findViewById(R.id.login_password);
+		
+		mEmailView.setText("emailaddress@email.com");
+		mPasswordView.setText("FakeEmail");
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
@@ -74,9 +77,12 @@ public class LoginActivity extends Activity {
 	}
 
 	public void goToRegister()
-	{
+	{		
 		Intent intent = new Intent(this, RegisterActivity.class);
-		startActivity(intent);
+		startActivity(intent);	
+		
+		mEmailView.setText(null);
+		mPasswordView.setText(null);
 	}
 	
 	public void attemptLogin() {

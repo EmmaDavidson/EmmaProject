@@ -8,21 +8,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ChooseHunt" >
 
-    <Button
-        android:id="@+id/find_hunts_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="Button" />
-
     <ListView
         android:id="@+id/hunt_list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
-        android:layout_marginTop="90dp" >
+        android:layout_height="wrap_content" >
+
     </ListView>
 
 </RelativeLayout>

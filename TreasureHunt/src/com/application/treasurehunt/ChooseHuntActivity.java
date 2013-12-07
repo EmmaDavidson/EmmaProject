@@ -2,12 +2,16 @@ package com.application.treasurehunt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import sqlLiteDatabase.Hunt;
+import sqlLiteDatabase.HuntDAO;
 
 import com.application.treasurehunt.LoginActivity.UserLoginTask;
 
@@ -20,10 +24,12 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
+//http://net.tutsplus.com/tutorials/php/php-database-access-are-you-doing-it-correctly/
 public class ChooseHuntActivity extends Activity {
 
 	JSONParser jsonParser = new JSONParser();
@@ -33,7 +39,9 @@ public class ChooseHuntActivity extends Activity {
 	private static JSONArray tagResult;
 	
 	private ReturnHuntsTask mAuthTask = null;
-	private ProgressDialog pDialog; //spinner thing
+	private ProgressDialog pDialog; 
+	
+	private HuntDAO huntDataSource;
 	
 	private ListView mListView;
 	
@@ -41,16 +49,12 @@ public class ChooseHuntActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_choose_hunt);
+		huntDataSource = new HuntDAO(this);
+		huntDataSource.open();
 		
-		mListView = (ListView) findViewById(R.id.hunt_list_view);
-			
-		findViewById(R.id.find_hunts_button).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						attemptReturnHunts();
-					}
-				});
+		mListView = (ListView) findViewById(R.id.hunt_list_view);			
+		
+		attemptReturnHunts();
 	}
 
 	@Override
@@ -65,7 +69,14 @@ public class ChooseHuntActivity extends Activity {
 			return;
 		} 			
 			mAuthTask = new ReturnHuntsTask(); // Do ASYNC way
-			mAuthTask.execute((String) null);		
+			mAuthTask.execute((String) null);	
+			try {
+				mAuthTask.get();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
 	}
 
 
@@ -104,12 +115,19 @@ public class ReturnHuntsTask extends AsyncTask<String, String, String> {
 			{
 				Log.d("Returning of hunts successful!", json.toString());
 				tagResult = json.getJSONArray("results");
-				//finish(); 
-				return tagResult.toString();
+				
+				//-http://stackoverflow.com/questions/8411154/null-pointer-exception-while-inserting-json-array-into-sqlite-database
+				for(int i=0; i < tagResult.length(); i++)
+				{
+					huntDataSource.addHunt(tagResult.getJSONObject(i).getString("HuntName"));
+				}
+				
+				return tagMessage.toString();
 			}
 			else
 			{
 				Log.d("Returning of hunts failed! ", json.getString(tagMessage));
+				
 				return json.getString(tagMessage);
 			}
 			
@@ -125,9 +143,17 @@ public class ReturnHuntsTask extends AsyncTask<String, String, String> {
 		mAuthTask = null;
 		pDialog.dismiss();
 
-		if (fileUrl != null) {
-			Toast.makeText(ChooseHuntActivity.this, fileUrl, Toast.LENGTH_LONG).show();
-		} else {
+		if (fileUrl != null) 
+		{	
+			List<Hunt> listOfHunts = huntDataSource.getAllHunts();
+			ArrayAdapter<Hunt> adapter = new ArrayAdapter<Hunt>(ChooseHuntActivity.this, android.R.layout.simple_list_item_1, listOfHunts);
+			mListView.setAdapter(adapter);	
+			
+			//Set a listener here for selecting an item. Takes you to the view of the scanner.           
+			
+		} 
+		else 
+		{
 			Toast.makeText(ChooseHuntActivity.this, "Nothing returned from the database", Toast.LENGTH_LONG).show();
 		}
 	}
