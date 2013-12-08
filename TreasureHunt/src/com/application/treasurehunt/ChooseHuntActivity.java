@@ -25,12 +25,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 //http://net.tutsplus.com/tutorials/php/php-database-access-are-you-doing-it-correctly/
-public class ChooseHuntActivity extends Activity {
+public class ChooseHuntActivity extends Activity implements OnItemClickListener {
 
 	JSONParser jsonParser = new JSONParser();
 	private static final String myChooseHuntUrl =  "http://192.168.1.74:80/webservice/choosehunt.php";
@@ -57,12 +58,12 @@ public class ChooseHuntActivity extends Activity {
 		attemptReturnHunts();
 	}
 
-	@Override
+	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.choose_hunt, menu);
 		return true;
-	}
+	} */
 	
 	public void attemptReturnHunts() {
 		if (mAuthTask != null) {
@@ -149,7 +150,14 @@ public class ReturnHuntsTask extends AsyncTask<String, String, String> {
 			ArrayAdapter<Hunt> adapter = new ArrayAdapter<Hunt>(ChooseHuntActivity.this, android.R.layout.simple_list_item_1, listOfHunts);
 			mListView.setAdapter(adapter);	
 			
-			//Set a listener here for selecting an item. Takes you to the view of the scanner.           
+			//http://stackoverflow.com/questions/16189651/android-listview-selected-item-stay-highlighted
+			mListView.setOnItemClickListener(new OnItemClickListener() {
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+				    Intent scanQRCodeActivity = new Intent(ChooseHuntActivity.this, ScanQRCodeActivity.class);
+					startActivity(scanQRCodeActivity);
+				}
+			});
 			
 		} 
 		else 
@@ -162,6 +170,13 @@ public class ReturnHuntsTask extends AsyncTask<String, String, String> {
 	protected void onCancelled() {
 		mAuthTask = null;
 	}
+}
+
+
+@Override
+public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	// TODO Auto-generated method stub
+	
 }
 }
 

@@ -48,9 +48,6 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		mEmailView = (EditText) findViewById(R.id.login_email_address);
 		mPasswordView = (EditText) findViewById(R.id.login_password);
-		
-		mEmailView.setText("emailaddress@email.com");
-		mPasswordView.setText("FakeEmail");
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
@@ -69,12 +66,12 @@ public class LoginActivity extends Activity {
 				});
 	}
 
-	@Override
+	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
-	}
+	} */
 
 	public void goToRegister()
 	{		
@@ -100,11 +97,10 @@ public class LoginActivity extends Activity {
 		{		
 			mAuthTask = new UserLoginTask(); // Do ASYNC way
 			mAuthTask.execute((String) null);
-		}
-		
-		mEmailView.setText(null);
-		mPasswordView.setText(null);
-		
+			
+			mEmailView.setText(null);
+			mPasswordView.setText(null);
+		}	
 	}
 	
 	public boolean isValidEmailAddress()
@@ -119,6 +115,12 @@ public class LoginActivity extends Activity {
 			mEmailView.setError(getString(R.string.error_email_too_short));	
 			return false;
 		}
+		//http://stackoverflow.com/questions/1819142/how-should-i-validate-an-e-mail-address-on-android
+		else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(mEmail.toString()).matches())
+		{
+			mEmailView.setError(getString(R.string.error_email_incorrect_format));	
+			return false;
+		}
 		
 		return true;
 		
@@ -131,7 +133,7 @@ public class LoginActivity extends Activity {
 			return false;
 			
 		}
-		else if(mPassword.length() < 5)
+		else if(mPassword.length() < 6)
 		{
 			mPasswordView.setError(getString(R.string.error_password_too_short));	
 			return false;

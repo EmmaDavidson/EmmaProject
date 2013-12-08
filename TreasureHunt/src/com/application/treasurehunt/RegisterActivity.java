@@ -59,12 +59,12 @@ public class RegisterActivity extends Activity {
 				});
 	}
 
-	@Override
+	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.register, menu);
 		return true;
-	}
+	} */
 	
 	public void attemptRegister() {
 		if (mAuthTask != null) {
@@ -99,6 +99,11 @@ public class RegisterActivity extends Activity {
 			mEmailView.setError(getString(R.string.error_email_too_short));	
 			return false;
 		}
+		else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(mEmail.toString()).matches())
+		{
+			mEmailView.setError(getString(R.string.error_email_incorrect_format));	
+			return false;
+		}
 		
 		return true;
 		
@@ -111,7 +116,7 @@ public class RegisterActivity extends Activity {
 			return false;
 			
 		}
-		else if(mPassword.length() < 5)
+		else if(mPassword.length() < 6)
 		{
 			mPasswordView.setError(getString(R.string.error_password_too_short));	
 			return false;
@@ -128,7 +133,7 @@ public class RegisterActivity extends Activity {
 			return false;
 			
 		}
-		else if(mPassword.length() < 5)
+		else if(mName.length() < 4)
 		{
 			mNameView.setError(getString(R.string.error_name_too_short));	
 			return false;

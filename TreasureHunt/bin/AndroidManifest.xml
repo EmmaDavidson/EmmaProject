@@ -10,7 +10,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -18,45 +17,36 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name="com.dm.zbar.android.scanner.ZBarScannerActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape" >
-        </activity>
+         
         <activity
             android:name="com.application.treasurehunt.LoginActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+         <activity
+            android:name="com.dm.zbar.android.scanner.ZBarScannerActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
+        </activity>
+        
         <activity
             android:name="com.application.treasurehunt.RegisterActivity"
-            android:label="@string/title_activity_register" >
+            android:label="@string/register_header" >
         </activity>
-        <activity
-            android:name="com.application.treasurehunt.ViewTreasureHunts"
-            android:label="@string/title_activity_view_treasure_hunts" >
-        </activity>
+        
         <activity
             android:name="com.application.treasurehunt.ScanQRCodeActivity"
-            android:label="@string/title_activity_scan_qrcode" >
+            android:label="@string/scan_qr_code_header" >
         </activity>
-        <activity
-            android:name="com.application.treasurehunt.LoginActivity1"
-            android:label="@string/title_activity_login_activity1"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
-        </activity>
-        <activity
-            android:name="com.application.treasurehunt.ChooseHunt"
-            android:label="@string/title_activity_choose_hunt" >
-        </activity>
+        
         <activity
             android:name="com.application.treasurehunt.ChooseHuntActivity"
-            android:label="@string/title_activity_choose_hunt" >
+            android:label="@string/choose_hunt_header" >
         </activity>
     </application>
 
