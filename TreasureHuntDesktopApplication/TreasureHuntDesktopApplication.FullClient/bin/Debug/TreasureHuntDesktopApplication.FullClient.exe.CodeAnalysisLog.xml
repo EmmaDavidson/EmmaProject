@@ -12,7 +12,7 @@
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-12-01 22:13:48Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-12-09 22:07:08Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="MainViewModel.cs" Line="48">'MainViewModel.MainViewModel()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;MainViewModel..ctor()&#xD;&#xA;MainViewModel.set_CurrentViewModel(ViewModelBase):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
             </Message>
            </Messages>
@@ -23,8 +23,8 @@
          <Members>
           <Member Name="#.ctor(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.ITreasureHuntService)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-12-01 22:13:48Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="SearchHuntViewModel.cs" Line="20">'SearchHuntViewModel.SearchHuntViewModel(ITreasureHuntService)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;SearchHuntViewModel..ctor(ITreasureHuntService)&#xD;&#xA;SearchHuntViewModel.RefreshTreasureHunts():Void&#xD;&#xA;SearchHuntViewModel.set_TreasureHunts(IEnumerable&lt;hunt&gt;):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-12-09 22:07:08Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="SearchHuntViewModel.cs" Line="21">'SearchHuntViewModel.SearchHuntViewModel(ITreasureHuntService)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;SearchHuntViewModel..ctor(ITreasureHuntService)&#xD;&#xA;SearchHuntViewModel.RefreshTreasureHunts():Void&#xD;&#xA;SearchHuntViewModel.set_TreasureHunts(IEnumerable&lt;hunt&gt;):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
             </Message>
            </Messages>
           </Member>
@@ -34,8 +34,8 @@
          <Members>
           <Member Name="#.ctor(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.ITreasureHuntService)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-12-01 22:13:48Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="ViewHuntViewModel.cs" Line="30">'ViewHuntViewModel.ViewHuntViewModel(ITreasureHuntService)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;ViewHuntViewModel..ctor(ITreasureHuntService)&#xD;&#xA;ViewHuntViewModel.RefreshQuestions():Void&#xD;&#xA;ViewHuntViewModel.set_Questions(IEnumerable&lt;question&gt;):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-12-09 22:07:08Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="ViewHuntViewModel.cs" Line="33">'ViewHuntViewModel.ViewHuntViewModel(ITreasureHuntService)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;ViewHuntViewModel..ctor(ITreasureHuntService)&#xD;&#xA;ViewHuntViewModel.RefreshQuestions():Void&#xD;&#xA;ViewHuntViewModel.set_Questions(IEnumerable&lt;question&gt;):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
             </Message>
            </Messages>
           </Member>

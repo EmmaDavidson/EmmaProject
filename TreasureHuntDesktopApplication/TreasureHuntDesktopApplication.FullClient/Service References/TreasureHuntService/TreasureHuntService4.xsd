@@ -92,4 +92,18 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetHuntBasedOnName">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHuntBasedOnNameResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data" minOccurs="0" name="GetHuntBasedOnNameResult" nillable="true" type="q9:hunt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

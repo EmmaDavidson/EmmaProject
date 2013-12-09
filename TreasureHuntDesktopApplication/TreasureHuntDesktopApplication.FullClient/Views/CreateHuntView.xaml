@@ -6,12 +6,22 @@
              xmlns:validation="clr-namespace:TreasureHuntDesktopApplication.FullClient.Project_Utilities"
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="300">
-    <Grid Margin="0,0,0,120">
-        <Button Command="{Binding SaveHuntNameCommand}" Content="Save" HorizontalAlignment="Left" Margin="107,88,0,-26" VerticalAlignment="Top" Width="75" Height="26"/>
-        <TextBox Text="{Binding HuntName}" HorizontalAlignment="Left" Height="23" Margin="55,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="192" RenderTransformOrigin="0.547,0.478">
+    <Grid Margin="0,0,0,120">     
+        <Button Command="{Binding SaveHuntNameCommand}" Content="Save" HorizontalAlignment="Left" Margin="172,80,0,0" VerticalAlignment="Top" Width="75" Height="26" RenderTransformOrigin="1.853,0.308"/>
+        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="55,80,0,0" VerticalAlignment="Top" Width="75" Height="26" RenderTransformOrigin="1.853,0.308"/>
+        <TextBox Text="{Binding HuntName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" HorizontalAlignment="Left" Height="23" Margin="55,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="192" RenderTransformOrigin="0.547,0.478">
         </TextBox>
         <Label Content="Hunt Name:" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="83"/>
-
-
     </Grid>
+    
+    <UserControl.Resources>
+        <!--http://www.eidias.com/Blog/2012/7/2/simple-validation-in-wpf-mvvm-using-idataerrorinfo-->
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
 </UserControl>

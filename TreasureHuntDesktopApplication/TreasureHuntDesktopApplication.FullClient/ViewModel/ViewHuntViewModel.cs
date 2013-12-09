@@ -7,11 +7,13 @@ using Novacode;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Documents;
 using TreasureHuntDesktopApplication.FullClient.Messages;
@@ -20,13 +22,14 @@ using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 {
-    public class ViewHuntViewModel : ViewModelBase
+    public class ViewHuntViewModel : ViewModelBase, IDataErrorInfo
     {
         #region Setup
         ITreasureHuntService serviceClient;
-        public RelayCommand SaveQuestionCommand { get; set; }
-        public RelayCommand ViewQrCodeCommand { get; set; }
-        public RelayCommand PrintQRCodesCommand { get; set; }
+        public RelayCommand SaveQuestionCommand { get; private set; }
+        public RelayCommand ViewQrCodeCommand { get; private set; }
+        public RelayCommand PrintQRCodesCommand { get; private set; }
+        public RelayCommand BackCommand { get; private set; }
         private String myFileDirectory = "C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\";
 
         public ViewHuntViewModel(ITreasureHuntService _serviceClient)
@@ -35,6 +38,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             SaveQuestionCommand = new RelayCommand(() => ExecuteSaveQuestionCommand(), ()=> IsValidNewQuestion());
             ViewQrCodeCommand = new RelayCommand(() => ExecuteViewQrCodeCommand(), () => IsSingleQuestionSelected());
             PrintQRCodesCommand = new RelayCommand(() => ExecutePrintQRCodesCommand(), () => IsValidListOfQuestions());
+            BackCommand = new RelayCommand(() => ExecuteBackCommand());
             
              Messenger.Default.Register<SelectedHuntMessage>
              (
@@ -63,7 +67,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             get
             {
-                return 100;
+                return 150;
 
             }
         }
@@ -72,11 +76,15 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             if (currentTreasureHunt != null)
             {
-                if (!Validation.IsNullOrWhiteSpace(newQuestion))
+                if (!Validation.IsNullOrWhiteSpace(this.newQuestion))
                 {
                     if (Validation.IsValidLength(newQuestion, NewQuestionMaxLength))
                     {
-                        return true;
+                        //-http://blog.magnusmontin.net/2013/08/26/data-validation-in-wpf/
+                        if (Regex.IsMatch(this.newQuestion, @"^[a-zA-Z -]+$"))
+                        {
+                            return true;
+                        }
                     }
                 }
             }
@@ -85,7 +93,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         public bool IsValidListOfQuestions()
         {
-            if (this.questions != null)
+            if(Questions.Count() != 0)
             {
                 return true;
             }
@@ -226,21 +234,26 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             using (DocX documentOfQRCodes = DocX.Create(newDocumentFileLocation))
             {
                 Novacode.Paragraph p = documentOfQRCodes.InsertParagraph(this.currentTreasureHunt.HuntName);
-                
+                documentOfQRCodes.InsertParagraph();
                 using (var currentQuestionQRCode = this.questions.GetEnumerator())
                 {
                     while (currentQuestionQRCode.MoveNext())
                     {
                         if (currentQuestionQRCode.Current.URL != null && currentQuestionQRCode.Current.URL != "empty URL")
                         {
+                            documentOfQRCodes.InsertParagraph(currentQuestionQRCode.Current.Question1);
                             Novacode.Paragraph q = documentOfQRCodes.InsertParagraph();
+                            
                             string locationOfImage = myFileDirectory + "QRCodes\\" + currentQuestionQRCode.Current.Question1 + ".png";
                             Novacode.Image img = documentOfQRCodes.AddImage(@locationOfImage);
 
                             Picture pic1 = img.CreatePicture();
                             q.InsertPicture(pic1, 0);
-                            pic1.Width = 600; //smaller codes sizes
-                            pic1.Height = 600;
+                            pic1.Width = 200; //smaller codes sizes
+                            pic1.Height = 200;
+
+                            documentOfQRCodes.InsertParagraph();
+
                         }
                     }
                 }
@@ -250,10 +263,16 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
             Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "PrintViewModel" });
             Messenger.Default.Send<PrintMessage>(new PrintMessage() { FileLocation = newDocumentFileLocation });
+            Messenger.Default.Send<SelectedHuntMessage>(new SelectedHuntMessage() { CurrentHunt = this.currentTreasureHunt });
 
          }
-        
 
+        private void ExecuteBackCommand()
+        {
+            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "SearchHuntViewModel" });
+            NewQuestion = null;
+        }
+        
         #endregion
 
         #region ETC
@@ -262,5 +281,25 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             throw new NotImplementedException();
         }
         #endregion
+
+        public string Error
+        {
+            get { return string.Empty; }
+        }
+
+        public string this[string columnName]
+        {
+            get 
+            {
+                String result = null;
+                if (!IsValidNewQuestion())
+                {
+                    result = "Question is invalid.";
+                }
+
+                return result;
+                
+            }
+        }
     }
 }

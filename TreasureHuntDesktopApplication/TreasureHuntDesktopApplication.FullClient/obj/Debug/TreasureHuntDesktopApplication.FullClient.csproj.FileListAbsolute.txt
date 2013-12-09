@@ -26,11 +26,31 @@ c:\users\emma\documents\visual studio 2012\Projects\TreasureHuntDesktopApplicati
 c:\users\emma\documents\visual studio 2012\Projects\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient.exe
 c:\users\emma\documents\visual studio 2012\Projects\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient.pdb
 c:\users\emma\documents\visual studio 2012\Projects\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient.csprojResolveAssemblyReference.cache
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient.csprojResolveAssemblyReference.cache
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Interop.XPS_SHL_DLLLib.dll
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient.csproj.ResolveComReference.cache
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\MainWindow.baml
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Skins\MainSkin.baml
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\PrintView.baml
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\SearchHuntView.baml
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\ViewQRCodeView.baml
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\CreateHuntView.g.cs
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\MainWindow.g.cs
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\PrintView.g.cs
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\SearchHuntView.g.cs
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\ViewHuntView.g.cs
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\ViewQRCodeView.g.cs
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\App.g.cs
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient_MarkupCompile.cache
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient_MarkupCompile.lref
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\TreasureHuntDesktopApplication.FullClient.exe.config
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\TreasureHuntDesktopApplication.FullClient.exe
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\TreasureHuntDesktopApplication.FullClient.pdb
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\TreasureHuntDesktopApplication.FullClient.exe.CodeAnalysisLog.xml
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\TreasureHuntDesktopApplication.FullClient.exe.lastcodeanalysissucceeded
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\Aspose.Words.dll
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\DocX.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\GalaSoft.MvvmLight.Extras.WPF45.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\GalaSoft.MvvmLight.WPF45.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\MessagingToolkit.Barcode.dll
@@ -38,6 +58,7 @@ C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\Treasu
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\Microsoft.Practices.ServiceLocation.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\MySql.Data.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\MySql.Data.Entity.dll
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\ScipBe.Common.Office.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\System.Windows.Interactivity.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\TreasureHuntDesktopApplication.DataService.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\zxing.dll
@@ -56,20 +77,6 @@ C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\Treasu
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\zxing.presentation.pdb
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\zxing.presentation.xml
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\TreasureHuntDesktopApplication.Data.pdb
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient.csprojResolveAssemblyReference.cache
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\MainWindow.baml
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Skins\MainSkin.baml
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\SearchHuntView.baml
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\ViewQRCodeView.baml
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\CreateHuntView.g.cs
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\MainWindow.g.cs
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\SearchHuntView.g.cs
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\ViewHuntView.g.cs
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\ViewQRCodeView.g.cs
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\App.g.cs
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\GeneratedInternalTypeHelper.g.cs
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient_MarkupCompile.cache
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient_MarkupCompile.lref
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\App.baml
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\CreateHuntView.baml
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\ViewHuntView.baml
@@ -78,10 +85,3 @@ C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\Treasu
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient.csproj.GenerateResource.Cache
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient.exe
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient.pdb
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\Aspose.Words.dll
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\DocX.dll
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\bin\Debug\ScipBe.Common.Office.dll
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Interop.XPS_SHL_DLLLib.dll
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\TreasureHuntDesktopApplication.FullClient.csproj.ResolveComReference.cache
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\PrintView.baml
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\obj\Debug\Views\PrintView.g.cs

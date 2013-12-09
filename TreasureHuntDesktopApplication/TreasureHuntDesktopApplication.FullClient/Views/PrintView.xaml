@@ -7,6 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <DocumentViewer Name="documentviewer" Document="{Binding DocumentViewer}"></DocumentViewer>
-            
+        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="240,0,0,0" VerticalAlignment="Top" Width="60" Height="28"/>
+
     </Grid>
 </UserControl>

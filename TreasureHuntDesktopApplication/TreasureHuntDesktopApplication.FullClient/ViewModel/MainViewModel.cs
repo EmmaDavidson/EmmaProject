@@ -47,7 +47,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         public MainViewModel()
         {
-            CurrentViewModel = MainViewModel.createHuntViewModel;
+            CurrentViewModel = MainViewModel.searchHuntViewModel;
             NavigateToCreateHuntViewCommand = new RelayCommand(() => ExecuteNavigateToCreateHuntCommand());
             NavigateToViewHuntsViewCommand = new RelayCommand(() => ExecuteNavigateToViewHuntCommand());
             NavigateToSearchHuntViewCommand = new RelayCommand(() => ExecuteNavigateToSearchHuntCommand());
@@ -81,6 +81,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             {
                 CurrentViewModel = MainViewModel.printViewModel;
             }
+            else if (requestedUpdateViewModel == "CreateHuntViewModel")
+            {
+                CurrentViewModel = MainViewModel.createHuntViewModel;
+            }
+            
             
 
         

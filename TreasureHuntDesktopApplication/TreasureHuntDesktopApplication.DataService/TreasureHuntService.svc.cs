@@ -82,5 +82,15 @@ namespace TreasureHuntDesktopApplication.DataService
                 context.ObjectStateManager.ChangeObjectState(updatedQuestion, System.Data.EntityState.Modified);
             }
         }
+
+        public hunt GetHuntBasedOnName(String name)
+        {
+            using (var context = new TreasureHuntEntities())
+            {
+                var returnedHunt = context.hunts.Where(c => c.HuntName == name).Single();
+                context.ObjectStateManager.ChangeObjectState(returnedHunt, System.Data.EntityState.Detached);
+                return returnedHunt;
+            }
+        }
     }
 }

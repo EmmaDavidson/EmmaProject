@@ -15,12 +15,14 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
     {
         #region Setup
         ITreasureHuntService serviceClient;
-        public RelayCommand SearchHuntCommand { get; set; }
+        public RelayCommand SearchHuntCommand { get; private set; }
+        public RelayCommand CreateNewHuntCommand { get; private set; }
 
         public SearchHuntViewModel(ITreasureHuntService _serviceClient)
         {
             serviceClient = _serviceClient;
             SearchHuntCommand = new RelayCommand(() => ExecuteSearchHuntCommand(), () => IsValidHunt());
+            CreateNewHuntCommand = new RelayCommand(() => ExecuteCreateHuntCommand());
             RefreshTreasureHunts();
 
             Messenger.Default.Register<ViewUpdatedMessage>
@@ -97,6 +99,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             //Takes the user to the selected hunt page.
             Messenger.Default.Send<SelectedHuntMessage>(new SelectedHuntMessage() { CurrentHunt = this.currentTreasureHunt });
             Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "ViewHuntViewModel" });
+        }
+
+        private void ExecuteCreateHuntCommand()
+        {
+            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "CreateHuntViewModel" });
         }
 
         #endregion

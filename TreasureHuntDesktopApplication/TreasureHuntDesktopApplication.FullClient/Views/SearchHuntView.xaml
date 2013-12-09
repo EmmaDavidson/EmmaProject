@@ -6,10 +6,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
     <Grid>
-        <ComboBox ItemsSource="{Binding Path=TreasureHunts}" DisplayMemberPath="HuntName" SelectedItem="{Binding Path=CurrentTreasureHunt, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Width="280"/>
-        <Label Content="Select Treasure Hunt:" HorizontalAlignment="Left" Margin="87,31,0,0" VerticalAlignment="Top"/>
-        <Button Command="{Binding SearchHuntCommand}" Content="Search" HorizontalAlignment="Left" Margin="115,100,0,0" VerticalAlignment="Top" Width="75"/>
-        
+        <ComboBox ItemsSource="{Binding Path=TreasureHunts}" DisplayMemberPath="HuntName" SelectedItem="{Binding Path=CurrentTreasureHunt, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="280"/>
+        <Label Content="Select Treasure Hunt:" HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding SearchHuntCommand}" Content="Search" HorizontalAlignment="Left" Margin="115,79,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Command="{Binding CreateNewHuntCommand}" Content="Create New Hunt" HorizontalAlignment="Left" Margin="168,117,0,0" VerticalAlignment="Top" Width="122" Height="23"/>
+
 
     </Grid>
 </UserControl>

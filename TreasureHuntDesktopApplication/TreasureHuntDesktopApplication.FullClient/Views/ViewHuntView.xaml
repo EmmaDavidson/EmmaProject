@@ -12,23 +12,38 @@
             <ColumnDefinition Width="37*"/>
         </Grid.ColumnDefinitions>
         
-        <Label Content="New Question: " HorizontalAlignment="Left" Margin="24,15,0,0" VerticalAlignment="Top"/>
-        <TextBox Text="{Binding NewQuestion, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="115,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="345" Grid.ColumnSpan="2">
+        <Label Content="New Question: " HorizontalAlignment="Left" Margin="24,41,0,0" VerticalAlignment="Top"/>
+        <!--http://www.eidias.com/Blog/2012/7/2/simple-validation-in-wpf-mvvm-using-idataerrorinfo-->
+        <TextBox Text="{Binding NewQuestion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" HorizontalAlignment="Left" Height="49" Margin="115,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="369" Grid.ColumnSpan="2">
         </TextBox>
-        <Button Content="Add Question" HorizontalAlignment="Left" Margin="333,19,0,0" VerticalAlignment="Top" Width="84" Command="{Binding SaveQuestionCommand}" Grid.Column="1"/>
+        <Button Content="Add Question" HorizontalAlignment="Left" Margin="333,41,0,0" VerticalAlignment="Top" Width="84" Command="{Binding SaveQuestionCommand}" Grid.Column="1"/>
+        <Button Command="{Binding ViewQrCodeCommand}" Content="View QR Code" HorizontalAlignment="Left" Margin="115,333,0,0" VerticalAlignment="Top" Width="181" Grid.ColumnSpan="2"/>
+        <Button Command="{Binding PrintQRCodesCommand}" Content="Print QR Codes" Grid.Column="1" HorizontalAlignment="Left" Margin="157,333,0,0" VerticalAlignment="Top" Width="171"/>
+        <ListView ItemsSource="{Binding Questions}" SelectedItem="{Binding CurrentQuestion}"  SelectionMode="Single" HorizontalAlignment="Left" Height="210" Margin="115,95,0,0" VerticalAlignment="Top" Width="369" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="400" Header="Question" DisplayMemberBinding="{Binding Path=Question1}" />
+                </GridView>
+            </ListView.View>
+            
+        </ListView>
+        <Button Command="{Binding BackCommand}" Content="Back" Grid.Column="1" HorizontalAlignment="Left" Margin="88,373,0,0" VerticalAlignment="Top" Width="75"/>
+        <Label FontWeight="Bold" Content="Current Treasure Hunt:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding CurrentTreasureHunt.HuntName}" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="150,10,0,0"/>
 
-        <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding Path=Questions}" SelectedItem="{Binding Path=CurrentQuestion}" Margin="75,62,81,204" Grid.ColumnSpan="2">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=Question1}" Header="Question" ></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Path=URL}" Header="URL"></DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Command="{Binding ViewQrCodeCommand}" Content="View QR Code" HorizontalAlignment="Left" Margin="75,333,0,0" VerticalAlignment="Top" Width="221" Grid.ColumnSpan="2"/>
-        <Button Command="{Binding DeleteQuestionCommand}" Content="Delete" Grid.Column="1" HorizontalAlignment="Left" Margin="154,333,0,0" VerticalAlignment="Top" Width="209"/>
-        <Button Command="{Binding PrintQRCodesCommand}" Content="Print QR Codes" Grid.Column="1" HorizontalAlignment="Left" Margin="33,370,0,0" VerticalAlignment="Top" Width="209"/>
-
+        
         <!--<TextBox Text="{Binding Path=CurrentQuestion.Question1, Mode=TwoWay}" HorizontalAlignment="Left" Height="23" Margin="10,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>-->
         <!--<Button Content="Update Question" Command="{Binding UpdateQuestionCommand}" HorizontalAlignment="Left" Margin="10,207,0,0" VerticalAlignment="Top" Width="114"/>-->
 
     </Grid>
+    <UserControl.Resources>
+        <!--http://www.eidias.com/Blog/2012/7/2/simple-validation-in-wpf-mvvm-using-idataerrorinfo-->
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
 </UserControl>

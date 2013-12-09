@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Office.Interop.Word;
 using Microsoft.Win32;
@@ -20,16 +21,25 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
     public class PrintViewModel : ViewModelBase
     {
         ITreasureHuntService serviceClient;
+        public RelayCommand BackCommand { get; set; }
 
         public PrintViewModel(ITreasureHuntService _serviceClient)
         {
             serviceClient = _serviceClient;
+            BackCommand = new RelayCommand(() => ExecuteBackQuestionCommand());
 
             Messenger.Default.Register<PrintMessage>
              (
 
              this,
              (action) => ReceivePrintMessage(action.FileLocation)
+             );
+
+            Messenger.Default.Register<SelectedHuntMessage>
+             (
+
+             this,
+             (action) => ReceiveSelectedHuntMessage(action.CurrentHunt)
              );
         }
 
@@ -45,6 +55,18 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             }
         }
 
+        private hunt currentTreasureHunt;
+        public hunt CurrentTreasureHunt
+        {
+            get { return this.currentTreasureHunt; }
+            set
+            {
+                this.currentTreasureHunt = value;
+                RaisePropertyChanged("CurrentTreasureHunt");
+
+            }
+        }
+
         //-http://code.msdn.microsoft.com/office/CSVSTOViewWordInWPF-db347436
         private void ReceivePrintMessage(String fileLocation)
         {
@@ -57,6 +79,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             }
 
             DocumentViewer = xpsDocument.GetFixedDocumentSequence();
+        }
+
+        private void ReceiveSelectedHuntMessage(hunt currentHunt)
+        {
+            this.currentTreasureHunt = currentHunt;
         }
 
         //-http://code.msdn.microsoft.com/office/CSVSTOViewWordInWPF-db347436
@@ -85,6 +112,12 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 ((_Application)wordApp).Quit(WdSaveOptions.wdDoNotSaveChanges);
             } 
            
-        } 
+        }
+
+        private void ExecuteBackQuestionCommand()
+        {
+            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "ViewHuntViewModel" });
+            Messenger.Default.Send<SelectedHuntMessage>(new SelectedHuntMessage() { CurrentHunt = this.currentTreasureHunt });
+        }
     }
 }
