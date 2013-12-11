@@ -19,7 +19,7 @@
         <Button Content="Add Question" HorizontalAlignment="Left" Margin="333,41,0,0" VerticalAlignment="Top" Width="84" Command="{Binding SaveQuestionCommand}" Grid.Column="1"/>
         <Button Command="{Binding ViewQrCodeCommand}" Content="View QR Code" HorizontalAlignment="Left" Margin="115,333,0,0" VerticalAlignment="Top" Width="181" Grid.ColumnSpan="2"/>
         <Button Command="{Binding PrintQRCodesCommand}" Content="Print QR Codes" Grid.Column="1" HorizontalAlignment="Left" Margin="157,333,0,0" VerticalAlignment="Top" Width="171"/>
-        <ListView ItemsSource="{Binding Questions}" SelectedItem="{Binding CurrentQuestion}"  SelectionMode="Single" HorizontalAlignment="Left" Height="210" Margin="115,95,0,0" VerticalAlignment="Top" Width="369" Grid.ColumnSpan="2">
+        <ListView ItemsSource="{Binding Questions}" SelectedItem="{Binding CurrentQuestion}"  SelectionMode="Single" HorizontalAlignment="Left" Height="177" Margin="115,128,0,0" VerticalAlignment="Top" Width="369" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="400" Header="Question" DisplayMemberBinding="{Binding Path=Question1}" />
@@ -27,6 +27,8 @@
             </ListView.View>
             
         </ListView>
+
+        <Label FontStyle="Italic" Foreground="Red" Content="{Binding ErrorMessage}" HorizontalAlignment="Left" Margin="115,95,0,0" VerticalAlignment="Top" Height="28" Width="188" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2"/>
         <Button Command="{Binding BackCommand}" Content="Back" Grid.Column="1" HorizontalAlignment="Left" Margin="88,373,0,0" VerticalAlignment="Top" Width="75"/>
         <Label FontWeight="Bold" Content="Current Treasure Hunt:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding CurrentTreasureHunt.HuntName}" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="150,10,0,0"/>

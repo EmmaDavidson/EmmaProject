@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -34,6 +35,18 @@ namespace TreasureHuntDesktopApplication.FullClient.Project_Utilities
             if(stringToCheck != null)
             {
                 if (stringToCheck.Length <= maxLength)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool IsValidCharacters(String stringToCheck)
+        {
+            if (stringToCheck != null)
+            {
+                if (Regex.IsMatch(stringToCheck, @"^[a-zA-Z ]+$"))
                 {
                     return true;
                 }

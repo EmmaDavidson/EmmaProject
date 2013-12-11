@@ -15,7 +15,6 @@ using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 {
-
     public class CreateHuntViewModel : ViewModelBase, IDataErrorInfo
     {
         #region Setup
@@ -32,6 +31,18 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #endregion
 
         #region Variable getters and setters
+
+        private string errorMessage;
+        public string ErrorMessage
+        {
+            get { return this.errorMessage; }
+            set
+            {
+
+                this.errorMessage = value;
+                RaisePropertyChanged("ErrorMessage");
+            }
+        }
 
         private string huntName;
         public string HuntName
@@ -62,13 +73,21 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             {
                 if (Validation.IsValidLength(HuntName, HuntNameMaxLength))
                 {
-                    if (Regex.IsMatch(HuntName, @"^[a-zA-Z ]+$"))
+                    if (Validation.IsValidCharacters(HuntName))
                     {
+                        ErrorMessage = null;
                         return true;
                     }
+
+                    ErrorMessage = "There are invalid characters";
+                    return false;
                 }
+
+                ErrorMessage = "Hunt name is an invalid length!";
+                return false;
             }
 
+            ErrorMessage = "Hunt name cannot be empty!";
             return false;
         }
         #endregion
@@ -100,26 +119,42 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #endregion
 
         //-http://codeblitz.wordpress.com/2009/05/08/wpf-validation-made-easy-with-idataerrorinfo/
-        public string Error
+        string IDataErrorInfo.Error
         {
             get
             {
-                return String.Empty;
+                return null;
             }
         }
 
-        public string this[string columnName]
+        //What properties I am validating.
+        static readonly string[] ValidatedProperties = 
+        { 
+            "HuntName"
+        };
+
+        string IDataErrorInfo.this[string propertyName]
         {
             get
             {
-                String result = null;
-                if (!IsValidHuntName())
-                {
-                    result = "Hunt name is invalid.";
-                }
-
-                return result;
+                return GetValidationMessage(propertyName);
             }
+        }
+
+        private string GetValidationMessage(string propertyName)
+        {
+            String result = null;
+
+            switch (propertyName)
+            {
+                case "HuntName":
+                    {
+                        result = ErrorMessage;
+                        break;
+                    }
+            }
+
+            return result;
         }
     }
 }

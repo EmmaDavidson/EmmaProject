@@ -81,12 +81,19 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                     if (Validation.IsValidLength(newQuestion, NewQuestionMaxLength))
                     {
                         //-http://blog.magnusmontin.net/2013/08/26/data-validation-in-wpf/
-                        if (Regex.IsMatch(this.newQuestion, @"^[a-zA-Z -]+$"))
+                        if (Validation.IsValidCharacters(this.newQuestion))
                         {
+                            ErrorMessage = null;
                             return true;
                         }
+                        ErrorMessage = "There are invalid characters";
+                        return false;                    
                     }
+                    ErrorMessage = "Hunt name is an invalid length!";
+                    return false;
                 }
+                ErrorMessage = "Hunt name cannot be empty!";
+                return false;
             }
             return false;
         }
@@ -138,6 +145,18 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         #region Variable getters and setters
 
+        private string errorMessage;
+        public string ErrorMessage
+        {
+            get { return this.errorMessage; }
+            set
+            {
+
+                this.errorMessage = value;
+                RaisePropertyChanged("ErrorMessage");
+            }
+        }
+
         private IEnumerable<question> questions;
         public IEnumerable<question> Questions
         {
@@ -188,17 +207,24 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         private void ExecuteSaveQuestionCommand()
         {
-            String locationOfQrCodeImage = myFileDirectory + "QRCodes\\" + this.newQuestion + ".png";
+            if (!DoesQuestionAlreadyExist(NewQuestion))
+            {
+                String locationOfQrCodeImage = myFileDirectory + "QRCodes\\" + this.newQuestion + ".png";
 
-            question brandNewQuestion = new question();
-            brandNewQuestion.Question1 = this.newQuestion;
-            brandNewQuestion.URL = locationOfQrCodeImage;
-            long questionId = this.serviceClient.SaveQuestion(brandNewQuestion); 
+                question brandNewQuestion = new question();
+                brandNewQuestion.Question1 = this.newQuestion;
+                brandNewQuestion.URL = locationOfQrCodeImage;
+                long questionId = this.serviceClient.SaveQuestion(brandNewQuestion);
 
-            SaveHuntQuestion(questionId);
-            EncodeQRCode(locationOfQrCodeImage);
-            
-            this.NewQuestion = String.Empty;
+                SaveHuntQuestion(questionId);
+                EncodeQRCode(locationOfQrCodeImage);
+
+                this.NewQuestion = String.Empty;
+            }
+            else 
+            { 
+                //Print out here that it has already been added!
+            }
         }
 
         private void SaveHuntQuestion(long questionId)
@@ -272,6 +298,27 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "SearchHuntViewModel" });
             NewQuestion = null;
         }
+
+        private bool DoesQuestionAlreadyExist(string newQuestion)
+        {
+            //GetHuntQuestions
+            List<long> listOfQuestions = serviceClient.GetHuntQuestions(this.currentTreasureHunt).ToList();
+
+            using (var currentHuntQuestionIds = listOfQuestions.GetEnumerator())
+            {
+                while (currentHuntQuestionIds.MoveNext())
+                {
+                    question question = serviceClient.GetQuestion(currentHuntQuestionIds.Current);
+
+                    if (question.Question1 == newQuestion)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;        
+        }
         
         #endregion
 
@@ -282,24 +329,43 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         }
         #endregion
 
-        public string Error
+        //-http://codeblitz.wordpress.com/2009/05/08/wpf-validation-made-easy-with-idataerrorinfo/
+        string IDataErrorInfo.Error
         {
-            get { return string.Empty; }
+            get
+            {
+                return null;
+            }
         }
 
-        public string this[string columnName]
-        {
-            get 
-            {
-                String result = null;
-                if (!IsValidNewQuestion())
-                {
-                    result = "Question is invalid.";
-                }
+        //What properties I am validating.
+        static readonly string[] ValidatedProperties = 
+        { 
+            "NewQuestion"
+        };
 
-                return result;
-                
+        string IDataErrorInfo.this[string propertyName]
+        {
+            get
+            {
+                return GetValidationMessage(propertyName);
             }
+        }
+
+        private string GetValidationMessage(string propertyName)
+        {
+            String result = null;
+
+            switch (propertyName)
+            {
+                case "NewQuestion":
+                    {
+                        result = ErrorMessage;
+                        break;
+                    }
+            }
+
+            return result;
         }
     }
 }
