@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -35,7 +36,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         public ViewHuntViewModel(ITreasureHuntService _serviceClient)
         {
             serviceClient = _serviceClient;
-            SaveQuestionCommand = new RelayCommand(() => ExecuteSaveQuestionCommand(), ()=> IsValidNewQuestion());
+            SaveQuestionCommand = new RelayCommand(() => ExecuteSaveQuestionCommand(), () => IsValidNewQuestion());
             ViewQrCodeCommand = new RelayCommand(() => ExecuteViewQrCodeCommand(), () => IsSingleQuestionSelected());
             PrintQRCodesCommand = new RelayCommand(() => ExecutePrintQRCodesCommand(), () => IsValidListOfQuestions());
             BackCommand = new RelayCommand(() => ExecuteBackCommand());
@@ -72,30 +73,22 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             }
         }
 
-        public bool IsValidNewQuestion()
+        public int NewQuestionMinLength
         {
-            if (currentTreasureHunt != null)
+            get
             {
-                if (!Validation.IsNullOrWhiteSpace(this.newQuestion))
-                {
-                    if (Validation.IsValidLength(newQuestion, NewQuestionMaxLength))
-                    {
-                        //-http://blog.magnusmontin.net/2013/08/26/data-validation-in-wpf/
-                        if (Validation.IsValidCharacters(this.newQuestion))
-                        {
-                            ErrorMessage = null;
-                            return true;
-                        }
-                        ErrorMessage = "There are invalid characters";
-                        return false;                    
-                    }
-                    ErrorMessage = "Hunt name is an invalid length!";
-                    return false;
-                }
-                ErrorMessage = "Hunt name cannot be empty!";
-                return false;
+                return 10;
+
             }
-            return false;
+        }
+
+        private bool IsValidNewQuestion()
+        {
+            foreach (string property in ValidatedProperties)
+                if (GetValidationMessage(property) != null)
+                    return false;
+
+            return true;
         }
 
         public bool IsValidListOfQuestions()
@@ -136,7 +129,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                         listOfQuestionsFromHunt.Add(currentQuestionInList);
                     }
 
-                    this.Questions = listOfQuestionsFromHunt.AsEnumerable();
+                    Questions = listOfQuestionsFromHunt.AsEnumerable();
                 }
              }
         }
@@ -144,18 +137,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #endregion
 
         #region Variable getters and setters
-
-        private string errorMessage;
-        public string ErrorMessage
-        {
-            get { return this.errorMessage; }
-            set
-            {
-
-                this.errorMessage = value;
-                RaisePropertyChanged("ErrorMessage");
-            }
-        }
 
         private IEnumerable<question> questions;
         public IEnumerable<question> Questions
@@ -222,8 +203,10 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 this.NewQuestion = String.Empty;
             }
             else 
-            { 
-                //Print out here that it has already been added!
+            {
+                String messageBoxText = "This question already exists.";
+                String caption = "Question Already Exists";
+                MessageBoxResult box = MessageBox.Show(messageBoxText, caption);
             }
         }
 
@@ -242,7 +225,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             Bitmap generatedQrCodeImage = encoder.Encode(this.NewQuestion);
             generatedQrCodeImage.Save(locationOfQrCodeImage, ImageFormat.Jpeg);
 
-            this.RefreshQuestions();
+            RefreshQuestions();
         }
 
         private void ExecuteViewQrCodeCommand()
@@ -252,11 +235,14 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         }
 
         //make internal
-        public void ExecutePrintQRCodesCommand()
+        private void ExecutePrintQRCodesCommand()
         {
+            NewQuestion = null;
             //-http://cathalscorner.blogspot.co.uk/2009/04/docx-version-1002-released.html
             String newDocumentFileLocation = myFileDirectory + "Documents\\" + this.currentTreasureHunt.HuntName + " QR Codes Sheet.docx";
 
+            //if(File.Exists(myFileDirectory + "Documents\\" + this.currentTreasureHunt.HuntName + " QR Codes Sheet.docx")
+            //{
             using (DocX documentOfQRCodes = DocX.Create(newDocumentFileLocation))
             {
                 Novacode.Paragraph p = documentOfQRCodes.InsertParagraph(this.currentTreasureHunt.HuntName);
@@ -275,7 +261,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
                             Picture pic1 = img.CreatePicture();
                             q.InsertPicture(pic1, 0);
-                            pic1.Width = 200; //smaller codes sizes
+                            pic1.Width = 200; 
                             pic1.Height = 200;
 
                             documentOfQRCodes.InsertParagraph();
@@ -284,7 +270,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                     }
                 }
   
-                documentOfQRCodes.Save(); 
+                documentOfQRCodes.Save();
             }
 
             Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "PrintViewModel" });
@@ -329,6 +315,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         }
         #endregion
 
+        #region IDataErrorInfo
         //-http://codeblitz.wordpress.com/2009/05/08/wpf-validation-made-easy-with-idataerrorinfo/
         string IDataErrorInfo.Error
         {
@@ -360,12 +347,32 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             {
                 case "NewQuestion":
                     {
-                        result = ErrorMessage;
+                        result = ValidateQuestion();
                         break;
                     }
             }
 
             return result;
         }
+
+        private String ValidateQuestion()
+        {
+            if (Validation.IsNullOrEmpty(NewQuestion))
+            {
+                return "Question cannot be empty!";
+            }
+            //-http://blog.magnusmontin.net/2013/08/26/data-validation-in-wpf/
+            if (!Validation.IsValidCharacters(NewQuestion))
+            {
+                return "There are invalid characters";
+            }
+            if (!Validation.IsValidLength(NewQuestion, NewQuestionMaxLength, NewQuestionMinLength))
+            {
+                return "Question is an invalid length!";
+            }
+          
+            return null;
+        }
+        #endregion
     }
 }

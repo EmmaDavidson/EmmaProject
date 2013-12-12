@@ -32,18 +32,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         #region Variable getters and setters
 
-        private string errorMessage;
-        public string ErrorMessage
-        {
-            get { return this.errorMessage; }
-            set
-            {
-
-                this.errorMessage = value;
-                RaisePropertyChanged("ErrorMessage");
-            }
-        }
-
         private string huntName;
         public string HuntName
         {
@@ -66,29 +54,22 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 return 100;
             }
         }
-
-        public bool IsValidHuntName()
+        public int HuntNameMinLength
         {
-            if (!Validation.IsNullOrWhiteSpace(HuntName))
+            get 
             {
-                if (Validation.IsValidLength(HuntName, HuntNameMaxLength))
-                {
-                    if (Validation.IsValidCharacters(HuntName))
-                    {
-                        ErrorMessage = null;
-                        return true;
-                    }
-
-                    ErrorMessage = "There are invalid characters";
-                    return false;
-                }
-
-                ErrorMessage = "Hunt name is an invalid length!";
-                return false;
+                return 5;
             }
+        }
 
-            ErrorMessage = "Hunt name cannot be empty!";
-            return false;
+        //-http://www.youtube.com/watch?v=OOHDie8BdGI
+        private bool IsValidHuntName()
+        {
+            foreach(string property in ValidatedProperties)
+                if(GetValidationMessage(property) != null)
+                return false;
+      
+            return true;
         }
         #endregion
 
@@ -119,6 +100,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #endregion
 
         //-http://codeblitz.wordpress.com/2009/05/08/wpf-validation-made-easy-with-idataerrorinfo/
+        //-http://www.youtube.com/watch?v=OOHDie8BdGI 
         string IDataErrorInfo.Error
         {
             get
@@ -149,12 +131,31 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             {
                 case "HuntName":
                     {
-                        result = ErrorMessage;
+                        result = ValidateHuntName();
                         break;
                     }
             }
 
             return result;
+        }
+
+        private String ValidateHuntName()
+        {
+            if (Validation.IsNullOrEmpty(HuntName))
+            {
+                return "Hunt name cannot be empty!";
+            }
+            if (!Validation.IsValidCharacters(HuntName))
+            {
+                return "There are invalid characters";
+            }
+            if (!Validation.IsValidLength(HuntName, HuntNameMaxLength, HuntNameMinLength))
+            {
+                return "Hunt name is an invalid length!";
+            }
+            
+
+            return null;
         }
     }
 }

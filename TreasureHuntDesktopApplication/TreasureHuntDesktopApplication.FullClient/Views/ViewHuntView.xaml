@@ -14,7 +14,7 @@
         
         <Label Content="New Question: " HorizontalAlignment="Left" Margin="24,41,0,0" VerticalAlignment="Top"/>
         <!--http://www.eidias.com/Blog/2012/7/2/simple-validation-in-wpf-mvvm-using-idataerrorinfo-->
-        <TextBox Text="{Binding NewQuestion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=True}" HorizontalAlignment="Left" Height="49" Margin="115,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="369" Grid.ColumnSpan="2">
+        <TextBox Name="NewQuestionTextBox" Text="{Binding NewQuestion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Height="49" Margin="115,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="369" Grid.ColumnSpan="2">
         </TextBox>
         <Button Content="Add Question" HorizontalAlignment="Left" Margin="333,41,0,0" VerticalAlignment="Top" Width="84" Command="{Binding SaveQuestionCommand}" Grid.Column="1"/>
         <Button Command="{Binding ViewQrCodeCommand}" Content="View QR Code" HorizontalAlignment="Left" Margin="115,333,0,0" VerticalAlignment="Top" Width="181" Grid.ColumnSpan="2"/>
@@ -28,7 +28,7 @@
             
         </ListView>
 
-        <Label FontStyle="Italic" Foreground="Red" Content="{Binding ErrorMessage}" HorizontalAlignment="Left" Margin="115,95,0,0" VerticalAlignment="Top" Height="28" Width="188" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2"/>
+        <Label FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=NewQuestionTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="115,95,0,0" VerticalAlignment="Top" Height="28" Width="188" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2"/>
         <Button Command="{Binding BackCommand}" Content="Back" Grid.Column="1" HorizontalAlignment="Left" Margin="88,373,0,0" VerticalAlignment="Top" Width="75"/>
         <Label FontWeight="Bold" Content="Current Treasure Hunt:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding CurrentTreasureHunt.HuntName}" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="150,10,0,0"/>

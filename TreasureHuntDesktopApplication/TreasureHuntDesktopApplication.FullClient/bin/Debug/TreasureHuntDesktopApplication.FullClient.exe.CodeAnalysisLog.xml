@@ -14,8 +14,8 @@
            <Accessors>
             <Accessor Name="#System.ComponentModel.IDataErrorInfo.get_Error()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="True">
              <Messages>
-              <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Status="Active" Created="2013-12-11 22:53:35Z" FixCategory="NonBreaking">
-               <Issue Certainty="95" Level="Error" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="CreateHuntViewModel.cs" Line="125">Make 'CreateHuntViewModel' sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of 'IDataErrorInfo.Error.get()' and is visible to derived classes.</Issue>
+              <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Status="Active" Created="2013-12-12 13:35:05Z" FixCategory="NonBreaking">
+               <Issue Certainty="95" Level="Error" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="CreateHuntViewModel.cs" Line="107">Make 'CreateHuntViewModel' sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of 'IDataErrorInfo.Error.get()' and is visible to derived classes.</Issue>
               </Message>
              </Messages>
             </Accessor>
@@ -25,8 +25,8 @@
            <Accessors>
             <Accessor Name="#System.ComponentModel.IDataErrorInfo.get_Item(System.String)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="True">
              <Messages>
-              <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Status="Active" Created="2013-12-11 22:53:35Z" FixCategory="NonBreaking">
-               <Issue Certainty="95" Level="Error" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="CreateHuntViewModel.cs" Line="139">Make 'CreateHuntViewModel' sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of 'IDataErrorInfo.this.get(string)' and is visible to derived classes.</Issue>
+              <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Status="Active" Created="2013-12-12 13:35:05Z" FixCategory="NonBreaking">
+               <Issue Certainty="95" Level="Error" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="CreateHuntViewModel.cs" Line="121">Make 'CreateHuntViewModel' sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of 'IDataErrorInfo.this.get(string)' and is visible to derived classes.</Issue>
               </Message>
              </Messages>
             </Accessor>
@@ -38,7 +38,7 @@
          <Members>
           <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-12-11 22:53:35Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-12-12 13:35:05Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="MainViewModel.cs" Line="48">'MainViewModel.MainViewModel()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;MainViewModel..ctor()&#xD;&#xA;MainViewModel.set_CurrentViewModel(ViewModelBase):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
             </Message>
            </Messages>
@@ -49,7 +49,7 @@
          <Members>
           <Member Name="#.ctor(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.ITreasureHuntService)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-12-11 22:53:35Z" FixCategory="NonBreaking">
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-12-12 13:35:05Z" FixCategory="NonBreaking">
              <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="SearchHuntViewModel.cs" Line="21">'SearchHuntViewModel.SearchHuntViewModel(ITreasureHuntService)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;SearchHuntViewModel..ctor(ITreasureHuntService)&#xD;&#xA;SearchHuntViewModel.RefreshTreasureHunts():Void&#xD;&#xA;SearchHuntViewModel.set_TreasureHunts(IEnumerable&lt;hunt&gt;):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
             </Message>
            </Messages>
@@ -60,8 +60,8 @@
          <Members>
           <Member Name="#.ctor(TreasureHuntDesktopApplication.FullClient.TreasureHuntService.ITreasureHuntService)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
            <Messages>
-            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-12-11 22:53:35Z" FixCategory="NonBreaking">
-             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="ViewHuntViewModel.cs" Line="33">'ViewHuntViewModel.ViewHuntViewModel(ITreasureHuntService)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;ViewHuntViewModel..ctor(ITreasureHuntService)&#xD;&#xA;ViewHuntViewModel.RefreshQuestions():Void&#xD;&#xA;ViewHuntViewModel.set_Questions(IEnumerable&lt;question&gt;):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2013-12-12 13:35:05Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="ViewHuntViewModel.cs" Line="34">'ViewHuntViewModel.ViewHuntViewModel(ITreasureHuntService)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;ViewHuntViewModel..ctor(ITreasureHuntService)&#xD;&#xA;ViewHuntViewModel.RefreshQuestions():Void&#xD;&#xA;ViewHuntViewModel.set_Questions(IEnumerable&lt;question&gt;):Void&#xD;&#xA;ObservableObject.RaisePropertyChanged(String):Void</Issue>
             </Message>
            </Messages>
           </Member>
@@ -69,8 +69,8 @@
            <Accessors>
             <Accessor Name="#System.ComponentModel.IDataErrorInfo.get_Error()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="True">
              <Messages>
-              <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Status="Active" Created="2013-12-11 22:53:35Z" FixCategory="NonBreaking">
-               <Issue Certainty="95" Level="Error" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="ViewHuntViewModel.cs" Line="336">Make 'ViewHuntViewModel' sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of 'IDataErrorInfo.Error.get()' and is visible to derived classes.</Issue>
+              <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Status="Active" Created="2013-12-12 13:35:05Z" FixCategory="NonBreaking">
+               <Issue Certainty="95" Level="Error" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="ViewHuntViewModel.cs" Line="323">Make 'ViewHuntViewModel' sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of 'IDataErrorInfo.Error.get()' and is visible to derived classes.</Issue>
               </Message>
              </Messages>
             </Accessor>
@@ -80,8 +80,8 @@
            <Accessors>
             <Accessor Name="#System.ComponentModel.IDataErrorInfo.get_Item(System.String)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="True">
              <Messages>
-              <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Status="Active" Created="2013-12-11 22:53:35Z" FixCategory="NonBreaking">
-               <Issue Certainty="95" Level="Error" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="ViewHuntViewModel.cs" Line="350">Make 'ViewHuntViewModel' sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of 'IDataErrorInfo.this.get(string)' and is visible to derived classes.</Issue>
+              <Message TypeName="InterfaceMethodsShouldBeCallableByChildTypes" Category="Microsoft.Design" CheckId="CA1033" Status="Active" Created="2013-12-12 13:35:05Z" FixCategory="NonBreaking">
+               <Issue Certainty="95" Level="Error" Path="c:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.FullClient\ViewModel" File="ViewHuntViewModel.cs" Line="337">Make 'ViewHuntViewModel' sealed (a breaking change if this class has previously shipped), implement the method non-explicitly, or implement a new method that exposes the functionality of 'IDataErrorInfo.this.get(string)' and is visible to derived classes.</Issue>
               </Message>
              </Messages>
             </Accessor>

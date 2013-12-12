@@ -23,18 +23,18 @@ namespace TreasureHuntDesktopApplication.FullClient.Project_Utilities
         public static bool IsNullOrEmpty(String stringToCheck)
         {
 
-            if (String.IsNullOrEmpty(stringToCheck))
+            if (String.IsNullOrEmpty(stringToCheck) || String.IsNullOrWhiteSpace(stringToCheck))
             {
                 return true;
             }
             return false;
         }
 
-        public static bool IsValidLength(String stringToCheck, int maxLength)
+        public static bool IsValidLength(String stringToCheck, int maxLength, int minLength)
         {
             if(stringToCheck != null)
             {
-                if (stringToCheck.Length <= maxLength)
+                if (stringToCheck.Length <= maxLength && stringToCheck.Length >= minLength)
                 {
                     return true;
                 }

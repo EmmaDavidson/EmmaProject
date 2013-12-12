@@ -67,12 +67,24 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             }
         }
 
+        private XpsDocument _xpsDocument;
+        public XpsDocument xpsDocument
+        {
+            get { return this._xpsDocument; }
+            set
+            {
+                this._xpsDocument = value;
+                RaisePropertyChanged("xpsDocument");
+
+            }
+        }
+
         //-http://code.msdn.microsoft.com/office/CSVSTOViewWordInWPF-db347436
         private void ReceivePrintMessage(String fileLocation)
         {
             string convertedXpsDoc = string.Concat("C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\tempDoc1.xps");
 
-            XpsDocument xpsDocument = ConvertWordToXps(fileLocation, convertedXpsDoc);
+            xpsDocument = ConvertWordToXps(fileLocation, convertedXpsDoc);
             if (xpsDocument == null)
             {
                 return;
@@ -97,7 +109,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 wordApp.WindowState = WdWindowState.wdWindowStateMinimize;
 
                 Document doc = wordApp.ActiveDocument;
-                doc.SaveAs(xpsFilename, WdSaveFormat.wdFormatXPS);
+                doc.SaveAs(xpsFilename, WdSaveFormat.wdFormatXPS);                
 
                 XpsDocument xpsDocument = new XpsDocument(xpsFilename, FileAccess.Read);
                 return xpsDocument;
@@ -109,7 +121,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             finally
             {
                 wordApp.Documents.Close();
-                ((_Application)wordApp).Quit(WdSaveOptions.wdDoNotSaveChanges);
+                ((_Application)wordApp).Quit(WdSaveOptions.wdDoNotSaveChanges);            
             } 
            
         }
@@ -118,6 +130,12 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "ViewHuntViewModel" });
             Messenger.Default.Send<SelectedHuntMessage>(new SelectedHuntMessage() { CurrentHunt = this.currentTreasureHunt });
+
+            DocumentViewer = null;
+            xpsDocument.Close();
+            //Delete the temporary file
+            File.Delete("C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\tempDoc1.xps");
+
         }
     }
 }
