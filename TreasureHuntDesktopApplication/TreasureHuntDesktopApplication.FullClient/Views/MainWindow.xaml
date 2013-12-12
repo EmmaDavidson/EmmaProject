@@ -3,26 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Height="500"
-        Width="1024"
+        Width="750"
         Title="Treasure Hunt"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="4*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        ResizeMode="NoResize">
 
-        <StackPanel>
-           <!--<Button Content="Create Hunt" Command="{Binding NavigateToCreateHuntViewCommand}"></Button>-->
-            <!--<Button Content="Search Hunts" Command="{Binding NavigateToSearchHuntViewCommand}"></Button>-->
-        </StackPanel>
+    <Grid Background="Black">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
                
-        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}"/>
+        <ContentControl Content="{Binding CurrentViewModel}" Grid.Column="1"/>
+        <Image Source="C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\TreasureHuntImage.png" Margin="0,0,0,331" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>

@@ -4,12 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="300">
-    <Grid>
-        <ComboBox ItemsSource="{Binding Path=TreasureHunts}" DisplayMemberPath="HuntName" SelectedItem="{Binding Path=CurrentTreasureHunt, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="280"/>
-        <Label Content="Select Treasure Hunt:" HorizontalAlignment="Left" Margin="87,10,0,0" VerticalAlignment="Top"/>
-        <Button Command="{Binding SearchHuntCommand}" Content="Search" HorizontalAlignment="Left" Margin="115,79,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Command="{Binding CreateNewHuntCommand}" Content="Create New Hunt" HorizontalAlignment="Left" Margin="168,117,0,0" VerticalAlignment="Top" Width="122" Height="23"/>
+             Height="500"
+             Width="600">
+    <Grid Background="White">
+        <ComboBox ItemsSource="{Binding Path=TreasureHunts}" DisplayMemberPath="HuntName" SelectedItem="{Binding Path=CurrentTreasureHunt, Mode=TwoWay}" HorizontalAlignment="Left" Margin="174,98,0,0" VerticalAlignment="Top" Width="339" Height="32"/>
+        <Label FontFamily="Arial" FontStyle="Italic" FontSize="20" Content="Search Treasure Hunts" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label FontFamily="Arial" FontSize="20" Content="Hunt name:" HorizontalAlignment="Left" Margin="53,97,0,0" VerticalAlignment="Top" Width="150"/>
+
+        <Button Command="{Binding SearchHuntCommand}" Content="Search" HorizontalAlignment="Left" Margin="263,144,0,0" VerticalAlignment="Top" Width="144" Height="33"/>
+        <Button Command="{Binding CreateNewHuntCommand}" Content="Create New Hunt" HorizontalAlignment="Left" Margin="404,394,0,0" VerticalAlignment="Top" Width="153" Height="35"/>
 
 
     </Grid>

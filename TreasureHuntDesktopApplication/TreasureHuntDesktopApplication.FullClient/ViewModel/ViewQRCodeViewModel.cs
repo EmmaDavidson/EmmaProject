@@ -35,6 +35,14 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
              (action) => ReceiveSelectedQuestionMessage(action.SelectedQuestion)
 
              );
+
+            Messenger.Default.Register<SelectedHuntMessage>
+             (
+
+             this,
+             (action) => ReceiveSelectedHuntMessage(action.CurrentHunt)
+
+             );
             
         }
         #endregion
@@ -42,9 +50,15 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #region Receiving Messages
         private void ReceiveSelectedQuestionMessage(question selectedQuestion)
         {
-            this.currentQuestion = selectedQuestion;
+            CurrentQuestion = selectedQuestion;
             GenerateQRCode();
         }
+
+        private void ReceiveSelectedHuntMessage(hunt selectedHunt)
+        {
+            CurrentTreasureHunt = selectedHunt;
+        }
+
         #endregion
 
         #region Variables
@@ -68,6 +82,18 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             {
                 this.qrCode = value;
                 RaisePropertyChanged("QRCode");
+            }
+        }
+
+        private hunt currentTreasureHunt;
+        public hunt CurrentTreasureHunt
+        {
+            get { return this.currentTreasureHunt; }
+            set
+            {
+                this.currentTreasureHunt = value;
+                RaisePropertyChanged("CurrentTreasureHunt");
+
             }
         }
         #endregion

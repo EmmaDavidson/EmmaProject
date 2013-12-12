@@ -4,11 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-        <Grid>
-            <Label Content="{Binding CurrentQuestion.Question1}" HorizontalAlignment="Left" Margin="76,20,0,0" VerticalAlignment="Top" Height="54" Width="204"/>
-           <Image Source="{Binding Path=QRCode, Mode=TwoWay}" HorizontalAlignment="Left" Height="161" Margin="63,102,0,0" VerticalAlignment="Top" Width="191"/>
-           <Button Command="{Binding BackToViewHuntCommand}" Content="Back to treasure hunt" Margin="24,268,20,0" VerticalAlignment="Top"/>
-        <Label Content="Question:" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top"/>
+             Height="500"
+             Width="600">
+    <Grid Background="White">
+        <Label FontFamily="Arial" FontStyle="Italic" FontSize="20" Content="Current Treasure Hunt:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+
+        <Label FontFamily="Arial" FontSize="20" Content="{Binding CurrentQuestion.Question1}" HorizontalAlignment="Left" Margin="178,48,0,0" VerticalAlignment="Top" Height="54" Width="402"/>
+           <Image Source="{Binding Path=QRCode, Mode=TwoWay}" HorizontalAlignment="Left" Height="150" Margin="199,153,0,0" VerticalAlignment="Top" Width="206"/>
+           <Button Command="{Binding BackToViewHuntCommand}" Content="Back" Margin="199,330,252,0" VerticalAlignment="Top"/>
+        <Label FontFamily="Arial" FontSize="20" FontStyle="Italic" Content="Current Question:" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top"/>
+        <Label FontFamily="Arial" FontSize="20" Content="{Binding CurrentTreasureHunt.HuntName}" HorizontalAlignment="Left" Margin="229,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.579,1.385"/>
     </Grid>
 </UserControl>
