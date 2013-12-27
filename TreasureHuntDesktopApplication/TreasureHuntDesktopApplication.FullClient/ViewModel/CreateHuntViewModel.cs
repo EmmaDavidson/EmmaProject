@@ -76,19 +76,48 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #region Commands
         private void ExecuteSaveHuntNameCommand()
         {
-            hunt newHunt = new hunt();
-            newHunt.HuntName = this.huntName;
-            this.serviceClient.SaveNewHunt(newHunt);
+            if (!DoesHuntAlreadyExist(HuntName))
+            {
+                hunt newHunt = new hunt();
+                newHunt.HuntName = this.huntName;
+                this.serviceClient.SaveNewHunt(newHunt);
 
-            //Grabs the correct hunt's ID and passes it into the view hunt view.
-            //Ensures that the hunt has been saved to the database before it goes and grab's it
-            hunt huntToView = serviceClient.GetHuntBasedOnName(newHunt.HuntName);
+                //Grabs the correct hunt's ID and passes it into the view hunt view.
+                //Ensures that the hunt has been saved to the database before it goes and grab's it
+                hunt huntToView = serviceClient.GetHuntBasedOnName(newHunt.HuntName);
 
-            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "ViewHuntViewModel" });
-            Messenger.Default.Send<SelectedHuntMessage>(new SelectedHuntMessage() { CurrentHunt = huntToView });
-            Messenger.Default.Send<ViewUpdatedMessage>(new ViewUpdatedMessage() { UpdatedView = true});
+                Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "ViewHuntViewModel" });
+                Messenger.Default.Send<SelectedHuntMessage>(new SelectedHuntMessage() { CurrentHunt = huntToView });
+                Messenger.Default.Send<ViewUpdatedMessage>(new ViewUpdatedMessage() { UpdatedView = true });
 
-            HuntName = null;
+                HuntName = null;
+            }
+            else 
+            {
+                String messageBoxText = "This hunt already exists.";
+                String caption = "Hunt Already Exists";
+                MessageBoxResult box = MessageBox.Show(messageBoxText, caption);     
+            }
+        }
+
+        private bool DoesHuntAlreadyExist(string newQuestion)
+        {
+            //GetHuntQuestions
+            List<hunt> listOfHunts = serviceClient.GetTreasureHunts().ToList();
+
+            using (var currentHunts = listOfHunts.GetEnumerator())
+            {
+                while (currentHunts.MoveNext())
+                {
+                    //-http://stackoverflow.com/questions/6371150/comparing-two-strings-ignoring-case-in-c-sharp
+                    if(String.Equals(currentHunts.Current.HuntName, this.huntName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private void ExecuteBackCommand()

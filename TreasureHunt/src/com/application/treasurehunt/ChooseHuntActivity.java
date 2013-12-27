@@ -5,15 +5,12 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import sqlLiteDatabase.Hunt;
 import sqlLiteDatabase.HuntDAO;
-
-import com.application.treasurehunt.LoginActivity.UserLoginTask;
 
 import Utilities.JSONParser;
 import android.os.AsyncTask;
@@ -22,12 +19,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 //http://net.tutsplus.com/tutorials/php/php-database-access-are-you-doing-it-correctly/
@@ -35,6 +30,7 @@ public class ChooseHuntActivity extends Activity implements OnItemClickListener 
 
 	JSONParser jsonParser = new JSONParser();
 	private static final String myChooseHuntUrl =  "http://192.168.1.74:80/webservice/choosehunt.php";
+	//private static final String myChooseHuntUrl =  "http://143.117.224.68:80/webservice/choosehunt.php";
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	private static JSONArray tagResult;

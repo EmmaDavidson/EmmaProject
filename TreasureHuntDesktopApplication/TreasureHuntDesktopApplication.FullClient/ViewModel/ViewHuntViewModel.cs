@@ -297,7 +297,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 {
                     question question = serviceClient.GetQuestion(currentHuntQuestionIds.Current);
 
-                    if (question.Question1 == newQuestion)
+                    if (String.Equals(question.Question1, newQuestion, StringComparison.OrdinalIgnoreCase))
                     {
                         return true;
                     }

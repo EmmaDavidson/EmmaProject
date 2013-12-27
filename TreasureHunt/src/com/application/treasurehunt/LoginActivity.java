@@ -29,6 +29,7 @@ public class LoginActivity extends Activity {
 	JSONParser jsonParser = new JSONParser();
 	//http://stackoverflow.com/questions/5806220/how-to-connect-to-my-http-localhost-web-server-from-android-emulator-in-eclips
 	private static final String myLoginUrl =  "http://192.168.1.74:80/webservice/login.php";
+	//private static final String myLoginUrl =  "http://143.117.224.68:80/webservice/login.php";
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	

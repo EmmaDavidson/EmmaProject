@@ -43,6 +43,8 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             {
                 RefreshTreasureHunts();
             }
+
+            //CurrentTreasureHunt = null;  
         }
         #endregion
 
@@ -75,7 +77,8 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         //make internal
         public void RefreshTreasureHunts()
         {
-            this.TreasureHunts = this.serviceClient.GetTreasureHunts();
+            TreasureHunts = this.serviceClient.GetTreasureHunts();
+            CurrentTreasureHunt = null;
         }
         #endregion
 

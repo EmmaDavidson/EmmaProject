@@ -26,6 +26,7 @@ import android.widget.Toast;
 public class RegisterActivity extends Activity {
 
 	private static final String myRegisterUrl =  "http://192.168.1.74:80/webservice/register.php";
+	//private static final String myRegisterUrl =  "http://143.117.224.68:80/webservice/register.php";
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	
