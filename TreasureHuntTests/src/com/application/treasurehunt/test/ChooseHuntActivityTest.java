@@ -25,9 +25,11 @@ public class ChooseHuntActivityTest extends ActivityInstrumentationTestCase2<Cho
 	public void setUp() throws Exception {
 	}
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void listOfHuntsGeneratedIfSuccessful()
+	{
+		
 	}
+
+	
 
 }

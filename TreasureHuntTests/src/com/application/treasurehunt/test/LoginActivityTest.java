@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -20,6 +23,7 @@ import org.robolectric.Robolectric;
 import Utilities.JSONParser;
 import android.R;
 import android.app.Instrumentation.ActivityMonitor;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
@@ -46,6 +50,13 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 	private String mEmail;
 	private String mPassword;
 	@Mock private JSONParser jsonParserMock;
+	Method isValidEmailMethod;
+	Method isValidPasswordMethod;
+	
+	Class mLoginActivityNew;
+	
+	Object isValidEmailMethodObject;
+	Object isValidPasswordMethodObject;
 	
 	//http://stackoverflow.com/questions/9053864/no-enclosing-instance-of-type-error-while-calling-method-from-another-class-in
 		
@@ -64,13 +75,27 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 	protected void setUp() throws Exception {
 		super.setUp();
 		mLoginActivity = getActivity();
+	
 		mEmailView = (TextView) mLoginActivity.findViewById(com.application.treasurehunt.R.id.login_email_address);
 		mPasswordView = (TextView) mLoginActivity.findViewById(com.application.treasurehunt.R.id.login_password);
 		mRegisterButton = (Button) mLoginActivity.findViewById(com.application.treasurehunt.R.id.register_on_login_button);
 		mLoginButton = (Button) mLoginActivity.findViewById(com.application.treasurehunt.R.id.sign_in_button);
 		
 		loginTask = mLoginActivity.new UserLoginTask();
+		
 		jsonParserMock = Mockito.mock(JSONParser.class);
+		mLoginActivity.jsonParser = jsonParserMock;
+		
+		//http://www.xyzws.com/Javafaq/how-to-use-reflection-to-call-methods-in-java/153
+		//http://blog.octo.com/en/android-testing-testing-private-methods/
+		//http://geekyouup.blogspot.co.uk/2010/01/android-app-optimization-using.html
+		mLoginActivityNew = LoginActivity.class;
+		
+		isValidEmailMethod = mLoginActivityNew.getDeclaredMethod("isValidEmailAddress", null);
+		isValidEmailMethod.setAccessible(true);
+					
+		isValidPasswordMethod = mLoginActivityNew.getDeclaredMethod("isValidPassword", null);
+		isValidPasswordMethod.setAccessible(true);
 		
 		//http://stackoverflow.com/questions/9694282/activityunittestcase-and-activityrunonuithread
 		mLoginActivity.runOnUiThread(new Runnable()
@@ -94,14 +119,28 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 		assertEquals("Email is empty", "", mEmail);
 	}
 	
-	public void emailInvalidIfEmpty()
-	{
+	public void emailInvalidIfEmpty() throws IllegalArgumentException, IllegalAccessException, NoSuchMethodException,InvocationTargetException
+	{	
 		mLoginActivity.runOnUiThread(new Runnable()
 		{
 			public void run()
 			{
+				//http://www.xyzws.com/Javafaq/how-to-use-reflection-to-call-methods-in-java/153
+				//http://blog.octo.com/en/android-testing-testing-private-methods/
+				//http://geekyouup.blogspot.co.uk/2010/01/android-app-optimization-using.html
 				mEmailView.setText(null);
-				assertEquals("Email is empty", false, mLoginActivity.isValidEmailAddress());
+				
+				try {
+					isValidEmailMethodObject = isValidEmailMethod.invoke(mLoginActivity, null);
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				
+				assertEquals("Email is empty", false, isValidEmailMethodObject);  
 			}
 		});
 	}
@@ -113,7 +152,18 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 			public void run()
 			{
 				mEmailView.setText("emma@com");
-				assertEquals("Email is invalid length", false, mLoginActivity.isValidEmailAddress());
+				
+				try {
+					isValidEmailMethodObject = isValidEmailMethod.invoke(mLoginActivity, null);
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				
+				assertEquals("Email is invalid length", false, isValidEmailMethodObject);
 			}
 		});
 		
@@ -126,7 +176,18 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 			public void run()
 			{
 				mEmailView.setText("emmadotcom");
-				assertEquals("Email is invalid format", false, mLoginActivity.isValidEmailAddress());
+				
+				try {
+					isValidEmailMethodObject = isValidEmailMethod.invoke(mLoginActivity, null);
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				
+				assertEquals("Email is invalid format", false, isValidEmailMethodObject);
 			}
 			
 		});
@@ -139,7 +200,18 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 			public void run()
 			{
 				mPasswordView.setText(null);
-				assertEquals("Password is empty", false, mLoginActivity.isValidPassword());
+				
+				try {
+					isValidPasswordMethodObject = isValidPasswordMethod.invoke(mLoginActivity, null);
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				
+				assertEquals("Password is empty", false, isValidPasswordMethodObject);
 			}
 		});
 	}
@@ -151,16 +223,27 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 			public void run()
 			{
 				mPasswordView.setText("em");
-				assertEquals("Password is invalid length", false, mLoginActivity.isValidPassword());
+				
+				try {
+					isValidPasswordMethodObject = isValidPasswordMethod.invoke(mLoginActivity, null);
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+				}
+				
+				assertEquals("Password is invalid length", false, isValidPasswordMethodObject);
 			}
 		});
 			
 	}
-	
+
 	//http://stackoverflow.com/questions/9405561/test-if-a-button-starts-a-new-activity-in-android-junit-pref-without-robotium
 	public void registerActivityShouldStartIfRegisterButtonPressed()
 	{
-		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(RegisterActivity.class.getName(), null, false);
+    	ActivityMonitor activityMonitor = getInstrumentation().addMonitor(RegisterActivity.class.getName(), null, false);
 		
 		mLoginActivity.runOnUiThread(new Runnable(){
 			@Override
@@ -170,128 +253,100 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 			
 		});
 		
-		RegisterActivity nextActivity = (RegisterActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5);
+		RegisterActivity nextActivity = (RegisterActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 10000);
 		assertNotNull(nextActivity);
 		nextActivity.finish();
 	}
 	
+	
+	//Problem with this test - had to change loginTask.doInBackground() to be public when should protected like the others
+	//This test currently tests that the HTTPRequest is actually made
+	//I wanted it to test that an activity was started afterwards but issues (See below)
 	public void chooseHuntActivityBeginsIfSuccessfullyLoggedIn() throws JSONException
 	{	
-		/*Object jsonMessage = "message" + ":" + "Successfully logged in!" + "," + "success:1";
-		jsonParserMock = Mockito.mock(JSONParser.class);
+		//http://stackoverflow.com/questions/3559063/how-to-enter-quotes-in-a-string
+		String SUCCESSFULLY_LOGGED_IN = "Successfully logged in!";
+		JSONObject fakeObject = new JSONObject();	
+		fakeObject.put("message", SUCCESSFULLY_LOGGED_IN);
+		fakeObject.put("success", "1");
 	
-		//Mockito.when(jsonParserMock.makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList())).thenReturn(fakeObject);
-	
-		//http://stackoverflow.com/questions/9694282/activityunittestcase-and-activityrunonuithread
-		mLoginActivity.runOnUiThread(new Runnable()
+		Mockito.when(jsonParserMock.makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList())).thenReturn(fakeObject);
+		
+		try
 		{
-			public void run()
-			{
-				mEmailView.setText("aewart@gmail.com");
-				mPasswordView.setText("password");
-			};
-			
-		});	
-		
-		*/
-	}
-	
-	public void loginFailsIfIncorrectDetails()
-	{
-		final UserLoginTask jsonMock = Mockito.mock(UserLoginTask.class);		
-		
-		JSONParser jsonParserMock = Mockito.mock(JSONParser.class);	
-		JSONObject fakeJsonObject = null;
-		try {
-			fakeJsonObject = new JSONObject("message" + ":" + "Login details incorrect." + "," + "success:0");
-		} catch (JSONException e1) {
-			e1.printStackTrace();
+			loginTask.doInBackground((String)null);
 		}
-		
-		Mockito.when(jsonParserMock.makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList())).thenReturn(fakeJsonObject);
-		
-		//http://stackoverflow.com/questions/9694282/activityunittestcase-and-activityrunonuithread
-		mLoginActivity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				mEmailView.setText("aewart@gmail.com");
-				mPasswordView.setText("ujhdsfksdf");
-			};
-			
-		});
-		
-		try {
-			runTestOnUiThread(new Runnable(){
-				 
-				public void run()
-				{
-					loginTask.doInBackground(Matchers.anyString());
-				}
-				
-			});
-		} catch (Throwable e) 
+		catch (Throwable e) 
 		{
 			e.printStackTrace();
 		}
-			
+		
 		//Assert that the call was made
-		Mockito.verify(jsonParserMock, Mockito.times(1)).makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList());
-	
-		//Assert that the choose hunt activity is started next
-		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(ChooseHuntActivity.class.getName(), null, false);
-		ChooseHuntActivity nextActivity = (ChooseHuntActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5);
-		assertNull(nextActivity);
-		nextActivity.finish();
+		Mockito.verify(jsonParserMock, Mockito.times(1)).makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList());		
+			
+		//test here to see if the activity has changed
+		//Problem is, the test is running on the wrong thread - despite the screen appearing
+		//UI thread?
+		//Should be acceptance tested instead?
 	}
 	
-	public void loginFailsIfUserDoesNotExist()
+	public void loginFailsIfIncorrectDetails() throws JSONException
 	{
-		final UserLoginTask jsonMock = Mockito.mock(UserLoginTask.class);		
+		//http://stackoverflow.com/questions/3559063/how-to-enter-quotes-in-a-string
+		String UNSUCCESSFUL_LOGIN = "Login details incorrect.";
+		JSONObject fakeObject = new JSONObject();	
+		fakeObject.put("message", UNSUCCESSFUL_LOGIN);
+		fakeObject.put("success", "0");
+	
+		Mockito.when(jsonParserMock.makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList())).thenReturn(fakeObject);
 		
-		JSONParser jsonParserMock = Mockito.mock(JSONParser.class);	
-		JSONObject fakeJsonObject = null;
-		try {
-			fakeJsonObject = new JSONObject("message" + ":" + "User does not exist." + "," + "success:0");
-		} catch (JSONException e1) {
-			e1.printStackTrace();
-		}
-		
-		Mockito.when(jsonParserMock.makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList())).thenReturn(fakeJsonObject);
-		
-		//http://stackoverflow.com/questions/9694282/activityunittestcase-and-activityrunonuithread
-		mLoginActivity.runOnUiThread(new Runnable()
+		try
 		{
-			public void run()
-			{
-				mEmailView.setText("aiujdfioudigt@gmail.com");
-				mPasswordView.setText("ujhdsfksdf");
-			};
-			
-		});
-		
-		try {
-			runTestOnUiThread(new Runnable(){
-				 
-				public void run()
-				{
-					//jsonMock.execute((String) null);
-					jsonMock.doInBackground((String)null);
-				}
-				
-			});
-		} catch (Throwable e) 
+			loginTask.doInBackground((String)null);
+		}
+		catch (Throwable e) 
 		{
 			e.printStackTrace();
-		}
-			
+		}	
+		
 		//Assert that the call was made
 		Mockito.verify(jsonParserMock, Mockito.times(1)).makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList());
 		
-		//Assert that the choose hunt activity is started next
-		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(ChooseHuntActivity.class.getName(), null, false);
-		ChooseHuntActivity nextActivity = (ChooseHuntActivity) getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5);
-		assertNull(nextActivity);
-		nextActivity.finish();
+		//test here to see if the activity has not changed
+		//Problem is, the test is running on the wrong thread - despite the screen appearing
+		//UI thread?
+		//Should be acceptance tested instead?
+
+		
+	}
+	
+	public void loginFailsIfUserDoesNotExist() throws JSONException
+	{		
+		//http://stackoverflow.com/questions/3559063/how-to-enter-quotes-in-a-string
+		String UNSUCCESSFUL_LOGIN = "Login details incorrect.";
+		JSONObject fakeObject = new JSONObject();	
+		fakeObject.put("message", UNSUCCESSFUL_LOGIN);
+		fakeObject.put("success", "0");
+	
+		Mockito.when(jsonParserMock.makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList())).thenReturn(fakeObject);
+		
+		try
+		{
+			loginTask.doInBackground((String)null);
+		}
+		catch (Throwable e) 
+		{
+			e.printStackTrace();
+		}	
+		
+		//Assert that the call was made
+		Mockito.verify(jsonParserMock, Mockito.times(1)).makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList());
+		
+		//test here to see if the activity has not changed
+		//Problem is, the test is running on the wrong thread - despite the screen appearing
+		//UI thread?
+		//Should be acceptance tested instead?
+		
 	}
 }
+
