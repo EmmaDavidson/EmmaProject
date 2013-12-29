@@ -12,6 +12,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -40,6 +42,15 @@ import com.application.treasurehunt.RegisterActivity;
 import com.application.treasurehunt.R.id;
 //http://developer.android.com/training/activity-testing/activity-basic-testing.html
 
+/*
+ * The following parts of LoginActivity are tested:
+ * Validation on both the email address and password using reflection
+ * RegisterActivity is started when button pressed
+ * JSON request made to database when login button pressed
+ * 		- issues here include not being able to check if a new activity has started 
+ * 		- see comments below for the appropriate tests
+ */
+
 public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginActivity> {
 
 	private LoginActivity mLoginActivity;
@@ -50,17 +61,21 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 	private String mEmail;
 	private String mPassword;
 	@Mock private JSONParser jsonParserMock;
+	
+	Class mLoginActivityClass;
+	Class mUserLoginTaskClass;
+	
 	Method isValidEmailMethod;
 	Method isValidPasswordMethod;
-	
-	Class mLoginActivityNew;
+	Method doInBackgroundMethod;
 	
 	Object isValidEmailMethodObject;
 	Object isValidPasswordMethodObject;
+	Object doInBackgroundMethodObject;
 	
 	//http://stackoverflow.com/questions/9053864/no-enclosing-instance-of-type-error-while-calling-method-from-another-class-in
 		
-	private LoginActivity.UserLoginTask loginTask;
+	LoginActivity.UserLoginTask loginTask;
 	
 	public LoginActivityTest(Class<LoginActivity> name) {
 		super(name);
@@ -71,7 +86,7 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 		super(LoginActivity.class);
 	}
 
-	@Override
+	@Before
 	protected void setUp() throws Exception {
 		super.setUp();
 		mLoginActivity = getActivity();
@@ -89,13 +104,17 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 		//http://www.xyzws.com/Javafaq/how-to-use-reflection-to-call-methods-in-java/153
 		//http://blog.octo.com/en/android-testing-testing-private-methods/
 		//http://geekyouup.blogspot.co.uk/2010/01/android-app-optimization-using.html
-		mLoginActivityNew = LoginActivity.class;
+		mLoginActivityClass = LoginActivity.class;
+		mUserLoginTaskClass = UserLoginTask.class;
 		
-		isValidEmailMethod = mLoginActivityNew.getDeclaredMethod("isValidEmailAddress", null);
+		isValidEmailMethod = mLoginActivityClass.getDeclaredMethod("isValidEmailAddress", null);
 		isValidEmailMethod.setAccessible(true);
 					
-		isValidPasswordMethod = mLoginActivityNew.getDeclaredMethod("isValidPassword", null);
+		isValidPasswordMethod = mLoginActivityClass.getDeclaredMethod("isValidPassword", null);
 		isValidPasswordMethod.setAccessible(true);
+		
+		doInBackgroundMethod = mUserLoginTaskClass.getDeclaredMethod("doInBackground", null);
+		doInBackgroundMethod.setAccessible(true);
 		
 		//http://stackoverflow.com/questions/9694282/activityunittestcase-and-activityrunonuithread
 		mLoginActivity.runOnUiThread(new Runnable()
@@ -109,6 +128,7 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 		});
 	}
 	
+	@Test
 	public void testPreconditions()
 	{
 		mEmail = mEmailView.getText().toString();
@@ -119,7 +139,8 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 		assertEquals("Email is empty", "", mEmail);
 	}
 	
-	public void emailInvalidIfEmpty() throws IllegalArgumentException, IllegalAccessException, NoSuchMethodException,InvocationTargetException
+	@Test
+	public void emailInvalidIfEmpty()
 	{	
 		mLoginActivity.runOnUiThread(new Runnable()
 		{
@@ -131,6 +152,7 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 				mEmailView.setText(null);
 				
 				try {
+					//OR IS IT .invoke(mLoginActivityClass)????
 					isValidEmailMethodObject = isValidEmailMethod.invoke(mLoginActivity, null);
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
@@ -145,6 +167,7 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 		});
 	}
 	
+	@Test
 	public void emailInvalidIfInvalidLength()
 	{
 		mLoginActivity.runOnUiThread(new Runnable()
@@ -169,6 +192,7 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 		
 	}
 	
+	@Test
 	public void emailInvalidIfIncorrectFormat()
 	{
 		mLoginActivity.runOnUiThread(new Runnable()
@@ -193,6 +217,7 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 		});
 	}
 	
+	@Test
 	public void passwordInvalidIfEmpty()
 	{
 		mLoginActivity.runOnUiThread(new Runnable()
@@ -216,6 +241,7 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 		});
 	}
 	
+	@Test
 	public void passwordInvalidIfInvalidLength()
 	{
 		mLoginActivity.runOnUiThread(new Runnable()
@@ -241,6 +267,7 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 	}
 
 	//http://stackoverflow.com/questions/9405561/test-if-a-button-starts-a-new-activity-in-android-junit-pref-without-robotium
+	@Test
 	public void registerActivityShouldStartIfRegisterButtonPressed()
 	{
     	ActivityMonitor activityMonitor = getInstrumentation().addMonitor(RegisterActivity.class.getName(), null, false);
@@ -258,10 +285,8 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 		nextActivity.finish();
 	}
 	
-	
-	//Problem with this test - had to change loginTask.doInBackground() to be public when should protected like the others
-	//This test currently tests that the HTTPRequest is actually made
 	//I wanted it to test that an activity was started afterwards but issues (See below)
+	@Test
 	public void chooseHuntActivityBeginsIfSuccessfullyLoggedIn() throws JSONException
 	{	
 		//http://stackoverflow.com/questions/3559063/how-to-enter-quotes-in-a-string
@@ -272,12 +297,13 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 	
 		Mockito.when(jsonParserMock.makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList())).thenReturn(fakeObject);
 		
-		try
-		{
-			loginTask.doInBackground((String)null);
-		}
-		catch (Throwable e) 
-		{
+		try {
+			doInBackgroundMethodObject = doInBackgroundMethod.invoke(loginTask, null);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
 		
@@ -290,6 +316,7 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 		//Should be acceptance tested instead?
 	}
 	
+	@Test
 	public void loginFailsIfIncorrectDetails() throws JSONException
 	{
 		//http://stackoverflow.com/questions/3559063/how-to-enter-quotes-in-a-string
@@ -300,12 +327,13 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 	
 		Mockito.when(jsonParserMock.makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList())).thenReturn(fakeObject);
 		
-		try
-		{
-			loginTask.doInBackground((String)null);
-		}
-		catch (Throwable e) 
-		{
+		try {
+			doInBackgroundMethodObject = doInBackgroundMethod.invoke(loginTask, null);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}	
 		
@@ -313,13 +341,13 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 		Mockito.verify(jsonParserMock, Mockito.times(1)).makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList());
 		
 		//test here to see if the activity has not changed
-		//Problem is, the test is running on the wrong thread - despite the screen appearing
+		//Problem is, the test is running on the wrong thread - despite the screen appearing on the device...its not checking the ui thread
 		//UI thread?
 		//Should be acceptance tested instead?
-
-		
+		//Maybe start the activity on the postExecuteMethod and check there?		
 	}
 	
+	@Test
 	public void loginFailsIfUserDoesNotExist() throws JSONException
 	{		
 		//http://stackoverflow.com/questions/3559063/how-to-enter-quotes-in-a-string
@@ -330,14 +358,15 @@ public class LoginActivityTest extends ActivityInstrumentationTestCase2<LoginAct
 	
 		Mockito.when(jsonParserMock.makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList())).thenReturn(fakeObject);
 		
-		try
-		{
-			loginTask.doInBackground((String)null);
-		}
-		catch (Throwable e) 
-		{
+		try {
+			doInBackgroundMethodObject = doInBackgroundMethod.invoke(loginTask, null);
+		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
-		}	
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
 		
 		//Assert that the call was made
 		Mockito.verify(jsonParserMock, Mockito.times(1)).makeHttpRequest(Matchers.anyString(), Matchers.anyString(), Matchers.anyList());
