@@ -11,6 +11,7 @@
           <EntitySet Name="questions" EntityType="treasurehuntdbModel.Store.questions" store:Type="Tables" Schema="treasurehuntdb" />
           <EntitySet Name="role" EntityType="treasurehuntdbModel.Store.role" store:Type="Tables" Schema="treasurehuntdb" />
           <EntitySet Name="user" EntityType="treasurehuntdbModel.Store.user" store:Type="Tables" Schema="treasurehuntdb" />
+          <EntitySet Name="userhunt" EntityType="treasurehuntdbModel.Store.userhunt" store:Type="Tables" Schema="treasurehuntdb" />
           <EntitySet Name="userrole" EntityType="treasurehuntdbModel.Store.userrole" store:Type="Tables" Schema="treasurehuntdb" />
           <AssociationSet Name="huntquestions_ibfk_1" Association="treasurehuntdbModel.Store.huntquestions_ibfk_1">
             <End Role="hunt" EntitySet="hunt" />
@@ -19,6 +20,18 @@
           <AssociationSet Name="huntquestions_ibfk_2" Association="treasurehuntdbModel.Store.huntquestions_ibfk_2">
             <End Role="questions" EntitySet="questions" />
             <End Role="huntquestions" EntitySet="huntquestions" />
+          </AssociationSet>
+          <AssociationSet Name="userhunt_ibfk_1" Association="treasurehuntdbModel.Store.userhunt_ibfk_1">
+            <End Role="user" EntitySet="user" />
+            <End Role="userhunt" EntitySet="userhunt" />
+          </AssociationSet>
+          <AssociationSet Name="userhunt_ibfk_2" Association="treasurehuntdbModel.Store.userhunt_ibfk_2">
+            <End Role="hunt" EntitySet="hunt" />
+            <End Role="userhunt" EntitySet="userhunt" />
+          </AssociationSet>
+          <AssociationSet Name="userhunt_ibfk_3" Association="treasurehuntdbModel.Store.userhunt_ibfk_3">
+            <End Role="userrole" EntitySet="userrole" />
+            <End Role="userhunt" EntitySet="userhunt" />
           </AssociationSet>
           <AssociationSet Name="userrole_ibfk_1" Association="treasurehuntdbModel.Store.userrole_ibfk_1">
             <End Role="role" EntitySet="role" />
@@ -34,7 +47,7 @@
             <PropertyRef Name="HuntId" />
           </Key>
           <Property Name="HuntId" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="HuntName" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="HuntName" Type="longtext" Nullable="false" />
         </EntityType>
         <EntityType Name="huntquestions">
           <Key>
@@ -68,6 +81,15 @@
           <Property Name="Email" Type="text" Nullable="false" />
           <Property Name="Password" Type="varchar" Nullable="false" MaxLength="15" />
         </EntityType>
+        <EntityType Name="userhunt">
+          <Key>
+            <PropertyRef Name="UserHuntId" />
+          </Key>
+          <Property Name="UserHuntId" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="uint" Nullable="false" />
+          <Property Name="HuntId" Type="uint" Nullable="false" />
+          <Property Name="UserRoleId" Type="uint" Nullable="false" />
+        </EntityType>
         <EntityType Name="userrole">
           <Key>
             <PropertyRef Name="UserRoleId" />
@@ -97,6 +119,42 @@
             </Principal>
             <Dependent Role="huntquestions">
               <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userhunt_ibfk_1">
+          <End Role="user" Type="treasurehuntdbModel.Store.user" Multiplicity="1" />
+          <End Role="userhunt" Type="treasurehuntdbModel.Store.userhunt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="userhunt">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userhunt_ibfk_2">
+          <End Role="hunt" Type="treasurehuntdbModel.Store.hunt" Multiplicity="1" />
+          <End Role="userhunt" Type="treasurehuntdbModel.Store.userhunt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hunt">
+              <PropertyRef Name="HuntId" />
+            </Principal>
+            <Dependent Role="userhunt">
+              <PropertyRef Name="HuntId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userhunt_ibfk_3">
+          <End Role="userrole" Type="treasurehuntdbModel.Store.userrole" Multiplicity="1" />
+          <End Role="userhunt" Type="treasurehuntdbModel.Store.userhunt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userrole">
+              <PropertyRef Name="UserRoleId" />
+            </Principal>
+            <Dependent Role="userhunt">
+              <PropertyRef Name="UserRoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -135,10 +193,15 @@
           <EntitySet Name="questions" EntityType="treasurehuntdbModel.question" />
           <EntitySet Name="roles" EntityType="treasurehuntdbModel.role" />
           <EntitySet Name="users" EntityType="treasurehuntdbModel.user" />
+          <EntitySet Name="userhunts" EntityType="treasurehuntdbModel.userhunt" />
           <EntitySet Name="userroles" EntityType="treasurehuntdbModel.userrole" />
           <AssociationSet Name="huntquestions_ibfk_1" Association="treasurehuntdbModel.huntquestions_ibfk_1">
             <End Role="hunt" EntitySet="hunts" />
             <End Role="huntquestions" EntitySet="huntquestions" />
+          </AssociationSet>
+          <AssociationSet Name="userhunt_ibfk_2" Association="treasurehuntdbModel.userhunt_ibfk_2">
+            <End Role="hunt" EntitySet="hunts" />
+            <End Role="userhunt" EntitySet="userhunts" />
           </AssociationSet>
           <AssociationSet Name="huntquestions_ibfk_2" Association="treasurehuntdbModel.huntquestions_ibfk_2">
             <End Role="questions" EntitySet="questions" />
@@ -148,9 +211,17 @@
             <End Role="role" EntitySet="roles" />
             <End Role="userrole" EntitySet="userroles" />
           </AssociationSet>
+          <AssociationSet Name="userhunt_ibfk_1" Association="treasurehuntdbModel.userhunt_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="userhunt" EntitySet="userhunts" />
+          </AssociationSet>
           <AssociationSet Name="userrole_ibfk_2" Association="treasurehuntdbModel.userrole_ibfk_2">
             <End Role="user" EntitySet="users" />
             <End Role="userrole" EntitySet="userroles" />
+          </AssociationSet>
+          <AssociationSet Name="userhunt_ibfk_3" Association="treasurehuntdbModel.userhunt_ibfk_3">
+            <End Role="userrole" EntitySet="userroles" />
+            <End Role="userhunt" EntitySet="userhunts" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="hunt">
@@ -158,8 +229,9 @@
             <PropertyRef Name="HuntId" />
           </Key>
           <Property Name="HuntId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="HuntName" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="HuntName" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="huntquestions" Relationship="treasurehuntdbModel.huntquestions_ibfk_1" FromRole="hunt" ToRole="huntquestions" />
+          <NavigationProperty Name="userhunts" Relationship="treasurehuntdbModel.userhunt_ibfk_2" FromRole="hunt" ToRole="userhunt" />
         </EntityType>
         <EntityType Name="huntquestion">
           <Key>
@@ -196,7 +268,20 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="userhunts" Relationship="treasurehuntdbModel.userhunt_ibfk_1" FromRole="user" ToRole="userhunt" />
           <NavigationProperty Name="userroles" Relationship="treasurehuntdbModel.userrole_ibfk_2" FromRole="user" ToRole="userrole" />
+        </EntityType>
+        <EntityType Name="userhunt">
+          <Key>
+            <PropertyRef Name="UserHuntId" />
+          </Key>
+          <Property Name="UserHuntId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="HuntId" Type="Int64" Nullable="false" />
+          <Property Name="UserRoleId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="hunt" Relationship="treasurehuntdbModel.userhunt_ibfk_2" FromRole="userhunt" ToRole="hunt" />
+          <NavigationProperty Name="user" Relationship="treasurehuntdbModel.userhunt_ibfk_1" FromRole="userhunt" ToRole="user" />
+          <NavigationProperty Name="userrole" Relationship="treasurehuntdbModel.userhunt_ibfk_3" FromRole="userhunt" ToRole="userrole" />
         </EntityType>
         <EntityType Name="userrole">
           <Key>
@@ -207,6 +292,7 @@
           <Property Name="UserId" Type="Int64" Nullable="false" />
           <NavigationProperty Name="role" Relationship="treasurehuntdbModel.userrole_ibfk_1" FromRole="userrole" ToRole="role" />
           <NavigationProperty Name="user" Relationship="treasurehuntdbModel.userrole_ibfk_2" FromRole="userrole" ToRole="user" />
+          <NavigationProperty Name="userhunts" Relationship="treasurehuntdbModel.userhunt_ibfk_3" FromRole="userrole" ToRole="userhunt" />
         </EntityType>
         <Association Name="huntquestions_ibfk_1">
           <End Role="hunt" Type="treasurehuntdbModel.hunt" Multiplicity="1" />
@@ -216,6 +302,18 @@
               <PropertyRef Name="HuntId" />
             </Principal>
             <Dependent Role="huntquestions">
+              <PropertyRef Name="HuntId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userhunt_ibfk_2">
+          <End Role="hunt" Type="treasurehuntdbModel.hunt" Multiplicity="1" />
+          <End Role="userhunt" Type="treasurehuntdbModel.userhunt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hunt">
+              <PropertyRef Name="HuntId" />
+            </Principal>
+            <Dependent Role="userhunt">
               <PropertyRef Name="HuntId" />
             </Dependent>
           </ReferentialConstraint>
@@ -244,6 +342,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="userhunt_ibfk_1">
+          <End Role="user" Type="treasurehuntdbModel.user" Multiplicity="1" />
+          <End Role="userhunt" Type="treasurehuntdbModel.userhunt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="userhunt">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="userrole_ibfk_2">
           <End Role="user" Type="treasurehuntdbModel.user" Multiplicity="1" />
           <End Role="userrole" Type="treasurehuntdbModel.userrole" Multiplicity="*" />
@@ -253,6 +363,18 @@
             </Principal>
             <Dependent Role="userrole">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userhunt_ibfk_3">
+          <End Role="userrole" Type="treasurehuntdbModel.userrole" Multiplicity="1" />
+          <End Role="userhunt" Type="treasurehuntdbModel.userhunt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="userrole">
+              <PropertyRef Name="UserRoleId" />
+            </Principal>
+            <Dependent Role="userhunt">
+              <PropertyRef Name="UserRoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -306,6 +428,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="userhunts">
+            <EntityTypeMapping TypeName="treasurehuntdbModel.userhunt">
+              <MappingFragment StoreEntitySet="userhunt">
+                <ScalarProperty Name="UserHuntId" ColumnName="UserHuntId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="HuntId" ColumnName="HuntId" />
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="userroles">
             <EntityTypeMapping TypeName="treasurehuntdbModel.userrole">
               <MappingFragment StoreEntitySet="userrole">
@@ -335,19 +467,6 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams>
-      <Diagram DiagramId="bea30ad2ea74482fa9b36af25800d472" Name="Diagram1">
-        <EntityTypeShape EntityType="treasurehuntdbModel.hunt" Width="1.5" PointX="2.75" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.huntquestion" Width="1.5" PointX="5" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.question" Width="1.5" PointX="2.75" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.role" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.user" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.userrole" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <AssociationConnector Association="treasurehuntdbModel.huntquestions_ibfk_1" ManuallyRouted="false" />
-        <AssociationConnector Association="treasurehuntdbModel.huntquestions_ibfk_2" ManuallyRouted="false" />
-        <AssociationConnector Association="treasurehuntdbModel.userrole_ibfk_1" ManuallyRouted="false" />
-        <AssociationConnector Association="treasurehuntdbModel.userrole_ibfk_2" ManuallyRouted="false" />
-      </Diagram>
-    </Diagrams>
+    <Diagrams></Diagrams>
   </Designer>
 </edmx:Edmx>

@@ -21,6 +21,27 @@ namespace TreasureHuntDesktopApplication.DataService
             }
         }
 
+        public IEnumerable<hunt> GetTreasureHuntsForParticularUser(user user)
+        {
+            using (var context = new TreasureHuntEntities())
+            {
+                if (user == null) return null;
+                var returnedHuntIds = context.userhunts.Where(c => c.UserId == user.UserId).Select(s => s.HuntId).ToList();
+                returnedHuntIds.ForEach(e => context.ObjectStateManager.ChangeObjectState(e, System.Data.EntityState.Detached));
+
+                List<hunt> returnedListOfHunts = new List<hunt>();
+
+                foreach (var huntId in returnedHuntIds)
+                {
+                    var hunt = context.hunts.Where(c => c.HuntId == huntId).Single();
+                    context.ObjectStateManager.ChangeObjectState(hunt, System.Data.EntityState.Detached);
+                    returnedListOfHunts.Add(hunt);
+                }
+
+                return returnedListOfHunts;
+            }
+        }
+
         public List<long> GetHuntQuestions(hunt hunt)
         { 
             using (var context = new TreasureHuntEntities())
@@ -63,13 +84,14 @@ namespace TreasureHuntDesktopApplication.DataService
             }
         }
 
-        public void SaveNewHunt(hunt newHunt)
+        public long SaveNewHunt(hunt newHunt)
         {
             using (var context = new TreasureHuntEntities())
             {
                 context.hunts.AddObject(newHunt);
                 context.SaveChanges();
                 context.ObjectStateManager.ChangeObjectState(newHunt, System.Data.EntityState.Added);
+                return newHunt.HuntId;
             }
         }
 
@@ -90,6 +112,72 @@ namespace TreasureHuntDesktopApplication.DataService
                 var returnedHunt = context.hunts.Where(c => c.HuntName == name).Single();
                 context.ObjectStateManager.ChangeObjectState(returnedHunt, System.Data.EntityState.Detached);
                 return returnedHunt;
+            }
+        }
+
+        public List<user> GetExistingUsers()
+        {
+            using (var context = new TreasureHuntEntities())
+            {
+                var returnedUsers = context.users.ToList();
+                returnedUsers.ForEach(e => context.ObjectStateManager.ChangeObjectState(e, System.Data.EntityState.Detached));
+                return returnedUsers;
+            }
+        }
+
+        public long SaveUser(user newUser)
+        {
+            using (var context = new TreasureHuntEntities())
+            {
+                context.users.AddObject(newUser);
+                context.SaveChanges();
+                context.ObjectStateManager.ChangeObjectState(newUser, System.Data.EntityState.Added);
+                return newUser.UserId;
+            }
+        }
+
+        public void SaveUserRole(userrole newUserRole)
+        {
+            using (var context = new TreasureHuntEntities())
+            {
+                context.userroles.AddObject(newUserRole);
+                context.SaveChanges();
+                context.ObjectStateManager.ChangeObjectState(newUserRole, System.Data.EntityState.Added);
+            }
+        }
+
+        public user GetUser(string emailAddress)
+        {
+            using (var context = new TreasureHuntEntities())
+            {
+                if (context.users.Any(c => c.Email == emailAddress))
+                {
+                    var returnedUser = context.users.Where(c => c.Email == emailAddress).Single();
+                    context.ObjectStateManager.ChangeObjectState(returnedUser, System.Data.EntityState.Detached);
+                    return returnedUser;
+                }
+
+                return null;
+            }
+        }
+
+        public userrole GetUserRole(user user)
+        {
+            using (var context = new TreasureHuntEntities())
+            {
+                var returnedUserRole = context.userroles.Where(c => c.UserId == user.UserId).Single();
+                context.ObjectStateManager.ChangeObjectState(returnedUserRole, System.Data.EntityState.Detached);
+                return returnedUserRole;
+            }
+        }
+
+        public void SaveUserHunt(userhunt userHunt)
+        {
+            using (var context = new TreasureHuntEntities())
+            {
+                context.userhunts.AddObject(userHunt);
+                context.SaveChanges();
+                context.ObjectStateManager.ChangeObjectState(userHunt, System.Data.EntityState.Added);
             }
         }
     }

@@ -95,6 +95,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.4.2.30.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -131,11 +132,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Messages\CurrentUserMessage.cs" />
     <Compile Include="Messages\PrintMessage.cs" />
     <Compile Include="Messages\SelectedHuntMessage.cs" />
     <Compile Include="Messages\SelectedQuestionMessage.cs" />
     <Compile Include="Messages\UpdateViewMessage.cs" />
     <Compile Include="Messages\ViewUpdatedMessage.cs" />
+    <Compile Include="Project Utilities\PasswordBoxAssistant.cs" />
     <Compile Include="Project Utilities\StringValidationRule.cs" />
     <Compile Include="Project Utilities\Validation.cs" />
     <Compile Include="Service References\TreasureHuntService\Reference.cs">
@@ -144,7 +147,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\CreateHuntViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\PrintViewModel.cs" />
+    <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\SearchHuntViewModel.cs" />
     <Compile Include="ViewModel\ViewHuntViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -153,8 +158,14 @@
     <Compile Include="Views\CreateHuntView.xaml.cs">
       <DependentUpon>CreateHuntView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PrintView.xaml.cs">
       <DependentUpon>PrintView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RegisterView.xaml.cs">
+      <DependentUpon>RegisterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SearchHuntView.xaml.cs">
       <DependentUpon>SearchHuntView.xaml</DependentUpon>
@@ -166,6 +177,10 @@
       <DependentUpon>ViewQRCodeView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CreateHuntView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,6 +202,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\PrintView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RegisterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -239,6 +258,12 @@
     <None Include="Service References\TreasureHuntService\TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\TreasureHuntService\TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TreasureHuntService\TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userrole.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\TreasureHuntService\TreasureHuntService.wsdl" />
     <None Include="Service References\TreasureHuntService\TreasureHuntService.xsd">
       <SubType>Designer</SubType>
@@ -285,6 +310,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="XPS_SHL_DLLLib">
+      <Guid>{0109E0F4-91AE-4736-A2CE-9D63E89D0EF6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadataStorage Include="Service References\TreasureHuntService\" />
   </ItemGroup>
   <ItemGroup>
@@ -301,17 +337,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="XPS_SHL_DLLLib">
-      <Guid>{0109E0F4-91AE-4736-A2CE-9D63E89D0EF6}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

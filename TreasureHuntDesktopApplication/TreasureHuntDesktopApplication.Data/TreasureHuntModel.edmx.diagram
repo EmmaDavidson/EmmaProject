@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ac6add06ef7e49258824c310f5ae5168" Name="Diagram1">
+        <EntityTypeShape EntityType="treasurehuntdbModel.hunt" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.huntquestion" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.question" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.role" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.user" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.userhunt" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.userrole" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="treasurehuntdbModel.huntquestions_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="treasurehuntdbModel.userhunt_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="treasurehuntdbModel.huntquestions_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="treasurehuntdbModel.userrole_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="treasurehuntdbModel.userhunt_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="treasurehuntdbModel.userrole_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="treasurehuntdbModel.userhunt_ibfk_3" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

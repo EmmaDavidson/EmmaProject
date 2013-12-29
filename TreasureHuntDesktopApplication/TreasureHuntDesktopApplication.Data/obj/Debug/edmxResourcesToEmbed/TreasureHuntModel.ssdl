@@ -6,6 +6,7 @@
     <EntitySet Name="questions" EntityType="treasurehuntdbModel.Store.questions" store:Type="Tables" Schema="treasurehuntdb" />
     <EntitySet Name="role" EntityType="treasurehuntdbModel.Store.role" store:Type="Tables" Schema="treasurehuntdb" />
     <EntitySet Name="user" EntityType="treasurehuntdbModel.Store.user" store:Type="Tables" Schema="treasurehuntdb" />
+    <EntitySet Name="userhunt" EntityType="treasurehuntdbModel.Store.userhunt" store:Type="Tables" Schema="treasurehuntdb" />
     <EntitySet Name="userrole" EntityType="treasurehuntdbModel.Store.userrole" store:Type="Tables" Schema="treasurehuntdb" />
     <AssociationSet Name="huntquestions_ibfk_1" Association="treasurehuntdbModel.Store.huntquestions_ibfk_1">
       <End Role="hunt" EntitySet="hunt" />
@@ -14,6 +15,18 @@
     <AssociationSet Name="huntquestions_ibfk_2" Association="treasurehuntdbModel.Store.huntquestions_ibfk_2">
       <End Role="questions" EntitySet="questions" />
       <End Role="huntquestions" EntitySet="huntquestions" />
+    </AssociationSet>
+    <AssociationSet Name="userhunt_ibfk_1" Association="treasurehuntdbModel.Store.userhunt_ibfk_1">
+      <End Role="user" EntitySet="user" />
+      <End Role="userhunt" EntitySet="userhunt" />
+    </AssociationSet>
+    <AssociationSet Name="userhunt_ibfk_2" Association="treasurehuntdbModel.Store.userhunt_ibfk_2">
+      <End Role="hunt" EntitySet="hunt" />
+      <End Role="userhunt" EntitySet="userhunt" />
+    </AssociationSet>
+    <AssociationSet Name="userhunt_ibfk_3" Association="treasurehuntdbModel.Store.userhunt_ibfk_3">
+      <End Role="userrole" EntitySet="userrole" />
+      <End Role="userhunt" EntitySet="userhunt" />
     </AssociationSet>
     <AssociationSet Name="userrole_ibfk_1" Association="treasurehuntdbModel.Store.userrole_ibfk_1">
       <End Role="role" EntitySet="role" />
@@ -29,7 +42,7 @@
       <PropertyRef Name="HuntId" />
     </Key>
     <Property Name="HuntId" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="HuntName" Type="varchar" Nullable="false" MaxLength="15" />
+    <Property Name="HuntName" Type="longtext" Nullable="false" />
   </EntityType>
   <EntityType Name="huntquestions">
     <Key>
@@ -63,6 +76,15 @@
     <Property Name="Email" Type="text" Nullable="false" />
     <Property Name="Password" Type="varchar" Nullable="false" MaxLength="15" />
   </EntityType>
+  <EntityType Name="userhunt">
+    <Key>
+      <PropertyRef Name="UserHuntId" />
+    </Key>
+    <Property Name="UserHuntId" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="uint" Nullable="false" />
+    <Property Name="HuntId" Type="uint" Nullable="false" />
+    <Property Name="UserRoleId" Type="uint" Nullable="false" />
+  </EntityType>
   <EntityType Name="userrole">
     <Key>
       <PropertyRef Name="UserRoleId" />
@@ -92,6 +114,42 @@
       </Principal>
       <Dependent Role="huntquestions">
         <PropertyRef Name="QuestionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="userhunt_ibfk_1">
+    <End Role="user" Type="treasurehuntdbModel.Store.user" Multiplicity="1" />
+    <End Role="userhunt" Type="treasurehuntdbModel.Store.userhunt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="userhunt">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="userhunt_ibfk_2">
+    <End Role="hunt" Type="treasurehuntdbModel.Store.hunt" Multiplicity="1" />
+    <End Role="userhunt" Type="treasurehuntdbModel.Store.userhunt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="hunt">
+        <PropertyRef Name="HuntId" />
+      </Principal>
+      <Dependent Role="userhunt">
+        <PropertyRef Name="HuntId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="userhunt_ibfk_3">
+    <End Role="userrole" Type="treasurehuntdbModel.Store.userrole" Multiplicity="1" />
+    <End Role="userhunt" Type="treasurehuntdbModel.Store.userhunt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="userrole">
+        <PropertyRef Name="UserRoleId" />
+      </Principal>
+      <Dependent Role="userhunt">
+        <PropertyRef Name="UserRoleId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

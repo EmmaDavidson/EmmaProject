@@ -54,5 +54,31 @@ namespace TreasureHuntDesktopApplication.FullClient.Project_Utilities
             return false;
         }
 
+        
+        public static bool IsValidEmail(String emailToCheck)
+        {
+            if (emailToCheck != null)
+            {
+                //-http://stackoverflow.com/questions/16167983/best-regular-expression-for-email-validation-in-c-sharp
+                if (Regex.IsMatch(emailToCheck, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static bool ArePasswordsMatching(String password, String retypedPassword)
+        {
+            if (password != null && retypedPassword != null)
+            {
+                if (password.SequenceEqual(retypedPassword))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }

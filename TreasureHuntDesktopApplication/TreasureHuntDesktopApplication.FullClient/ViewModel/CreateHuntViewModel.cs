@@ -27,10 +27,38 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             serviceClient = _serviceClient;
             SaveHuntNameCommand = new RelayCommand(() => ExecuteSaveHuntNameCommand(), () => IsValidHuntName());
             BackCommand = new RelayCommand(() => ExecuteBackCommand());
+
+            Messenger.Default.Register<CurrentUserMessage>
+            (
+
+            this,
+            (action) => ReceiveCurrentUserMessage(action.CurrentUser)
+
+            );
+        }
+        #endregion
+
+        #region Receiving Messages
+
+        private void ReceiveCurrentUserMessage(user currentUser)
+        {
+            CurrentUser = currentUser;
         }
         #endregion
 
         #region Variable getters and setters
+
+        private user currentUser;
+        public user CurrentUser
+        {
+            get { return this.currentUser; }
+            set
+            {
+
+                this.currentUser = value;
+                RaisePropertyChanged("CurrentUser");
+            }
+        }
 
         private string huntName;
         public string HuntName
@@ -80,8 +108,17 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             {
                 hunt newHunt = new hunt();
                 newHunt.HuntName = this.huntName;
-                this.serviceClient.SaveNewHunt(newHunt);
+                long huntId = this.serviceClient.SaveNewHunt(newHunt);
 
+                userrole newUserRole = this.serviceClient.GetUserRole(this.currentUser);
+
+                userhunt newUserHunt = new userhunt();
+                newUserHunt.HuntId = huntId;
+                newUserHunt.UserId = this.currentUser.UserId;
+                newUserHunt.UserRoleId = newUserRole.UserRoleId;
+
+                this.serviceClient.SaveUserHunt(newUserHunt);
+                
                 //Grabs the correct hunt's ID and passes it into the view hunt view.
                 //Ensures that the hunt has been saved to the database before it goes and grab's it
                 hunt huntToView = serviceClient.GetHuntBasedOnName(newHunt.HuntName);
@@ -128,6 +165,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         #endregion
 
+        #region IDataErrorInfo
         //-http://codeblitz.wordpress.com/2009/05/08/wpf-validation-made-easy-with-idataerrorinfo/
         //-http://www.youtube.com/watch?v=OOHDie8BdGI 
         string IDataErrorInfo.Error
@@ -186,5 +224,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
             return null;
         }
+        #endregion
     }
 }

@@ -45,6 +45,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="userhunts">
+      <EntityTypeMapping TypeName="treasurehuntdbModel.userhunt">
+        <MappingFragment StoreEntitySet="userhunt">
+          <ScalarProperty Name="UserHuntId" ColumnName="UserHuntId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="HuntId" ColumnName="HuntId" />
+          <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="userroles">
       <EntityTypeMapping TypeName="treasurehuntdbModel.userrole">
         <MappingFragment StoreEntitySet="userrole">

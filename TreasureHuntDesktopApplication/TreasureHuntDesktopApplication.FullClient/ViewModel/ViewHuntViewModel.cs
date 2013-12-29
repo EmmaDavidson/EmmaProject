@@ -287,7 +287,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         }
 
         private bool DoesQuestionAlreadyExist(string newQuestion)
-        {
+        {   //REFACTOR THIS - ONLY DO ONE SERVICE CALL AND HAVE IT RETURN THE WHOLE QUESTION INSTEAD OF THE ID
             //GetHuntQuestions
             List<long> listOfQuestions = serviceClient.GetHuntQuestions(this.currentTreasureHunt).ToList();
 

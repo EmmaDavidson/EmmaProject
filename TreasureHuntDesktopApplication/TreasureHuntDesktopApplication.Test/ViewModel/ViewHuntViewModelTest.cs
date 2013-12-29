@@ -19,7 +19,7 @@ namespace TreasureHuntDesktopApplication.Test
         public ViewHuntViewModel viewModel;
         Mock<ITreasureHuntService> serviceClient;
         
-        public const string newQuestion = "My new treasure hunt question";
+        public const string newQuestion = "My new treasure hunt user";
 
         hunt myFakeHunt;
         question myFakeQuestion;
@@ -41,7 +41,7 @@ namespace TreasureHuntDesktopApplication.Test
             myFakeHunt = new hunt();
             myFakeHunt.HuntName = "My Fake Hunt";
             myFakeQuestion = new question();
-            myFakeQuestion.Question1 = "This is my question";
+            myFakeQuestion.Question1 = "This is my user";
             myFakeQuestion.URL = "empty url";
 
             returnedHunts.Add(myFakeHunt);
@@ -179,9 +179,9 @@ namespace TreasureHuntDesktopApplication.Test
         [Test]
         public void ShouldCreateQRCodeImage()
         {   
-            this.NewQuestion = "My new treasure hunt question";
+            this.NewQuestion = "My new treasure hunt user";
             viewModel.SaveQuestionCommand.Execute(new object());
-            Assert.IsTrue(File.Exists("C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\QRCodes\\My new treasure hunt question.png"), "The file does not exist");
+            Assert.IsTrue(File.Exists("C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\QRCodes\\My new treasure hunt user.png"), "The file does not exist");
         }
         #endregion
     }

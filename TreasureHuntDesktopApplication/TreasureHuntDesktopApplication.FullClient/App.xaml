@@ -28,5 +28,15 @@
             </views:PrintView>
         </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+            <views:LoginView>
+            </views:LoginView>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:RegisterViewModel}">
+            <views:RegisterView>
+            </views:RegisterView>
+        </DataTemplate>
+
     </Application.Resources>
 </Application>

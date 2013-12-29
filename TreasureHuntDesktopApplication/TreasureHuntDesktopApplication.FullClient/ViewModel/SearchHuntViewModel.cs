@@ -32,6 +32,14 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
              (action) => ReceiveViewUpdatedMessage(action.UpdatedView)
 
              );
+
+            Messenger.Default.Register<CurrentUserMessage>
+           (
+
+           this,
+           (action) => ReceiveCurrentUserMessage(action.CurrentUser)
+
+           );
         }
 
         #endregion
@@ -46,9 +54,27 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
             //CurrentTreasureHunt = null;  
         }
+
+        private void ReceiveCurrentUserMessage(user currentUser)
+        {
+            CurrentUser = currentUser;
+        }
         #endregion
 
         #region Variables
+
+        private user currentUser;
+        public user CurrentUser
+        {
+            get { return this.currentUser; }
+            set
+            {
+
+                this.currentUser = value;
+                RaisePropertyChanged("CurrentUser");
+            }
+        }
+
         private IEnumerable<hunt> treasureHunts;
         public IEnumerable<hunt> TreasureHunts
         {
@@ -77,7 +103,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         //make internal
         public void RefreshTreasureHunts()
         {
-            TreasureHunts = this.serviceClient.GetTreasureHunts();
+            TreasureHunts = this.serviceClient.GetTreasureHuntsForParticularUser(this.currentUser);
             CurrentTreasureHunt = null;
         }
         #endregion

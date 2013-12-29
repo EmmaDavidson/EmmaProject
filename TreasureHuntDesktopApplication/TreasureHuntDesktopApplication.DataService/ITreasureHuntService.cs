@@ -19,7 +19,7 @@ namespace TreasureHuntDesktopApplication.DataService
         void SaveNewHuntQuestion(huntquestion huntQuestion);
 
         [OperationContract]
-        void SaveNewHunt(hunt newHunt);
+        long SaveNewHunt(hunt newHunt);
 
         [OperationContract]
         List<long> GetHuntQuestions(hunt hunt);
@@ -35,5 +35,26 @@ namespace TreasureHuntDesktopApplication.DataService
 
         [OperationContract]
         hunt GetHuntBasedOnName(String name);
+
+        [OperationContract]
+        List<user> GetExistingUsers();
+
+        [OperationContract]
+        long SaveUser(user newUser);
+
+        [OperationContract]
+        void SaveUserRole(userrole newUserRole);
+
+        [OperationContract]
+        user GetUser(string emailAddress);
+
+        [OperationContract]
+        userrole GetUserRole(user user);
+
+        [OperationContract]
+        void SaveUserHunt(userhunt userHunt);
+
+        [OperationContract]
+        IEnumerable<hunt> GetTreasureHuntsForParticularUser(user user);
     }
 }

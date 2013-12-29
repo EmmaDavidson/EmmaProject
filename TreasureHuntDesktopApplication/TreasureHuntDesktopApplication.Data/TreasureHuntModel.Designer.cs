@@ -20,9 +20,12 @@ using System.Xml.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("treasurehuntdbModel", "huntquestions_ibfk_1", "hunt", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.hunt), "huntquestions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.huntquestion), true)]
+[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userhunt_ibfk_2", "hunt", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.hunt), "userhunt", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userhunt), true)]
 [assembly: EdmRelationshipAttribute("treasurehuntdbModel", "huntquestions_ibfk_2", "questions", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.question), "huntquestions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.huntquestion), true)]
 [assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userrole_ibfk_1", "role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.role), "userrole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userrole), true)]
+[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userhunt_ibfk_1", "user", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.user), "userhunt", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userhunt), true)]
 [assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userrole_ibfk_2", "user", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.user), "userrole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userrole), true)]
+[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userhunt_ibfk_3", "userrole", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.userrole), "userhunt", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userhunt), true)]
 
 #endregion
 
@@ -157,6 +160,22 @@ namespace TreasureHuntDesktopApplication.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<userhunt> userhunts
+        {
+            get
+            {
+                if ((_userhunts == null))
+                {
+                    _userhunts = base.CreateObjectSet<userhunt>("userhunts");
+                }
+                return _userhunts;
+            }
+        }
+        private ObjectSet<userhunt> _userhunts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<userrole> userroles
         {
             get
@@ -212,6 +231,14 @@ namespace TreasureHuntDesktopApplication.Data
         public void AddTousers(user user)
         {
             base.AddObject("users", user);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the userhunts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTouserhunts(userhunt userhunt)
+        {
+            base.AddObject("userhunts", userhunt);
         }
     
         /// <summary>
@@ -330,6 +357,28 @@ namespace TreasureHuntDesktopApplication.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<huntquestion>("treasurehuntdbModel.huntquestions_ibfk_1", "huntquestions", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userhunt_ibfk_2", "userhunt")]
+        public EntityCollection<userhunt> userhunts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_2", "userhunt");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_2", "userhunt", value);
                 }
             }
         }
@@ -908,6 +957,28 @@ namespace TreasureHuntDesktopApplication.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userhunt_ibfk_1", "userhunt")]
+        public EntityCollection<userhunt> userhunts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_1", "userhunt");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_1", "userhunt", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userrole_ibfk_2", "userrole")]
         public EntityCollection<userrole> userroles
         {
@@ -920,6 +991,258 @@ namespace TreasureHuntDesktopApplication.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<userrole>("treasurehuntdbModel.userrole_ibfk_2", "userrole", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="treasurehuntdbModel", Name="userhunt")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class userhunt : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new userhunt object.
+        /// </summary>
+        /// <param name="userHuntId">Initial value of the UserHuntId property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="huntId">Initial value of the HuntId property.</param>
+        /// <param name="userRoleId">Initial value of the UserRoleId property.</param>
+        public static userhunt Createuserhunt(global::System.Int64 userHuntId, global::System.Int64 userId, global::System.Int64 huntId, global::System.Int64 userRoleId)
+        {
+            userhunt userhunt = new userhunt();
+            userhunt.UserHuntId = userHuntId;
+            userhunt.UserId = userId;
+            userhunt.HuntId = huntId;
+            userhunt.UserRoleId = userRoleId;
+            return userhunt;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 UserHuntId
+        {
+            get
+            {
+                return _UserHuntId;
+            }
+            set
+            {
+                if (_UserHuntId != value)
+                {
+                    OnUserHuntIdChanging(value);
+                    ReportPropertyChanging("UserHuntId");
+                    _UserHuntId = StructuralObject.SetValidValue(value, "UserHuntId");
+                    ReportPropertyChanged("UserHuntId");
+                    OnUserHuntIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _UserHuntId;
+        partial void OnUserHuntIdChanging(global::System.Int64 value);
+        partial void OnUserHuntIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int64 _UserId;
+        partial void OnUserIdChanging(global::System.Int64 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 HuntId
+        {
+            get
+            {
+                return _HuntId;
+            }
+            set
+            {
+                OnHuntIdChanging(value);
+                ReportPropertyChanging("HuntId");
+                _HuntId = StructuralObject.SetValidValue(value, "HuntId");
+                ReportPropertyChanged("HuntId");
+                OnHuntIdChanged();
+            }
+        }
+        private global::System.Int64 _HuntId;
+        partial void OnHuntIdChanging(global::System.Int64 value);
+        partial void OnHuntIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 UserRoleId
+        {
+            get
+            {
+                return _UserRoleId;
+            }
+            set
+            {
+                OnUserRoleIdChanging(value);
+                ReportPropertyChanging("UserRoleId");
+                _UserRoleId = StructuralObject.SetValidValue(value, "UserRoleId");
+                ReportPropertyChanged("UserRoleId");
+                OnUserRoleIdChanged();
+            }
+        }
+        private global::System.Int64 _UserRoleId;
+        partial void OnUserRoleIdChanging(global::System.Int64 value);
+        partial void OnUserRoleIdChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userhunt_ibfk_2", "hunt")]
+        public hunt hunt
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.userhunt_ibfk_2", "hunt").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.userhunt_ibfk_2", "hunt").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<hunt> huntReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.userhunt_ibfk_2", "hunt");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<hunt>("treasurehuntdbModel.userhunt_ibfk_2", "hunt", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userhunt_ibfk_1", "user")]
+        public user user
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.userhunt_ibfk_1", "user").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.userhunt_ibfk_1", "user").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<user> userReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.userhunt_ibfk_1", "user");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<user>("treasurehuntdbModel.userhunt_ibfk_1", "user", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userhunt_ibfk_3", "userrole")]
+        public userrole userrole
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<userrole>("treasurehuntdbModel.userhunt_ibfk_3", "userrole").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<userrole>("treasurehuntdbModel.userhunt_ibfk_3", "userrole").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<userrole> userroleReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<userrole>("treasurehuntdbModel.userhunt_ibfk_3", "userrole");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<userrole>("treasurehuntdbModel.userhunt_ibfk_3", "userrole", value);
                 }
             }
         }
@@ -1108,6 +1431,28 @@ namespace TreasureHuntDesktopApplication.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<user>("treasurehuntdbModel.userrole_ibfk_2", "user", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userhunt_ibfk_3", "userhunt")]
+        public EntityCollection<userhunt> userhunts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_3", "userhunt");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_3", "userhunt", value);
                 }
             }
         }

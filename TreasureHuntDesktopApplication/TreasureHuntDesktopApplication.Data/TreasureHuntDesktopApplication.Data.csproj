@@ -59,14 +59,15 @@
     <Content Include="Schema\treasurehuntdb%281%29.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.Config" />
     <None Include="packages.config" />
     <EntityDeploy Include="TreasureHuntModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TreasureHuntModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="TreasureHuntModel.edmx.diagram">
+      <DependentUpon>TreasureHuntModel.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
