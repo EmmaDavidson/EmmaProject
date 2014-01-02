@@ -4,8 +4,8 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ac6add06ef7e49258824c310f5ae5168" Name="Diagram1">
-        <EntityTypeShape EntityType="treasurehuntdbModel.hunt" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+      <Diagram DiagramId="621e4bc28b574e37aca4cf205bf90630" Name="Diagram1">
+        <EntityTypeShape EntityType="treasurehuntdbModel.hunt" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="treasurehuntdbModel.huntquestion" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="treasurehuntdbModel.question" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="treasurehuntdbModel.role" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />

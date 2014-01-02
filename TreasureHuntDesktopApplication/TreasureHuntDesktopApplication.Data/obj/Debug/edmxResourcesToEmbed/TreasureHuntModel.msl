@@ -6,6 +6,7 @@
         <MappingFragment StoreEntitySet="hunt">
           <ScalarProperty Name="HuntId" ColumnName="HuntId" />
           <ScalarProperty Name="HuntName" ColumnName="HuntName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -1,3 +1,4 @@
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Data\bin\Debug\TreasureHuntDesktopApplication.Data.dll.config
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Data\bin\Debug\TreasureHuntDesktopApplication.Data.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Data\bin\Debug\TreasureHuntDesktopApplication.Data.pdb
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Data\bin\Debug\EntityFramework.dll
@@ -6,4 +7,3 @@ C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\Treasu
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Data\bin\Debug\EntityFramework.xml
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Data\obj\Debug\TreasureHuntDesktopApplication.Data.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Data\obj\Debug\TreasureHuntDesktopApplication.Data.pdb
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Data\bin\Debug\TreasureHuntDesktopApplication.Data.dll.config

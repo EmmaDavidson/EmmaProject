@@ -212,6 +212,9 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
         private string HuntNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion[] huntquestionsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -244,6 +247,16 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
             }
             set {
                 this.HuntNameField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                this.PasswordField = value;
             }
         }
         

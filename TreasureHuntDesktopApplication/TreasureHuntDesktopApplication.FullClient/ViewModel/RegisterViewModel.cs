@@ -128,7 +128,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             get
             {
-                return 15;
+                return 20;
 
             }
         }

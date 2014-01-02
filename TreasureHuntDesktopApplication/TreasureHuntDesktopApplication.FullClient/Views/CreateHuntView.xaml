@@ -10,8 +10,8 @@
 
     <Grid Background="White"> 
         
-        <Button Command="{Binding SaveHuntNameCommand}" Content="Save" HorizontalAlignment="Left" Margin="385,225,0,0" VerticalAlignment="Top" Width="115" Height="31" RenderTransformOrigin="1.853,0.308"/>
-        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="213,225,0,0" VerticalAlignment="Top" Width="109" Height="31" RenderTransformOrigin="1.853,0.308"/>
+        <Button Command="{Binding SaveHuntNameCommand}" Content="Save" HorizontalAlignment="Left" Margin="362,435,0,0" VerticalAlignment="Top" Width="115" Height="31" RenderTransformOrigin="1.853,0.308"/>
+        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="206,435,0,0" VerticalAlignment="Top" Width="109" Height="31" RenderTransformOrigin="1.853,0.308"/>
         <TextBox Name="HuntNameTextBox" Text="{Binding HuntName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Height="52" Margin="182,122,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="350" RenderTransformOrigin="0.547,0.478">
         </TextBox>
         <Label FontFamily="Arial" FontSize="20" FontStyle="Italic" Content="Create a new hunt" HorizontalAlignment="Left" Margin="24,10,0,0" VerticalAlignment="Top" Width="186"/>
@@ -20,6 +20,14 @@
         <Label FontSize="18" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=HuntNameTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="182,179,0,0" VerticalAlignment="Top" Height="41" Width="350" RenderTransformOrigin="0.5,0.5">
          
         </Label>
+        <Label Content="Set Password:" HorizontalAlignment="Left" Margin="78,237,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.763,0.192"/>
+        <Label FontSize="18" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=PasswordTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="182,281,0,0" VerticalAlignment="Top" Height="33" Width="350"/>
+        <PasswordBox Name="PasswordTextBox" validation:PasswordBoxAssistant.BindPassword="true" validation:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Margin="182,237,0,0" VerticalAlignment="Top" Width="350" Height="29"/>
+        <Label Content="Retype Password:" HorizontalAlignment="Left" Margin="59,319,0,0" VerticalAlignment="Top"/>
+        <Label FontSize="18" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=RetypePasswordTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="182,363,0,0" VerticalAlignment="Top" Height="31" Width="350"/>
+        <PasswordBox Name="RetypePasswordTextBox" validation:PasswordBoxAssistant.BindPassword="true" validation:PasswordBoxAssistant.BoundPassword="{Binding RetypedPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Margin="182,319,0,0" VerticalAlignment="Top" Width="350" Height="26"/>
+
+
 
     </Grid>
 </UserControl>

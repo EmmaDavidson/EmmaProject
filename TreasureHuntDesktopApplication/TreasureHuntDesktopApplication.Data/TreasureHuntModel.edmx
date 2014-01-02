@@ -48,6 +48,7 @@
           </Key>
           <Property Name="HuntId" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="HuntName" Type="longtext" Nullable="false" />
+          <Property Name="Password" Type="varchar" Nullable="false" MaxLength="30" />
         </EntityType>
         <EntityType Name="huntquestions">
           <Key>
@@ -70,16 +71,16 @@
             <PropertyRef Name="RoleId" />
           </Key>
           <Property Name="RoleId" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="Name" Type="text" Nullable="false" />
         </EntityType>
         <EntityType Name="user">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="30" />
           <Property Name="Email" Type="text" Nullable="false" />
-          <Property Name="Password" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="Password" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <EntityType Name="userhunt">
           <Key>
@@ -230,6 +231,7 @@
           </Key>
           <Property Name="HuntId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="HuntName" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="huntquestions" Relationship="treasurehuntdbModel.huntquestions_ibfk_1" FromRole="hunt" ToRole="huntquestions" />
           <NavigationProperty Name="userhunts" Relationship="treasurehuntdbModel.userhunt_ibfk_2" FromRole="hunt" ToRole="userhunt" />
         </EntityType>
@@ -257,7 +259,7 @@
             <PropertyRef Name="RoleId" />
           </Key>
           <Property Name="RoleId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="userroles" Relationship="treasurehuntdbModel.userrole_ibfk_1" FromRole="role" ToRole="userrole" />
         </EntityType>
         <EntityType Name="user">
@@ -265,9 +267,9 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="userhunts" Relationship="treasurehuntdbModel.userhunt_ibfk_1" FromRole="user" ToRole="userhunt" />
           <NavigationProperty Name="userroles" Relationship="treasurehuntdbModel.userrole_ibfk_2" FromRole="user" ToRole="userrole" />
         </EntityType>
@@ -389,6 +391,7 @@
               <MappingFragment StoreEntitySet="hunt">
                 <ScalarProperty Name="HuntId" ColumnName="HuntId" />
                 <ScalarProperty Name="HuntName" ColumnName="HuntName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

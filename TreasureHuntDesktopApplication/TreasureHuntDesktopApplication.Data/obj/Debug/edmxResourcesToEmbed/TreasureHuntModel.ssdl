@@ -43,6 +43,7 @@
     </Key>
     <Property Name="HuntId" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="HuntName" Type="longtext" Nullable="false" />
+    <Property Name="Password" Type="varchar" Nullable="false" MaxLength="30" />
   </EntityType>
   <EntityType Name="huntquestions">
     <Key>
@@ -65,16 +66,16 @@
       <PropertyRef Name="RoleId" />
     </Key>
     <Property Name="RoleId" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="15" />
+    <Property Name="Name" Type="text" Nullable="false" />
   </EntityType>
   <EntityType Name="user">
     <Key>
       <PropertyRef Name="UserId" />
     </Key>
     <Property Name="UserId" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="30" />
     <Property Name="Email" Type="text" Nullable="false" />
-    <Property Name="Password" Type="varchar" Nullable="false" MaxLength="15" />
+    <Property Name="Password" Type="varchar" Nullable="false" MaxLength="20" />
   </EntityType>
   <EntityType Name="userhunt">
     <Key>

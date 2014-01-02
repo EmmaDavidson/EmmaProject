@@ -218,14 +218,14 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 return "Password cannot be empty!";
             }
             //-http://blog.magnusmontin.net/2013/08/26/data-validation-in-wpf/
-            if (!Validation.IsValidCharacters(Password))
+           /* if (!Validation.IsValidCharacters(Password))
             {
                 return "There are invalid characters";
             }
             if (!Validation.IsValidLength(Password, PasswordMaxLength, PasswordMinLength))
             {
                 return "Password is an invalid length!";
-            }
+            } */
 
             return null;
         }

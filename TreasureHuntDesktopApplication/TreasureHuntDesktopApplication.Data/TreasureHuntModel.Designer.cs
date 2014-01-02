@@ -272,11 +272,13 @@ namespace TreasureHuntDesktopApplication.Data
         /// </summary>
         /// <param name="huntId">Initial value of the HuntId property.</param>
         /// <param name="huntName">Initial value of the HuntName property.</param>
-        public static hunt Createhunt(global::System.Int64 huntId, global::System.String huntName)
+        /// <param name="password">Initial value of the Password property.</param>
+        public static hunt Createhunt(global::System.Int64 huntId, global::System.String huntName, global::System.String password)
         {
             hunt hunt = new hunt();
             hunt.HuntId = huntId;
             hunt.HuntName = huntName;
+            hunt.Password = password;
             return hunt;
         }
 
@@ -334,6 +336,30 @@ namespace TreasureHuntDesktopApplication.Data
         private global::System.String _HuntName;
         partial void OnHuntNameChanging(global::System.String value);
         partial void OnHuntNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Password
+        {
+            get
+            {
+                return _Password;
+            }
+            set
+            {
+                OnPasswordChanging(value);
+                ReportPropertyChanging("Password");
+                _Password = StructuralObject.SetValidValue(value, false, "Password");
+                ReportPropertyChanged("Password");
+                OnPasswordChanged();
+            }
+        }
+        private global::System.String _Password;
+        partial void OnPasswordChanging(global::System.String value);
+        partial void OnPasswordChanged();
 
         #endregion
 

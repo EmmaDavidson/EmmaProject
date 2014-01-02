@@ -42,6 +42,7 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="HuntId" type="xs:long" />
           <xs:element minOccurs="0" name="HuntName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="huntquestions" nillable="true" type="tns:ArrayOfhuntquestion" />
           <xs:element minOccurs="0" name="userhunts" nillable="true" type="tns:ArrayOfuserhunt" />
         </xs:sequence>
