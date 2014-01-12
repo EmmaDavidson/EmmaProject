@@ -5,7 +5,6 @@
 
 	require("config.inc.php");
 	 
-
 	if (!empty($_POST)) {
 
 	    if (empty($_POST['email']) || empty($_POST['password'])) {
@@ -44,7 +43,7 @@
 				{
 				
 					$response["success"] = 1;
-	   		        	$response["message"] = "Succlkjdjfdsjessfully logged in!";
+	   		        	$response["message"] = "Successfully logged in!";
 	    				echo json_encode($response);
 				}
 				else
@@ -84,6 +83,7 @@
 	    </form>
 	    <?php
 	}
+
 	 
 	?>
 

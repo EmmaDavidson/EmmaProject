@@ -3,8 +3,13 @@
 	require("config.inc.php");
 
 	try {		
-		$query = $db->prepare("SELECT HuntName FROM hunt");
-		$result = $query->execute();
+		$query = "SELECT * FROM hunt WHERE HuntName = :huntname";
+		$query_params = array(
+	        ':huntname' => $_POST['hunt']
+	   	 );
+
+                $stmt   = $db->prepare($query);
+	        $result = $stmt->execute($query_params);
 	    }
 
 	catch (PDOException $ex) 
@@ -16,13 +21,13 @@
 	        die(json_encode($response));
 	    }
 
-	    $users = $query->fetchAll(PDO::FETCH_ASSOC);
+	    $huntId = $stmt->fetch();
 
-            if($users)
+            if($huntId)
 	    {
 		$response["success"] = 1;
-	        $response["message"] = "Sucessfully returned hunts!";
-		$response["results"] = $users;
+	        $response["message"] = "Sucessfully returned hunt id!";
+		$response["result"] = $huntId;
 
 		echo json_encode($response);
 	    }		

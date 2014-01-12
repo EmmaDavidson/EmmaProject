@@ -48,6 +48,17 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         #region Variable getters and setters
 
+        private String description;
+        public String Description
+        {
+            get { return this.description; }
+            set
+            {
+                this.description = value;
+                RaisePropertyChanged("Description");
+            }
+        }
+
         private String password;
         public String Password
         {
@@ -97,6 +108,22 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #endregion
 
         #region Validation
+
+        public int DescriptionMaxLength
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        public int DescriptionMinLength
+        {
+            get
+            {
+                return 1000;
+            }
+        }
 
         public int PasswordMinLength
         {
@@ -149,6 +176,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 hunt newHunt = new hunt();
                 newHunt.HuntName = this.huntName;
                 newHunt.Password = this.Password;
+                //newHunt.Description = this.Description
                 long huntId = this.serviceClient.SaveNewHunt(newHunt);
 
                 userrole newUserRole = this.serviceClient.GetUserRole(this.currentUser);
@@ -227,7 +255,8 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         { 
             "HuntName",
             "Password",
-            "RetypedPassword"
+            "RetypedPassword",
+            "Description"
         };
 
         string IDataErrorInfo.this[string propertyName]
@@ -257,6 +286,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 case "RetypedPassword":
                     {
                         result = ValidateMatchingPasswords();
+                        break;
+                    }
+                case "Description":
+                    {
+                        result = ValidateDescription();
                         break;
                     }
 
@@ -317,6 +351,19 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 return "Passwords do not match";
             }
 
+            return null;
+        }
+
+        private String ValidateDescription()
+        {
+            if (Validation.IsNullOrEmpty(Description))
+            {
+                return "This field cannot be empty!";
+            }
+            if (!Validation.IsValidLength(Description, DescriptionMaxLength, DescriptionMinLength))
+            {
+                return "Description is an invalid length!";
+            }
             return null;
         }
 

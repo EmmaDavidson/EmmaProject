@@ -10,8 +10,8 @@
 
     <Grid Background="White"> 
         
-        <Button Command="{Binding SaveHuntNameCommand}" Content="Save" HorizontalAlignment="Left" Margin="362,435,0,0" VerticalAlignment="Top" Width="115" Height="31" RenderTransformOrigin="1.853,0.308"/>
-        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="206,435,0,0" VerticalAlignment="Top" Width="109" Height="31" RenderTransformOrigin="1.853,0.308"/>
+        <Button Command="{Binding SaveHuntNameCommand}" Content="Save" HorizontalAlignment="Left" Margin="475,459,0,0" VerticalAlignment="Top" Width="115" Height="31" RenderTransformOrigin="1.853,0.308"/>
+        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="10,459,0,0" VerticalAlignment="Top" Width="109" Height="31" RenderTransformOrigin="1.853,0.308"/>
         <TextBox Name="HuntNameTextBox" Text="{Binding HuntName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Height="52" Margin="182,122,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="350" RenderTransformOrigin="0.547,0.478">
         </TextBox>
         <Label FontFamily="Arial" FontSize="20" FontStyle="Italic" Content="Create a new hunt" HorizontalAlignment="Left" Margin="24,10,0,0" VerticalAlignment="Top" Width="186"/>
@@ -26,6 +26,9 @@
         <Label Content="Retype Password:" HorizontalAlignment="Left" Margin="59,319,0,0" VerticalAlignment="Top"/>
         <Label FontSize="18" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=RetypePasswordTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="182,363,0,0" VerticalAlignment="Top" Height="31" Width="350"/>
         <PasswordBox Name="RetypePasswordTextBox" validation:PasswordBoxAssistant.BindPassword="true" validation:PasswordBoxAssistant.BoundPassword="{Binding RetypedPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Margin="182,319,0,0" VerticalAlignment="Top" Width="350" Height="26"/>
+        <Label Content="Hunt description:" HorizontalAlignment="Left" Margin="61,384,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Name="DescriptionBox" HorizontalAlignment="Left" Height="32" Margin="182,399,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="350" RenderTransformOrigin="0.491,0.125"/>
+        <Label FontSize="18" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=DescriptionBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="182,436,0,0" VerticalAlignment="Top" Height="35" Width="272"/>
 
 
 
