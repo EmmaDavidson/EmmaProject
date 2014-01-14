@@ -23,6 +23,11 @@ public class HuntDAO {
   public void open() throws SQLException {
 	  database = dbHelper.getWritableDatabase();
 	  //Unclean - drops the database each time and re-adds the table.
+	  updateDatabaseLocally();
+  }
+  
+  public void updateDatabaseLocally()
+  {
 	  dbHelper.onUpgrade(database, database.getVersion(), database.getVersion());
   }
 

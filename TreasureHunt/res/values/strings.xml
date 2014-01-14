@@ -33,6 +33,8 @@
     <string name="password_label">Password</string>
     <string name="email_label">Email</string>
     <string name="name_label">Name</string>
-    
+    <string name="title_activity_register_with_hunt">RegisterWithHuntActivity</string>
+    <string name="register_hunt_label">Register</string>
+    <string name="shared_preferences">MySharedPreferencesFile</string>
 
 </resources>

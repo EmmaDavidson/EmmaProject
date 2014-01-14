@@ -15,9 +15,12 @@ import sqlLiteDatabase.HuntDAO;
 import Utilities.JSONParser;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,9 +31,9 @@ import android.widget.Toast;
 //http://net.tutsplus.com/tutorials/php/php-database-access-are-you-doing-it-correctly/
 public class ChooseHuntActivity extends Activity implements OnItemClickListener {
 
-	JSONParser jsonParser = new JSONParser();
+	public JSONParser jsonParser = new JSONParser();
 	private static final String myChooseHuntUrl =  "http://192.168.1.74:80/webservice/choosehunt.php";
-	//private static final String myChooseHuntUrl =  "http://143.117.224.68:80/webservice/choosehunt.php";
+	//private static final String myChooseHuntUrl =  "http://143.117.190.106:80/webservice/choosehunt.php";
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	private static JSONArray tagResult;
@@ -41,6 +44,7 @@ public class ChooseHuntActivity extends Activity implements OnItemClickListener 
 	private HuntDAO huntDataSource;
 	
 	private ListView mListView;
+	String currentUser;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +53,20 @@ public class ChooseHuntActivity extends Activity implements OnItemClickListener 
 		huntDataSource = new HuntDAO(this);
 		huntDataSource.open();
 		
-		mListView = (ListView) findViewById(R.id.hunt_list_view);			
+		mListView = (ListView) findViewById(R.id.hunt_list_view);		
+		
+		Intent intent = getIntent();
+		currentUser = intent.getStringExtra(getString(R.string.email_label));
 		
 		attemptReturnHunts();
+		
+		/*findViewById(R.id.sign_in_button).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						updateListOfHunts();
+					}
+				}); */
 	}
 
 	/*@Override
@@ -61,12 +76,46 @@ public class ChooseHuntActivity extends Activity implements OnItemClickListener 
 		return true;
 	} */
 	
-	public void attemptReturnHunts() {
+//	@Override
+//	protected void onResume()
+//	{
+//		//super.onResume();
+//		//updateListOfHunts();
+//	}
+	
+	private void updateListOfHunts()
+	{
+		//get this to happen automatically at some point // refreshes itself
+		huntDataSource.updateDatabaseLocally();
+		attemptReturnHunts();
+	}
+	
+	private void attemptReturnHunts() {
 		if (mAuthTask != null) {
 			return;
 		} 			
 			mAuthTask = new ReturnHuntsTask(); // Do ASYNC way
 			mAuthTask.execute((String) null);	
+			//http://stackoverflow.com/questions/7882739/android-setting-a-timeout-for-an-asynctask?rq=1
+			Handler handler = new Handler();
+			handler.postDelayed(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					if(mAuthTask != null)
+					{
+						if(mAuthTask.getStatus() == AsyncTask.Status.RUNNING)
+						{
+							mAuthTask.cancel(true);
+							pDialog.cancel();
+							Toast.makeText(ChooseHuntActivity.this, "Connection timeout. Please try again.", Toast.LENGTH_LONG).show();
+						}
+					}
+				}
+			}
+			
+			, 10000);
 			try {
 				mAuthTask.get();
 			} catch (InterruptedException e) {
@@ -95,8 +144,7 @@ public class ReturnHuntsTask extends AsyncTask<String, String, String> {
 		//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
 		//http://www.php.net/manual/en/pdostatement.fetchall.php
 		//http://stackoverflow.com/questions/14491430/using-pdo-to-echo-display-all-rows-from-a-table
-
-		
+	
 		int success;
 		
 		try {
@@ -143,15 +191,22 @@ public class ReturnHuntsTask extends AsyncTask<String, String, String> {
 		if (fileUrl != null) 
 		{	
 			List<Hunt> listOfHunts = huntDataSource.getAllHunts();
-			ArrayAdapter<Hunt> adapter = new ArrayAdapter<Hunt>(ChooseHuntActivity.this, android.R.layout.simple_list_item_1, listOfHunts);
+			final ArrayAdapter<Hunt> adapter = new ArrayAdapter<Hunt>(ChooseHuntActivity.this, android.R.layout.simple_list_item_1, listOfHunts);
 			mListView.setAdapter(adapter);	
 			
 			//http://stackoverflow.com/questions/16189651/android-listview-selected-item-stay-highlighted
 			mListView.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-				    Intent scanQRCodeActivity = new Intent(ChooseHuntActivity.this, ScanQRCodeActivity.class);
-					startActivity(scanQRCodeActivity);
+					
+					//check here to make sure that user hasn't already registered with this hunt
+					//http://stackoverflow.com/questions/4508979/android-listview-get-selected-item
+					Hunt selectedHunt = adapter.getItem(position);
+				    
+					Intent registerWithHuntintent = new Intent(ChooseHuntActivity.this, RegisterWithHuntActivity.class);
+					registerWithHuntintent.putExtra("Email", currentUser);
+					registerWithHuntintent.putExtra("Current hunt", selectedHunt.getHuntName());
+					startActivity(registerWithHuntintent);
 				}
 			});
 			

@@ -8,10 +8,6 @@ public class Hunt {
 	    return huntId;
 	  }
 
-	  public void setHuntId(long id) {
-	    this.huntId = id;
-	  }
-
 	  public String getHuntName() {
 	    return huntName;
 	  }
@@ -19,6 +15,11 @@ public class Hunt {
 	  public void setHuntName(String hunt) {
 	    this.huntName = hunt;
 	  }
+	  
+	  public String getHuntPassword() {
+		    return huntName;
+		  }
+
 
 	  // Will be used by the ArrayAdapter in the ListView
 	  @Override

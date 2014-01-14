@@ -1,5 +1,6 @@
 package com.application.treasurehunt;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +12,13 @@ import org.json.JSONObject;
 import Utilities.JSONParser;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -26,10 +31,10 @@ import android.widget.Toast;
  */
 public class LoginActivity extends Activity {
 	//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
-	JSONParser jsonParser = new JSONParser();
+	
 	//http://stackoverflow.com/questions/5806220/how-to-connect-to-my-http-localhost-web-server-from-android-emulator-in-eclips
 	private static final String myLoginUrl =  "http://192.168.1.74:80/webservice/login.php";
-	//private static final String myLoginUrl =  "http://143.117.224.68:80/webservice/login.php";
+	//private static final String myLoginUrl =  "http://143.117.190.106:80/webservice/login.php";
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	
@@ -41,6 +46,8 @@ public class LoginActivity extends Activity {
 
 	private EditText mEmailView;
 	private EditText mPasswordView;
+	
+	public JSONParser jsonParser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,8 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		mEmailView = (EditText) findViewById(R.id.login_email_address);
 		mPasswordView = (EditText) findViewById(R.id.login_password);
+		
+		jsonParser = new JSONParser();
 
 		findViewById(R.id.sign_in_button).setOnClickListener(
 				new View.OnClickListener() {
@@ -66,7 +75,8 @@ public class LoginActivity extends Activity {
 					}
 				});
 	}
-
+	
+	
 	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -74,7 +84,7 @@ public class LoginActivity extends Activity {
 		return true;
 	} */
 
-	public void goToRegister()
+	private void goToRegister()
 	{		
 		Intent intent = new Intent(this, RegisterActivity.class);
 		startActivity(intent);	
@@ -83,28 +93,45 @@ public class LoginActivity extends Activity {
 		mPasswordView.setText(null);
 	}
 	
-	public void attemptLogin() {
+	private void attemptLogin() {
 		if (mAuthTask != null) {
 			return;
 		} 		
-		
-		mEmailView.setError(null);
-		mPasswordView.setError(null);
 
 		mEmail = mEmailView.getText().toString();
 		mPassword = mPasswordView.getText().toString();
 		
 		if((isValidEmailAddress() && isValidPassword()))
 		{		
-			mAuthTask = new UserLoginTask(); // Do ASYNC way
+			mAuthTask = new UserLoginTask(); 
 			mAuthTask.execute((String) null);
 			
-			mEmailView.setText(null);
-			mPasswordView.setText(null);
+			//http://stackoverflow.com/questions/7882739/android-setting-a-timeout-for-an-asynctask?rq=1
+			Handler handler = new Handler();
+			handler.postDelayed(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					if(mAuthTask != null)
+					{
+						if(mAuthTask.getStatus() == AsyncTask.Status.RUNNING)
+						{
+							mAuthTask.cancel(true);
+							pDialog.cancel();
+							Toast.makeText(LoginActivity.this, "Connection timeout. Please try again.", Toast.LENGTH_LONG).show();
+						}
+					}
+				}
+			}	
+			, 10000);
+			
+			//mEmailView.setText(null);
+			//mPasswordView.setText(null);
 		}	
 	}
 	
-	public boolean isValidEmailAddress()
+	private boolean isValidEmailAddress()
 	{	
 		if (TextUtils.isEmpty(mEmail)) {
 			mEmailView.setError(getString(R.string.error_email_null));
@@ -127,7 +154,7 @@ public class LoginActivity extends Activity {
 		
 	}
 	
-	public boolean isValidPassword()
+	private boolean isValidPassword()
 	{
 		if (TextUtils.isEmpty(mPassword)) {
 			mPasswordView.setError(getString(R.string.error_password_null));
@@ -144,74 +171,79 @@ public class LoginActivity extends Activity {
 		
 	}
 
-	public class UserLoginTask extends AsyncTask<String, String, String> {
+public class UserLoginTask extends AsyncTask<String, String, String>{
+	
+	@Override
+	protected void onPreExecute()
+	{
+		super.onPreExecute();
+		pDialog = new ProgressDialog(LoginActivity.this);
+        pDialog.setMessage("Attempting login...");
+		pDialog.setIndeterminate(false);
+		pDialog.setCancelable(true);
+		pDialog.show();
+	}
+	
+	@Override
+	protected String doInBackground(String... args) {
+		//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
+		int success;
+		String email = mEmail;
+		String password = mPassword;
 		
-		@Override
-		protected void onPreExecute()
-		{
-			super.onPreExecute();
-			pDialog = new ProgressDialog(LoginActivity.this);
-            pDialog.setMessage("Attempting login...");
-			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(true);
-			pDialog.show();
-		}
-		
-		@Override
-		protected String doInBackground(String... args) {
-			//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
+		try {
+			List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 			
-			int success;
-			String email = mEmail;
-			String password = mPassword;
+			parameters.add(new BasicNameValuePair("email", email));
+			parameters.add(new BasicNameValuePair("password", password));
 			
-			try {
-				List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-				
-				parameters.add(new BasicNameValuePair("email", email));
-				parameters.add(new BasicNameValuePair("password", password));
-				
-				Log.d("request", "starting");
-				JSONObject json = jsonParser.makeHttpRequest(myLoginUrl, "POST", parameters);
-				Log.d("Login attempt", json.toString());
-				
-				success = json.getInt(tagSuccess);
-				if(success == 1)
-				{
-					Log.d("Login Successful!", json.toString());
-					Intent scanQRCodeActivityIntent = new Intent(LoginActivity.this, ChooseHuntActivity.class);
-					finish();
-					startActivity(scanQRCodeActivityIntent);
-					return json.getString(tagMessage);
-				}
-				else
-				{
-					Log.d("Login failed!", json.getString(tagMessage));
-					return json.getString(tagMessage);
-				}
-				
-			} catch (JSONException e) {
+			Log.d("request", "starting");
 			
+			JSONObject retrievedJsonObject = jsonParser.makeHttpRequest(myLoginUrl, "POST", parameters);
+			Log.d("Login attempt", retrievedJsonObject.toString());
+			
+			success = retrievedJsonObject.getInt(tagSuccess);
+			if(success == 1)
+			{
+				Log.d("Login Successful!", retrievedJsonObject.toString());
+				Intent chooseHuntActivityIntent = new Intent(LoginActivity.this, ChooseHuntActivity.class);
+				//finish();
+				chooseHuntActivityIntent.putExtra(getString(R.string.email_label), email);
+				startActivity(chooseHuntActivityIntent);
+				
+				return retrievedJsonObject.getString(tagMessage);
 			}
-
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(final String fileUrl) {
-			mAuthTask = null;
-			pDialog.dismiss();
-
-			if (fileUrl != null) {
-				Toast.makeText(LoginActivity.this, fileUrl, Toast.LENGTH_LONG).show();
-			} else {
-				Toast.makeText(LoginActivity.this, "Nothing returned from the database", Toast.LENGTH_LONG).show();
+			else
+			{
+				Log.d("Login failed!", retrievedJsonObject.getString(tagMessage));
+				return retrievedJsonObject.getString(tagMessage);
 			}
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 
-		@Override
-		protected void onCancelled() {
-			mAuthTask = null;
+		return "This is my return message";
+	}
+
+	@Override
+	protected void onPostExecute(final String fileUrl) {
+		mAuthTask = null;
+		pDialog.dismiss();
+
+		if (fileUrl != null) {
+			Toast.makeText(LoginActivity.this, fileUrl, Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(LoginActivity.this, "Nothing returned from the database", Toast.LENGTH_LONG).show();
 		}
 	}
+
+	@Override
+	protected void onCancelled() {
+		mAuthTask = null;
+	}
 }
+}
+
+
+
