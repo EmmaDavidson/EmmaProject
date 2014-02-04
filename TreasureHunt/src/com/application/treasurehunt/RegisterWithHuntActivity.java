@@ -22,18 +22,27 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class RegisterWithHuntActivity extends Activity{
 	
-	private String mPassword;
-	private EditText mPasswordView;
-	
+	//Home
 	private static final String getUserIdUrl =  "http://192.168.1.74:80/webservice/returnCurrentUserId.php";
 	private static final String getHuntIdUrl =  "http://192.168.1.74:80/webservice/returnCurrentHuntId.php";
 	private static final String registerUserWithHuntUrl =  "http://192.168.1.74:80/webservice/huntParticipantSave.php";
+	private static final String getHuntDescriptionUrl = "http://192.168.1.74:80/webservice/getHuntDescription.php";
+	
+	//University
+	//private static final String getUserIdUrl =  "http://143.117.190.106:80/webservice/returnCurrentUserId.php";
+	//private static final String getHuntIdUrl =  "http://143.117.190.106:80/webservice/returnCurrentHuntId.php";
+	//private static final String registerUserWithHuntUrl =  "http://143.117.190.106:80/webservice/huntParticipantSave.php";
+	
+	//private static final String getHuntDescription = "http://192.168.1.74:80/webservice/huntDescription.php";
 	
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
@@ -42,17 +51,31 @@ public class RegisterWithHuntActivity extends Activity{
 	
 	private static JSONObject userIdResult;
 	private static JSONObject huntIdResult;
+	private static JSONObject currentHuntDescriptionResult;
 	
 	private UserRegisterWithHuntTask mAuthTask = null;
 	private GetHuntIdTask mHuntTask = null;
 	private GetUserIdTask mUserTask = null;
+	private GetHuntDescriptionTask mHuntDescriptionTask = null;
 	private ProgressDialog pDialog;
 	
 	String currentUser;
 	String currentHunt;
+	String currentHuntDescription;
 	
 	boolean currentHuntIdReturned = false;
 	boolean currentUserIdReturned = false;
+	boolean registrationSuccessful = false;
+	boolean huntDescriptionreturned = false;
+	
+	TextView mhuntDescriptionView;
+	TextView mHuntNameLabelView;
+	
+	Button mBeginHuntButton;
+	Button mRegisterButton;
+	
+	ProgressBar mHuntDescriptionProgressBar;
+	
 	
 	int userId = 0;
 	int huntId = 0;
@@ -62,17 +85,24 @@ public class RegisterWithHuntActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register_with_hunt);
 		
-		mPasswordView = (EditText) findViewById(R.id.register_hunt_password);
+		//mPasswordView = (EditText) findViewById(R.id.register_hunt_password);
+		mhuntDescriptionView = (TextView) findViewById(R.id.hunt_description_box);
+		mHuntNameLabelView = (TextView) findViewById(R.id.hunt_name_label);
 		
-		attemptToReturnHuntId();
-		attemptToReturnUserId();
+		mBeginHuntButton = (Button) findViewById(R.id.start_treasure_hunt_button);
+		mBeginHuntButton.setEnabled(false);
 		
-		findViewById(R.id.register_hunt_button).setOnClickListener(
+		mRegisterButton = (Button) findViewById(R.id.register_hunt_button);
+		//Check to see if the person has already registered - if so, set this to false
+		mBeginHuntButton.setEnabled(false);
+		
+		mHuntDescriptionProgressBar = (ProgressBar) findViewById(R.id.hunt_description_progress_bar);
+		
+		mRegisterButton.setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-
-						
+	
 						if(currentUserIdReturned && currentHuntIdReturned){
 							attemptRegisterWithHunt();
 						}
@@ -84,9 +114,24 @@ public class RegisterWithHuntActivity extends Activity{
 					}
 				});
 		
+		mBeginHuntButton.setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent scanQRCodeActivity = new Intent(RegisterWithHuntActivity.this, ScanQRCodeActivity.class);
+						startActivity(scanQRCodeActivity);	
+					}
+				});
+		
 		Intent intent = getIntent();
 		currentUser = intent.getStringExtra("Email");
 		currentHunt = intent.getStringExtra("Current hunt");
+		mHuntNameLabelView.setText(currentHunt);
+		
+		attemptToReturnHuntId();
+		attemptToReturnHuntDescription();
+		attemptToReturnUserId();
+		
 	}
 
 	@Override
@@ -94,6 +139,39 @@ public class RegisterWithHuntActivity extends Activity{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.register_with_hunt, menu);
 		return true;
+	}
+	
+	private void checkIfUserAlreadyExists()
+	{
+		
+	}
+	
+	private void attemptToReturnHuntDescription()
+	{
+		if (mHuntDescriptionTask != null) {
+			return;
+		} 	
+		mHuntDescriptionTask = new GetHuntDescriptionTask();
+		mHuntDescriptionTask.execute((String) null);
+
+		Handler handlerForUserTask = new Handler();
+		handlerForUserTask.postDelayed(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				if(mHuntDescriptionTask!= null)
+				{
+					if(mHuntDescriptionTask.getStatus() == AsyncTask.Status.RUNNING)
+					{
+						mHuntDescriptionTask.cancel(true);
+						pDialog.cancel();
+						Toast.makeText(RegisterWithHuntActivity.this, "Connection timeout. Please try again.", Toast.LENGTH_LONG).show();
+					}
+				}
+			}
+		}
+		, 10000);	
 	}
 	
 	private void attemptToReturnUserId()
@@ -158,11 +236,7 @@ public class RegisterWithHuntActivity extends Activity{
 		if (mAuthTask != null) {
 			return;
 		} 		
-		mPasswordView.setError(null);
-		mPassword = mPasswordView.getText().toString();
-		
-		if(isValidPassword())
-		{			
+			
 			mAuthTask = new UserRegisterWithHuntTask(); // Do ASYNC way
 			mAuthTask.execute((String) null);
 			
@@ -185,16 +259,7 @@ public class RegisterWithHuntActivity extends Activity{
 				}
 			}
 			, 100000);			
-		}	
-	}
-	
-	private boolean isValidPassword()
-	{
-		if (TextUtils.isEmpty(mPassword)) {
-			mPasswordView.setError(getString(R.string.error_password_null));
-			return false;	
-		}	
-		return true;		
+			
 	}
 	
 public class GetUserIdTask extends AsyncTask<String, String, String> {
@@ -273,7 +338,8 @@ public class GetHuntIdTask extends AsyncTask<String, String, String> {
 			{
 				huntIdResult = jsonFindHuntId.getJSONObject("result");
 				currentHuntIdReturned = true;
-				huntId = huntIdResult.getInt("HuntId");
+				huntId = huntIdResult.getInt("HuntId");				
+					
 				return jsonFindHuntId.getString(tagMessage);			
 			}
 			else
@@ -292,9 +358,11 @@ public class GetHuntIdTask extends AsyncTask<String, String, String> {
 		mHuntTask = null;
 
 		if (fileUrl != null) {
-			//Toast.makeText(RegisterWithHuntActivity.this, fileUrl, Toast.LENGTH_LONG).show();
+			Toast.makeText(RegisterWithHuntActivity.this, fileUrl, Toast.LENGTH_LONG).show();
+			mhuntDescriptionView.setText(currentHuntDescription);
 		} else {
-			Toast.makeText(RegisterWithHuntActivity.this, "Nothing returned from the database", Toast.LENGTH_LONG).show();
+			//Toast.makeText(RegisterWithHuntActivity.this, "Nothing returned from the database", Toast.LENGTH_LONG).show();
+			Toast.makeText(RegisterWithHuntActivity.this, "Couldn't retrieve hunt description", Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -322,15 +390,14 @@ public class UserRegisterWithHuntTask extends AsyncTask<String, String, String> 
 			//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
 			
 			int success;
-			String password = mPassword;
 				//Check to make sure password is correct
 				List<NameValuePair> parametersForPasswordCheck = new ArrayList<NameValuePair>();
 				
 				//http://stackoverflow.com/questions/8603583/sending-integer-to-http-server-using-namevaluepair
 				parametersForPasswordCheck.add(new BasicNameValuePair("huntid", Integer.toString(huntId)));
 				parametersForPasswordCheck.add(new BasicNameValuePair("userid", Integer.toString(userId)));
-				parametersForPasswordCheck.add(new BasicNameValuePair("huntname", currentHunt));
-				parametersForPasswordCheck.add(new BasicNameValuePair("password", password));
+				//parametersForPasswordCheck.add(new BasicNameValuePair("huntname", currentHunt));
+				
 				try{
 				Log.d("request", "starting");
 				JSONObject json = jsonParserForRegister.makeHttpRequest(registerUserWithHuntUrl, "POST", parametersForPasswordCheck);
@@ -340,9 +407,8 @@ public class UserRegisterWithHuntTask extends AsyncTask<String, String, String> 
 				if(success == 1)
 				{							
 					Log.d("Registration Successful!", json.toString());
-					Intent scanQRCodeActivity = new Intent(RegisterWithHuntActivity.this, ScanQRCodeActivity.class);
-					finish();
-					startActivity(scanQRCodeActivity);
+					registrationSuccessful = true;
+					
 					return json.getString(tagMessage);
 				}
 				else
@@ -362,6 +428,12 @@ public class UserRegisterWithHuntTask extends AsyncTask<String, String, String> 
 		protected void onPostExecute(final String fileUrl) {
 			mAuthTask = null;
 			pDialog.dismiss();
+			
+			if(registrationSuccessful)
+			{
+				mBeginHuntButton.setEnabled(true);
+				
+			}
 
 			if (fileUrl != null) {
 				Toast.makeText(RegisterWithHuntActivity.this, fileUrl, Toast.LENGTH_LONG).show();
@@ -376,4 +448,77 @@ public class UserRegisterWithHuntTask extends AsyncTask<String, String, String> 
 		}
 	}
 
+
+public class GetHuntDescriptionTask extends AsyncTask<String, String, String> {
+	
+	@Override
+	protected void onPreExecute()
+	{
+		super.onPreExecute();
+		mHuntDescriptionProgressBar = new ProgressBar(RegisterWithHuntActivity.this);
+		mHuntDescriptionProgressBar.setVisibility(ProgressBar.VISIBLE);
+	}
+
+	@Override
+	protected String doInBackground(String... args) {
+		//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
+		
+			int success;
+			//Check to make sure password is correct
+			List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+			
+			//http://stackoverflow.com/questions/8603583/sending-integer-to-http-server-using-namevaluepair
+			parameters.add(new BasicNameValuePair("huntId", Integer.toString(huntId)));
+			
+			try{
+			Log.d("request", "starting");
+			JSONObject json = jsonParserForRegister.makeHttpRequest(getHuntDescriptionUrl, "POST", parameters);
+			Log.d("Return hunt description attempt", json.toString());
+				
+			success = json.getInt(tagSuccess);
+			if(success == 1)
+			{							
+				Log.d("Got hunt description!", json.toString());
+				currentHuntDescriptionResult = json.getJSONObject("result");
+				currentHuntDescription = currentHuntDescriptionResult.getString("HuntDescription");
+				huntDescriptionreturned = true;
+				return json.getString(tagMessage);
+			}
+			else
+			{
+				Log.d("Return hunt description failed!", json.getString(tagMessage));
+				return json.getString(tagMessage);
+			}
+			
+		} catch (JSONException e) {
+		
+		}
+
+		return null;
+	}
+
+	@Override
+	protected void onPostExecute(final String fileUrl) {
+		mHuntDescriptionProgressBar.setVisibility(ProgressBar.GONE);
+		mHuntDescriptionTask = null;
+
+		if (fileUrl != null) {
+			Toast.makeText(RegisterWithHuntActivity.this, fileUrl, Toast.LENGTH_LONG).show();	
+			if(huntDescriptionreturned)
+			{
+				mhuntDescriptionView.setText(currentHuntDescription);
+				
+			}
+		} else {
+			Toast.makeText(RegisterWithHuntActivity.this, "Nothing returned from the database", Toast.LENGTH_LONG).show();
+		}
+		
+		
+	}
+
+	@Override
+	protected void onCancelled() {
+		mAuthTask = null;
+	}
+}
 }

@@ -27,10 +27,16 @@ import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
 
+	//Home
 	private static final String myRegisterUrl =  "http://192.168.1.74:80/webservice/register.php";
-	//private static final String myRegisterUrl =  "http://143.117.190.106:80/webservice/register.php";
 	private static final String getUserIdUrl =  "http://192.168.1.74:80/webservice/returnCurrentUserId.php";
 	private static final String setUserRoleUrl =  "http://192.168.1.74:80/webservice/setUserRole.php";
+	
+	//University
+	//private static final String myRegisterUrl =  "http://143.117.190.106:80/webservice/register.php";
+	//private static final String getUserIdUrl = "http://143.117.190.106:80/webservice/returnCurrentUserId.php";
+	//private static final String setUserRoleUrl = "http://143.117.190.106:80/webservice/setUserRole.php";
+	
 	
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";

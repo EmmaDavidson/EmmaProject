@@ -8,27 +8,39 @@
              Height="500"
              Width="600">
 
-    <Grid Background="White"> 
-        
-        <Button Command="{Binding SaveHuntNameCommand}" Content="Save" HorizontalAlignment="Left" Margin="475,459,0,0" VerticalAlignment="Top" Width="115" Height="31" RenderTransformOrigin="1.853,0.308"/>
-        <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="10,459,0,0" VerticalAlignment="Top" Width="109" Height="31" RenderTransformOrigin="1.853,0.308"/>
-        <TextBox Name="HuntNameTextBox" Text="{Binding HuntName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Height="52" Margin="182,122,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="350" RenderTransformOrigin="0.547,0.478">
-        </TextBox>
-        <Label FontFamily="Arial" FontSize="20" FontStyle="Italic" Content="Create a new hunt" HorizontalAlignment="Left" Margin="24,10,0,0" VerticalAlignment="Top" Width="186"/>
-        <Label FontFamily="Arial" FontSize="20" Content="Hunt name:" HorizontalAlignment="Left" Margin="61,131,0,0" VerticalAlignment="Top" Width="121"/>
+    <Grid Background="Gold">
 
-        <Label FontSize="18" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=HuntNameTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="182,179,0,0" VerticalAlignment="Top" Height="41" Width="350" RenderTransformOrigin="0.5,0.5">
+        <Button FontFamily="Stereofidelic" FontSize="30" Command="{Binding SaveHuntNameCommand}" Content="Save" HorizontalAlignment="Left" Margin="459,440,0,0" VerticalAlignment="Top" Width="115" Height="31" RenderTransformOrigin="1.853,0.308">
+            <Button.BitmapEffect>
+                <!--http://msdn.microsoft.com/en-us/library/vstudio/ms753350%28v=vs.90%29.aspx -->
+                <DropShadowBitmapEffect Color="SaddleBrown" Direction="320" ShadowDepth="25" Softness="1"  Opacity="0.5"/>
+            </Button.BitmapEffect>
+
+        </Button>
+        <Button FontFamily="Stereofidelic" FontSize="30" Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="24,440,0,0" VerticalAlignment="Top" Width="109" Height="31" RenderTransformOrigin="1.853,0.308">
+            <Button.BitmapEffect>
+                <!--http://msdn.microsoft.com/en-us/library/vstudio/ms753350%28v=vs.90%29.aspx -->
+                <DropShadowBitmapEffect Color="SaddleBrown" Direction="320" ShadowDepth="25" Softness="1"  Opacity="0.5"/>
+            </Button.BitmapEffect>
+
+        </Button>
+        <TextBox Name="HuntNameTextBox" FontFamily="Stereofidelic" Text="{Binding HuntName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Height="29" Margin="135,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="278" RenderTransformOrigin="0.547,0.478">
+        </TextBox>
+        <Label Foreground="DarkSlateGray" FontWeight="ExtraBold" FontFamily="Boopee" FontSize="30" FontStyle="Italic" Content="Create a new hunt" HorizontalAlignment="Left" Margin="24,10,0,0" VerticalAlignment="Top" Width="186"/>
+        <Label Foreground="DarkSlateGray" FontFamily="Boopee" FontSize="20" Content="Hunt name:" HorizontalAlignment="Left" Margin="45,68,0,0" VerticalAlignment="Top" Width="121"/>
+
+        <Label FontSize="9" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=HuntNameTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="418,74,0,0" VerticalAlignment="Top" Height="29" Width="137" RenderTransformOrigin="0.5,0.5">
          
         </Label>
-        <Label Content="Set Password:" HorizontalAlignment="Left" Margin="78,237,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.763,0.192"/>
-        <Label FontSize="18" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=PasswordTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="182,281,0,0" VerticalAlignment="Top" Height="33" Width="350"/>
-        <PasswordBox Name="PasswordTextBox" validation:PasswordBoxAssistant.BindPassword="true" validation:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Margin="182,237,0,0" VerticalAlignment="Top" Width="350" Height="29"/>
-        <Label Content="Retype Password:" HorizontalAlignment="Left" Margin="59,319,0,0" VerticalAlignment="Top"/>
-        <Label FontSize="18" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=RetypePasswordTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="182,363,0,0" VerticalAlignment="Top" Height="31" Width="350"/>
-        <PasswordBox Name="RetypePasswordTextBox" validation:PasswordBoxAssistant.BindPassword="true" validation:PasswordBoxAssistant.BoundPassword="{Binding RetypedPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Margin="182,319,0,0" VerticalAlignment="Top" Width="350" Height="26"/>
-        <Label Content="Hunt description:" HorizontalAlignment="Left" Margin="61,384,0,0" VerticalAlignment="Top"/>
-        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Name="DescriptionBox" HorizontalAlignment="Left" Height="32" Margin="182,399,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="350" RenderTransformOrigin="0.491,0.125"/>
-        <Label FontSize="18" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=DescriptionBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="182,436,0,0" VerticalAlignment="Top" Height="35" Width="272"/>
+        <Label Foreground="DarkSlateGray" FontFamily="Boopee" FontSize="18" Content="Set Password:" HorizontalAlignment="Left" Margin="44,114,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.763,0.192"/>
+        <Label FontSize="9" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=PasswordTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="418,114,0,0" VerticalAlignment="Top" Height="29" Width="137"/>
+        <PasswordBox Name="PasswordTextBox" validation:PasswordBoxAssistant.BindPassword="true" validation:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Margin="135,114,0,0" VerticalAlignment="Top" Width="278" Height="29"/>
+        <Label Foreground="DarkSlateGray" FontFamily="Boopee" FontSize="18" Content="Retype Password:" HorizontalAlignment="Left" Margin="26,158,0,0" VerticalAlignment="Top"/>
+        <Label FontSize="9" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=RetypePasswordTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="418,158,0,0" VerticalAlignment="Top" Height="26" Width="137"/>
+        <PasswordBox Name="RetypePasswordTextBox" validation:PasswordBoxAssistant.BindPassword="true" validation:PasswordBoxAssistant.BoundPassword="{Binding RetypedPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Margin="135,158,0,0" VerticalAlignment="Top" Width="278" Height="26"/>
+        <Label Foreground="DarkSlateGray" FontFamily="Boopee" FontSize="18" Content="Hunt description:" HorizontalAlignment="Left" Margin="29,195,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Name="DescriptionBox" HorizontalAlignment="Left" Height="87" Margin="135,189,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="278" RenderTransformOrigin="0.491,0.125"/>
+        <Label FontSize="9" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=DescriptionBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="418,195,0,0" VerticalAlignment="Top" Height="29" Width="137"/>
 
 
 

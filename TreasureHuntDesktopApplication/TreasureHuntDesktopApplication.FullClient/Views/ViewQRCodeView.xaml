@@ -6,13 +6,13 @@
              mc:Ignorable="d" 
              Height="500"
              Width="600">
-    <Grid Background="White">
-        <Label FontFamily="Arial" FontStyle="Italic" FontSize="20" Content="Current Treasure Hunt:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+    <Grid Background="Gold">
+        <Label Foreground="DarkSlateGray" FontFamily="Boopee" FontStyle="Italic" FontSize="20" Content="Current Treasure Hunt:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
 
-        <Label FontFamily="Arial" FontSize="20" Content="{Binding CurrentQuestion.Question1}" HorizontalAlignment="Left" Margin="178,48,0,0" VerticalAlignment="Top" Height="54" Width="402"/>
+        <Label FontFamily="Boopee" FontSize="20" Content="{Binding CurrentQuestion.Question1}" HorizontalAlignment="Left" Margin="178,48,0,0" VerticalAlignment="Top" Height="54" Width="402"/>
            <Image Source="{Binding Path=QRCode, Mode=TwoWay}" HorizontalAlignment="Left" Height="150" Margin="199,153,0,0" VerticalAlignment="Top" Width="206"/>
            <Button Command="{Binding BackToViewHuntCommand}" Content="Back" Margin="199,330,252,0" VerticalAlignment="Top" Height="40"/>
-        <Label FontFamily="Arial" FontSize="20" FontStyle="Italic" Content="Current Question:" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top"/>
+        <Label Foreground="DarkSlateGray" FontFamily="Boopee" FontSize="20" FontStyle="Italic" Content="Current Question:" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top"/>
         <Label FontFamily="Arial" FontSize="20" Content="{Binding CurrentTreasureHunt.HuntName}" HorizontalAlignment="Left" Margin="229,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.579,1.385"/>
     </Grid>
 </UserControl>

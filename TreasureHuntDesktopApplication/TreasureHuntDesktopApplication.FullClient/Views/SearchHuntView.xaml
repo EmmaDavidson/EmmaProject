@@ -6,12 +6,17 @@
              mc:Ignorable="d" 
              Height="500"
              Width="600">
-    <Grid Background="White">
+    <Grid Background="Gold">
         <ComboBox ItemsSource="{Binding Path=TreasureHunts}" DisplayMemberPath="HuntName" SelectedItem="{Binding Path=CurrentTreasureHunt, Mode=TwoWay}" HorizontalAlignment="Left" Margin="174,98,0,0" VerticalAlignment="Top" Width="339" Height="32"/>
-        <Label FontFamily="Arial" FontStyle="Italic" FontSize="20" Content="Search Treasure Hunts" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Label FontFamily="Arial" FontSize="20" Content="Hunt name:" HorizontalAlignment="Left" Margin="53,97,0,0" VerticalAlignment="Top" Width="150"/>
+        <Label FontFamily="Boopee" FontWeight="ExtraBold" FontSize="30" Foreground="DarkSlateGray" Content="Search Treasure Hunts" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Foreground="DarkSlateGray" FontFamily="Boopee" FontSize="20" Content="Hunt name:" HorizontalAlignment="Left" Margin="53,97,0,0" VerticalAlignment="Top" Width="150"/>
 
-        <Button Command="{Binding SearchHuntCommand}" Content="Search" HorizontalAlignment="Left" Margin="263,144,0,0" VerticalAlignment="Top" Width="144" Height="33"/>
+        <Button Command="{Binding SearchHuntCommand}" Content="Search" HorizontalAlignment="Left" Margin="263,144,0,0" VerticalAlignment="Top" Width="144" Height="33">
+            <Button.BitmapEffect>
+                <!--http://msdn.microsoft.com/en-us/library/vstudio/ms753350%28v=vs.90%29.aspx -->
+                <DropShadowBitmapEffect Color="SaddleBrown" Direction="320" ShadowDepth="25" Softness="1"  Opacity="0.5"/>
+            </Button.BitmapEffect>
+        </Button>
         <Button Command="{Binding CreateNewHuntCommand}" Content="Create New Hunt" HorizontalAlignment="Left" Margin="404,394,0,0" VerticalAlignment="Top" Width="153" Height="35"/>
 
 

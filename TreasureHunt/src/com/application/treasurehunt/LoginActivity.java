@@ -23,6 +23,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -34,7 +36,8 @@ public class LoginActivity extends Activity {
 	
 	//http://stackoverflow.com/questions/5806220/how-to-connect-to-my-http-localhost-web-server-from-android-emulator-in-eclips
 	private static final String myLoginUrl =  "http://192.168.1.74:80/webservice/login.php";
-	//private static final String myLoginUrl =  "http://143.117.190.106:80/webservice/login.php";
+	
+	//private static final String myLoginUrl =  "http://143.117.190.106:81/webservice/login.php";
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	
@@ -47,6 +50,9 @@ public class LoginActivity extends Activity {
 	private EditText mEmailView;
 	private EditText mPasswordView;
 	
+	Button mLoginButton;
+	Button mRegisterButton;
+	
 	public JSONParser jsonParser;
 
 	@Override
@@ -58,8 +64,10 @@ public class LoginActivity extends Activity {
 		mPasswordView = (EditText) findViewById(R.id.login_password);
 		
 		jsonParser = new JSONParser();
-
-		findViewById(R.id.sign_in_button).setOnClickListener(
+		
+		mLoginButton = (Button) findViewById(R.id.sign_in_button);
+				
+		mLoginButton.setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
@@ -93,10 +101,7 @@ public class LoginActivity extends Activity {
 		mPasswordView.setText(null);
 	}
 	
-	private void attemptLogin() {
-		if (mAuthTask != null) {
-			return;
-		} 		
+	private void attemptLogin() {		
 
 		mEmail = mEmailView.getText().toString();
 		mPassword = mPasswordView.getText().toString();
@@ -243,6 +248,7 @@ public class UserLoginTask extends AsyncTask<String, String, String>{
 		mAuthTask = null;
 	}
 }
+
 }
 
 

@@ -5,19 +5,41 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:validation="clr-namespace:TreasureHuntDesktopApplication.FullClient.Project_Utilities"
              mc:Ignorable="d" 
-             Height="500"
-             Width="600">
-    <Grid Background="White">
+             Height="449"
+             Width="750">
+    <Grid Margin="1,0,-10,-10" RenderTransformOrigin="0.5,0.5" >
+        <Grid.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform/>
+                <SkewTransform/>
+                <RotateTransform Angle="0.054"/>
+                <TranslateTransform/>
+            </TransformGroup>
+        </Grid.RenderTransform>
+        <Label Foreground="DarkSlateGray" FontWeight="ExtraBold" FontFamily="Boopee" FontSize="40" FontStyle="Italic" Content="Login" HorizontalAlignment="Left" Margin="324,82,0,0" VerticalAlignment="Top" Width="93" RenderTransformOrigin="-3.312,-0.128" Height="64"/>
+        <TextBox Name="EmailAddressTextBox" HorizontalAlignment="Left" Height="36" Margin="255,151,0,0" TextWrapping="Wrap" Text="{Binding EmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" VerticalAlignment="Top" Width="252"/>
+        <Label Foreground="DarkSlateGray" FontFamily="Boopee" FontSize="20" Content="Email Address:" HorizontalAlignment="Left" Margin="146,151,0,0" VerticalAlignment="Top" Height="47" Width="109"/>
+        <Label Foreground="DarkSlateGray" FontFamily="Boopee" FontSize="20" Content="Password:" HorizontalAlignment="Left" Margin="170,203,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="47" Width="80"/>
+        <Button Background="AliceBlue"  Command="{Binding LoginUserCommand}" FontFamily="Stereofidelic" FontSize="30" Foreground="DarkSlateGray"  Content="Login" HorizontalAlignment="Left" Margin="296,262,0,0" VerticalAlignment="Top" Width="150" Height="37">
+            <Button.BitmapEffect>
+                <!--http://msdn.microsoft.com/en-us/library/vstudio/ms753350%28v=vs.90%29.aspx -->
+                <DropShadowBitmapEffect Color="SaddleBrown" Direction="320" ShadowDepth="25" Softness="1"  Opacity="0.5"/>
+            </Button.BitmapEffect>
+        </Button>
+
+
+        <Button Background="AliceBlue"  Command="{Binding RegisterCommand}" Foreground="DarkSlateGray" FontFamily="Stereofidelic" FontSize="30" Content="Register" HorizontalAlignment="Left" Margin="296,304,0,0" VerticalAlignment="Top" Width="150" Height="37">
+
+            <Button.BitmapEffect>
+                <!--http://msdn.microsoft.com/en-us/library/vstudio/ms753350%28v=vs.90%29.aspx -->
+                <DropShadowBitmapEffect Color="SaddleBrown" Direction="320" ShadowDepth="25" Softness="1"  Opacity="0.5"/>
+            </Button.BitmapEffect>
+            
+        </Button>
+        <PasswordBox Name="PasswordTextBox" validation:PasswordBoxAssistant.BindPassword="true" validation:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Margin="255,203,0,0" VerticalAlignment="Top" Width="252" Height="35"/>
+        <Label  FontSize="14" FontStyle="Italic" Foreground="Brown" Content="{Binding ElementName=EmailAddressTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="512,151,0,0" VerticalAlignment="Top" Height="36" Width="209" RenderTransformOrigin="0.548,-0.154"/>
+        <Label  FontSize="14" FontStyle="Italic" Foreground="Brown" Content="{Binding ElementName=PasswordTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="512,203,0,0" VerticalAlignment="Top" Height="35" Width="209" RenderTransformOrigin="0.5,0.5"/>
+
         
-        <Label FontFamily="Arial" FontSize="20" FontStyle="Italic" Content="Treasure Hunt" HorizontalAlignment="Left" Margin="222,5,0,0" VerticalAlignment="Top" Width="141"/>
-        <Label FontFamily="Arial" FontSize="20" FontStyle="Italic" Content="Login" HorizontalAlignment="Left" Margin="261,38,0,0" VerticalAlignment="Top" Width="64"/>
-        <TextBox Name="EmailAddressTextBox" HorizontalAlignment="Left" Height="26" Margin="207,113,0,0" TextWrapping="Wrap" Text="{Binding EmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" VerticalAlignment="Top" Width="280"/>
-        <Label Content="Email Address:" HorizontalAlignment="Left" Margin="113,113,0,0" VerticalAlignment="Top"/>
-        <Label Content="Password:" HorizontalAlignment="Left" Margin="137,184,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
-        <Button Command="{Binding LoginUserCommand}" Content="Login" HorizontalAlignment="Left" Margin="288,296,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Command="{Binding RegisterCommand}" Content="Register" HorizontalAlignment="Left" Margin="473,437,0,0" VerticalAlignment="Top" Width="75"/>
-        <PasswordBox Name="PasswordTextBox" validation:PasswordBoxAssistant.BindPassword="true" validation:PasswordBoxAssistant.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" HorizontalAlignment="Left" Margin="207,184,0,0" VerticalAlignment="Top" Width="280" Height="26"/>
-        <Label  FontSize="18" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=EmailAddressTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="207,144,0,0" VerticalAlignment="Top" Height="35" Width="280" RenderTransformOrigin="0.5,0.5"/>
-        <Label  FontSize="18" FontStyle="Italic" Foreground="Red" Content="{Binding ElementName=PasswordTextBox, Path=(Validation.Errors).CurrentItem.ErrorContent}" HorizontalAlignment="Left" Margin="192,224,0,0" VerticalAlignment="Top" Height="47" Width="312" RenderTransformOrigin="0.5,0.5"/>
     </Grid>
 </UserControl>
