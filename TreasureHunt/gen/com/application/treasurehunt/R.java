@@ -24,37 +24,42 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_forgot_password=0x7f080016;
-        public static final int action_settings=0x7f080015;
-        public static final int hunt_description_box=0x7f08000f;
-        public static final int hunt_description_progress_bar=0x7f080012;
-        public static final int hunt_list_view=0x7f080000;
-        public static final int hunt_name_label=0x7f08000e;
-        public static final int login=0x7f08000c;
-        public static final int login_email_address=0x7f080005;
-        public static final int login_form_layout=0x7f080001;
-        public static final int login_label=0x7f080002;
-        public static final int login_password=0x7f080004;
-        public static final int register_email_address=0x7f08000a;
-        public static final int register_form_layout=0x7f080007;
-        public static final int register_hunt_button=0x7f080010;
-        public static final int register_label=0x7f080008;
-        public static final int register_name=0x7f080009;
-        public static final int register_on_login_button=0x7f080006;
-        public static final int register_password=0x7f08000b;
-        public static final int register_save_button=0x7f08000d;
-        public static final int scan_content_received=0x7f080014;
-        public static final int scan_qr_code_button=0x7f080013;
-        public static final int sign_in_button=0x7f080003;
-        public static final int start_treasure_hunt_button=0x7f080011;
+        public static final int action_forgot_password=0x7f08001a;
+        public static final int action_settings=0x7f080019;
+        public static final int choose_hunt_label=0x7f080000;
+        public static final int chronometer=0x7f080017;
+        public static final int hunt_description_box=0x7f080011;
+        public static final int hunt_description_progress_bar=0x7f080014;
+        public static final int hunt_list_view=0x7f080002;
+        public static final int hunt_name_label=0x7f080010;
+        public static final int hunt_refresh_button=0x7f080001;
+        public static final int login=0x7f08000e;
+        public static final int login_email_address=0x7f080007;
+        public static final int login_form_layout=0x7f080003;
+        public static final int login_label=0x7f080004;
+        public static final int login_password=0x7f080006;
+        public static final int refresh_button=0x7f080015;
+        public static final int register_email_address=0x7f08000c;
+        public static final int register_form_layout=0x7f080009;
+        public static final int register_hunt_button=0x7f080012;
+        public static final int register_label=0x7f08000a;
+        public static final int register_name=0x7f08000b;
+        public static final int register_on_login_button=0x7f080008;
+        public static final int register_password=0x7f08000d;
+        public static final int register_save_button=0x7f08000f;
+        public static final int scan_content_received=0x7f080018;
+        public static final int scan_qr_code_button=0x7f080016;
+        public static final int sign_in_button=0x7f080005;
+        public static final int start_treasure_hunt_button=0x7f080013;
     }
     public static final class layout {
         public static final int activity_choose_hunt=0x7f030000;
         public static final int activity_login=0x7f030001;
-        public static final int activity_register=0x7f030002;
-        public static final int activity_register_with_hunt=0x7f030003;
-        public static final int activity_scan_qrcode=0x7f030004;
-        public static final int login=0x7f030005;
+        public static final int activity_logout=0x7f030002;
+        public static final int activity_register=0x7f030003;
+        public static final int activity_register_with_hunt=0x7f030004;
+        public static final int activity_scan_qrcode=0x7f030005;
+        public static final int login=0x7f030006;
     }
     public static final class menu {
         public static final int add_question=0x7f070000;
@@ -62,19 +67,20 @@ public final class R {
         public static final int generate_hunt=0x7f070002;
         public static final int login=0x7f070003;
         public static final int login_activity1=0x7f070004;
-        public static final int main=0x7f070005;
-        public static final int register=0x7f070006;
-        public static final int register_with_hunt=0x7f070007;
-        public static final int scan_barcode=0x7f070008;
-        public static final int scan_qrcode=0x7f070009;
-        public static final int view_questions=0x7f07000a;
-        public static final int view_treasure_hunts=0x7f07000b;
+        public static final int logout=0x7f070005;
+        public static final int main=0x7f070006;
+        public static final int register=0x7f070007;
+        public static final int register_with_hunt=0x7f070008;
+        public static final int scan_barcode=0x7f070009;
+        public static final int scan_qrcode=0x7f07000a;
+        public static final int view_questions=0x7f07000b;
+        public static final int view_treasure_hunts=0x7f07000c;
     }
     public static final class string {
-        public static final int action_forgot_password=0x7f040026;
+        public static final int action_forgot_password=0x7f040027;
         public static final int action_settings=0x7f040003;
-        public static final int action_sign_in_register=0x7f040024;
-        public static final int action_sign_in_short=0x7f040025;
+        public static final int action_sign_in_register=0x7f040025;
+        public static final int action_sign_in_short=0x7f040026;
         public static final int app_name=0x7f040000;
         public static final int choose_hunt=0x7f04001c;
         public static final int choose_hunt_header=0x7f04001b;
@@ -82,10 +88,10 @@ public final class R {
         public static final int error_email_incorrect_format=0x7f04001a;
         public static final int error_email_null=0x7f040014;
         public static final int error_email_too_short=0x7f040016;
-        public static final int error_field_required=0x7f04002b;
-        public static final int error_incorrect_password=0x7f04002a;
-        public static final int error_invalid_email=0x7f040028;
-        public static final int error_invalid_password=0x7f040029;
+        public static final int error_field_required=0x7f04002c;
+        public static final int error_incorrect_password=0x7f04002b;
+        public static final int error_invalid_email=0x7f040029;
+        public static final int error_invalid_password=0x7f04002a;
         public static final int error_name_null=0x7f040018;
         public static final int error_name_too_short=0x7f040019;
         public static final int error_password_null=0x7f040015;
@@ -95,7 +101,7 @@ public final class R {
         public static final int logging_in_spinner_info=0x7f040013;
         public static final int login=0x7f040008;
         public static final int login_header=0x7f040002;
-        public static final int login_progress_signing_in=0x7f040027;
+        public static final int login_progress_signing_in=0x7f040028;
         public static final int name_label=0x7f04001f;
         public static final int password_label=0x7f04001d;
         /**  Strings related to login 
@@ -115,8 +121,9 @@ public final class R {
         public static final int scan_qr_code_header=0x7f040012;
         public static final int shared_preferences=0x7f040022;
         public static final int title_activity_generate_hunt=0x7f040007;
-        public static final int title_activity_login=0x7f040023;
-        public static final int title_activity_login_activity1=0x7f04002c;
+        public static final int title_activity_login=0x7f040024;
+        public static final int title_activity_login_activity1=0x7f04002d;
+        public static final int title_activity_logout=0x7f040023;
         public static final int title_activity_register_with_hunt=0x7f040020;
         public static final int title_activity_scan_barcode=0x7f040010;
     }

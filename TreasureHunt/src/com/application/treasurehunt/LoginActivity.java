@@ -10,12 +10,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import Utilities.JSONParser;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -36,22 +38,33 @@ public class LoginActivity extends Activity {
 	
 	//http://stackoverflow.com/questions/5806220/how-to-connect-to-my-http-localhost-web-server-from-android-emulator-in-eclips
 	private static final String myLoginUrl =  "http://192.168.1.74:80/webservice/login.php";
+	private static final String getUserIdUrl =  "http://192.168.1.74:80/webservice/returnCurrentUserId.php";
 	
 	//private static final String myLoginUrl =  "http://143.117.190.106:81/webservice/login.php";
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
+	
+	private GetUserIdTask mUserTask = null;
 	
 	private UserLoginTask mAuthTask = null;
 	private ProgressDialog pDialog; //spinner thing
 	
 	private String mEmail;
 	private String mPassword;
+	
+	private boolean loginSuccessful = false;
 
 	private EditText mEmailView;
 	private EditText mPasswordView;
 	
+	private static JSONObject userIdResult;
+	
 	Button mLoginButton;
 	Button mRegisterButton;
+	
+	boolean currentUserIdReturned;
+	
+	int userId = 0;
 	
 	public JSONParser jsonParser;
 
@@ -62,6 +75,13 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		mEmailView = (EditText) findViewById(R.id.login_email_address);
 		mPasswordView = (EditText) findViewById(R.id.login_password);
+		
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			ActionBar actionBar = getActionBar();
+			actionBar.setTitle("Treasure Hunt");
+			actionBar.setSubtitle("Login");
+		}
 		
 		jsonParser = new JSONParser();
 		
@@ -175,7 +195,26 @@ public class LoginActivity extends Activity {
 		return true;
 		
 	}
+	
+	//http://developer.android.com/training/basics/activity-lifecycle/recreating.html
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState)
+	{	
+		savedInstanceState.putString("LOGIN_EMAIL_ADDRESS", mEmailView.getText().toString());
+		savedInstanceState.putString("LOGIN_PASSWORD", mPasswordView.getText().toString());
+		
+		super.onSaveInstanceState(savedInstanceState);
+	}
 
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState)
+	{
+		super.onRestoreInstanceState(savedInstanceState);
+		
+		mEmailView.setText(savedInstanceState.getString("LOGIN_EMAIL_ADDRESS"));
+		mPasswordView.setText(savedInstanceState.getString("LOGIN_PASSWORD"));
+	}
+	
 public class UserLoginTask extends AsyncTask<String, String, String>{
 	
 	@Override
@@ -213,7 +252,7 @@ public class UserLoginTask extends AsyncTask<String, String, String>{
 				Log.d("Login Successful!", retrievedJsonObject.toString());
 				Intent chooseHuntActivityIntent = new Intent(LoginActivity.this, ChooseHuntActivity.class);
 				//finish();
-				chooseHuntActivityIntent.putExtra(getString(R.string.email_label), email);
+				loginSuccessful = true;
 				startActivity(chooseHuntActivityIntent);
 				
 				return retrievedJsonObject.getString(tagMessage);
@@ -235,6 +274,14 @@ public class UserLoginTask extends AsyncTask<String, String, String>{
 	protected void onPostExecute(final String fileUrl) {
 		mAuthTask = null;
 		pDialog.dismiss();
+		
+		if(loginSuccessful)
+		{
+			while(!currentUserIdReturned)
+			{
+				attemptToReturnUserId();
+			}
+		}
 
 		if (fileUrl != null) {
 			Toast.makeText(LoginActivity.this, fileUrl, Toast.LENGTH_LONG).show();
@@ -246,6 +293,95 @@ public class UserLoginTask extends AsyncTask<String, String, String>{
 	@Override
 	protected void onCancelled() {
 		mAuthTask = null;
+	}
+}
+
+private void attemptToReturnUserId()
+{
+	if (mUserTask != null) {
+		return;
+	} 	
+	mUserTask = new GetUserIdTask();
+	mUserTask.execute((String) null);
+
+	Handler handlerForUserTask = new Handler();
+	handlerForUserTask.postDelayed(new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			if(mUserTask!= null)
+			{
+				if(mUserTask.getStatus() == AsyncTask.Status.RUNNING)
+				{
+					mUserTask.cancel(true);
+					pDialog.cancel();
+					Toast.makeText(LoginActivity.this, "Connection timeout. Please try again.", Toast.LENGTH_LONG).show();
+				}
+			}
+		}
+	}
+	, 10000);	
+}
+
+
+public class GetUserIdTask extends AsyncTask<String, String, String> {
+
+	@Override
+	protected String doInBackground(String... arg0) {
+		
+		int success;
+		//GETTING THE USER ID
+		List<NameValuePair> parametersForUserId = new ArrayList<NameValuePair>();
+		//http://stackoverflow.com/questions/8603583/sending-integer-to-http-server-using-namevaluepair
+		parametersForUserId.add(new BasicNameValuePair("email", mEmail));
+		
+		try{
+			Log.d("request", "starting");
+			JSONObject jsonFindUserId = jsonParser.makeHttpRequest(getUserIdUrl, "POST", parametersForUserId);
+			Log.d("Get User Id Attempt", jsonFindUserId.toString());
+			success = jsonFindUserId.getInt(tagSuccess);
+			
+			if(success == 1)
+			{
+				userIdResult = jsonFindUserId.getJSONObject("result");
+				currentUserIdReturned = true;
+				userId = userIdResult.getInt("UserId");
+				return jsonFindUserId.getString(tagMessage);
+				
+			}
+			else
+			{
+				Log.d("Getting User Id failed!", jsonFindUserId.getString(tagMessage));
+				return jsonFindUserId.getString(tagMessage);
+			}
+		}
+		catch (JSONException e) {
+			
+		}
+		
+		return null;
+	}
+	
+	@Override
+	protected void onPostExecute(final String fileUrl) {
+		mUserTask = null;
+
+		if (fileUrl != null) {
+
+			SharedPreferences settings = getSharedPreferences("UserPreferencesFile", 0);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putInt("currentUserId", userId);
+			editor.commit();
+
+		} else {
+			Toast.makeText(LoginActivity.this, "Nothing returned from the database", Toast.LENGTH_LONG).show();
+		}
+	}
+
+	@Override
+	protected void onCancelled() {
+		mUserTask = null;
 	}
 }
 

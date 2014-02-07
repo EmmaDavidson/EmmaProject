@@ -14,14 +14,19 @@ import sqlLiteDatabase.HuntDAO;
 
 import Utilities.JSONParser;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -44,8 +49,10 @@ public class ChooseHuntActivity extends Activity implements OnItemClickListener 
 	
 	private HuntDAO huntDataSource;
 	
+	SharedPreferences.Editor editor;
+	SharedPreferences settings;
+	
 	private ListView mListView;
-	String currentUser;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,35 +61,57 @@ public class ChooseHuntActivity extends Activity implements OnItemClickListener 
 		huntDataSource = new HuntDAO(this);
 		huntDataSource.open();
 		
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			ActionBar actionBar = getActionBar();
+			actionBar.setTitle("Treasure Hunt");
+			actionBar.setSubtitle("Choose a hunt");
+		}
+		
 		mListView = (ListView) findViewById(R.id.hunt_list_view);		
 		
 		Intent intent = getIntent();
-		currentUser = intent.getStringExtra(getString(R.string.email_label));
 		
 		attemptReturnHunts();
 		
-		/*findViewById(R.id.sign_in_button).setOnClickListener(
+		findViewById(R.id.hunt_refresh_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
 						updateListOfHunts();
 					}
-				}); */
+				}); 
+		
+		settings = getSharedPreferences("UserPreferencesFile", 0);
+		editor = settings.edit();
 	}
 
-	/*@Override
+	//http://mobileorchard.com/android-app-development-menus-part-1-options-menu/
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.choose_hunt, menu);
+		super.onCreateOptionsMenu(menu);
+		getMenuInflater().inflate(R.menu.login, menu);
+		menu.add(Menu.NONE, 1, Menu.NONE, "Log out");
 		return true;
-	} */
+	} 
 	
-//	@Override
-//	protected void onResume()
-//	{
-//		//super.onResume();
-//		//updateListOfHunts();
-//	}
+	//http://mobileorchard.com/android-app-development-menus-part-1-options-menu/
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
+		case 1:
+			SharedPreferences settings = getSharedPreferences("UserPreferencesFile", 0);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.clear();
+			editor.commit();
+			Intent loginActivityIntent = new Intent(ChooseHuntActivity.this, LoginActivity.class);
+			startActivity(loginActivityIntent);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 	
 	private void updateListOfHunts()
 	{
@@ -205,8 +234,9 @@ public class ReturnHuntsTask extends AsyncTask<String, String, String> {
 					Hunt selectedHunt = adapter.getItem(position);
 				    
 					Intent registerWithHuntintent = new Intent(ChooseHuntActivity.this, RegisterWithHuntActivity.class);
-					registerWithHuntintent.putExtra("Email", currentUser);
-					registerWithHuntintent.putExtra("Current hunt", selectedHunt.getHuntName());
+					editor.putString("currentHuntName", selectedHunt.getHuntName());
+					editor.commit(); 
+
 					startActivity(registerWithHuntintent);
 				}
 			});
@@ -230,5 +260,6 @@ public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 	// TODO Auto-generated method stub
 	
 }
+
 }
 

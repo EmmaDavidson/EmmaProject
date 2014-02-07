@@ -1,16 +1,45 @@
 package com.application.treasurehunt;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.application.treasurehunt.RegisterWithHuntActivity.CheckIfUserRegisteredTask;
+import com.application.treasurehunt.services.HuntTimerService;
 import com.dm.zbar.android.scanner.ZBarConstants;
 import com.dm.zbar.android.scanner.ZBarScannerActivity;
 //import com.google.zxing.integration.android.IntentIntegrator;
 //import com.google.zxing.integration.android.IntentResult;
 
+import Utilities.JSONParser;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.SystemClock;
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.text.format.DateUtils;
+import android.text.format.Time;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,18 +49,137 @@ import android.widget.Toast;
 
 public class ScanQRCodeActivity extends Activity implements OnClickListener {
 
+	private static final String getHuntParticipantIdUrl = "http://192.168.1.74:80/webservice/getHuntParticipantId.php";
+	private static final String scanResultUrl = "http://192.168.1.74:80/webservice/updateScanResults.php";
+	
+	public JSONParser jsonParser = new JSONParser();
+	
+	private static final String tagSuccess = "success";
+	private static final String tagMessage = "message";
+	
+	private static JSONObject huntParticipantIdResult;
+	
 	private Button scanButton;
 	private TextView contentText;
+	
+	int userId;
+	int huntId;
+	private int huntParticipantId;
+	
+	boolean huntParticipantIdReturned;
+	
+	SharedPreferences settings;
+	SharedPreferences.Editor editor;
+	
+	long startTime;
+	
+	GetHuntParticipantIdTask mGetHuntParticipantIdTask;
+	ScanResultTask mScanResultTask;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_scan_qrcode);
 		
+		if(savedInstanceState != null)
+		{
+			huntParticipantId = savedInstanceState.getInt(huntId + "HUNT_PARTICIPANT_ID");
+		}
+		
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			ActionBar actionBar = getActionBar();
+			actionBar.setTitle("Treasure Hunt");
+			actionBar.setSubtitle("Scan a QR code");
+		}
+		
+		settings = getSharedPreferences("UserPreferencesFile", 0);
+		editor = settings.edit();
+		
+		//http://developer.android.com/guide/topics/data/data-storage.html#pref
+		userId = settings.getInt("currentUserId", 0);
+		huntId = settings.getInt("currentHuntId", 0);
+		startTime = settings.getLong("1 startTime", 100);
+		Log.d("leaderboard", "The start time retrieved from the editor is: " + startTime);
+		Log.d("leaderboard", "The hunt retrieved from the editor is: " + huntId);
+
 		scanButton = (Button)findViewById(R.id.scan_qr_code_button);
 		contentText = (TextView)findViewById(R.id.scan_content_received);
 		scanButton.setOnClickListener(this);
+		
+		if(!huntParticipantIdReturned)
+		{
+			getParticipantId();
+		}
+		else
+		{
+			huntParticipantId = settings.getInt(huntId + " userParticipantId", 0) ; 
+		}
+		
 	}
+	
+	//http://mobileorchard.com/android-app-development-menus-part-1-options-menu/
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		getMenuInflater().inflate(R.menu.login, menu);
+		menu.add(Menu.NONE, 1, Menu.NONE, "Log out");
+		return true;
+	} 
+	
+	//http://mobileorchard.com/android-app-development-menus-part-1-options-menu/
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
+		case 1:
+			SharedPreferences settings = getSharedPreferences("UserPreferencesFile", 0);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.clear();
+			editor.commit();
+			Intent loginActivityIntent = new Intent(ScanQRCodeActivity.this, LoginActivity.class);
+			startActivity(loginActivityIntent);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	private void getParticipantId()
+	{
+		if (mGetHuntParticipantIdTask != null) {
+			return;
+		} 	
+		
+		mGetHuntParticipantIdTask = new GetHuntParticipantIdTask();
+		mGetHuntParticipantIdTask.execute((String) null);
+
+		Handler handlerForUserTask = new Handler();
+		handlerForUserTask.postDelayed(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				if(mGetHuntParticipantIdTask!= null)
+				{
+					if(mGetHuntParticipantIdTask.getStatus() == AsyncTask.Status.RUNNING)
+					{
+						mGetHuntParticipantIdTask.cancel(true);
+						Toast.makeText(ScanQRCodeActivity.this, "Connection timeout. Please try again.", Toast.LENGTH_LONG).show();
+						
+					}
+				}
+			}
+		}
+		, 10000);	
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState)
+	{	
+		savedInstanceState.putInt(huntId + "HUNT_PARTICIPANT_ID", huntParticipantId);
+		super.onSaveInstanceState(savedInstanceState);
+	}	
 	
 	//For now - deciding to use ZBar within application so user does not have to have another application running to scan
 	@Override
@@ -45,10 +193,180 @@ public class ScanQRCodeActivity extends Activity implements OnClickListener {
 		if (resultCode == RESULT_OK) 
 	    {	
 			contentText.setText("QUESTION: " + intent.getStringExtra(ZBarConstants.SCAN_RESULT));
+			saveScanResult();
 
 	    } else if(resultCode == RESULT_CANCELED) {
 	        Toast.makeText(this, "Camera unavailable", Toast.LENGTH_SHORT).show();
 	    }
+	}
+	
+	public void saveScanResult()
+	{
+		if (mScanResultTask != null) {
+			return;
+		} 	
+		
+		mScanResultTask = new ScanResultTask();
+		mScanResultTask.execute((String) null);
+
+		Handler handlerForUserTask = new Handler();
+		handlerForUserTask.postDelayed(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				if(mScanResultTask!= null)
+				{
+					if(mScanResultTask.getStatus() == AsyncTask.Status.RUNNING)
+					{
+						mScanResultTask.cancel(true);
+						Toast.makeText(ScanQRCodeActivity.this, "Connection timeout. Please try again.", Toast.LENGTH_LONG).show();
+						
+					}
+				}
+			}
+		}
+		, 10000);	
+	}
+	
+public class ScanResultTask extends AsyncTask<String, String, String> {
+		
+		@Override
+		protected String doInBackground(String... args) {
+			//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
+			
+				int success;
+
+				List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+				
+				//NEED TO FIND REFERENCES
+				//http://stackoverflow.com/questions/10862845/how-to-set-android-chronometer-base-time-from-date-object
+				
+				float elapsedTime = System.currentTimeMillis() - startTime;
+				Log.d("leaderboard", "elapsed time from last scan: " + elapsedTime);
+				
+				//http://stackoverflow.com/questions/625433/how-to-convert-milliseconds-to-x-mins-x-seconds-in-java
+				//http://stackoverflow.com/questions/10593834/displaying-seconds-in-3-decimal-places-java
+				float timeElapsedSeconds = (elapsedTime / 1000) % 60;
+				float timeElapsedMinutes = ((elapsedTime / (1000.0f)) / 60.0f) % 60.0f;
+				float timeElapsedHours = (elapsedTime /(1000.0f*60.0f*60.0f) %24.0f);
+				
+				Log.d("leaderboard","elapsedTime in hours"+ Float.toString(timeElapsedHours));
+				Log.d("leaderboard","elapsedTime in minutes: "+ timeElapsedMinutes);
+				Log.d("leaderboard","elapsedTime in seconds: "+ timeElapsedSeconds);
+				
+				//http://stackoverflow.com/questions/8603583/sending-integer-to-http-server-using-namevaluepair
+				//Chose elapsed hours because it may take some time to complete the hunt
+				parameters.add(new BasicNameValuePair("huntParticipantId", Integer.toString(huntParticipantId)));
+				parameters.add(new BasicNameValuePair("timeElapsed", Float.toString(timeElapsedHours)));
+				//Don't need to save the tally as it will update in the php call
+				//http://stackoverflow.com/questions/3866524/mysql-update-column-1
+				
+				try{
+					Log.d("request", "starting");
+					JSONObject json = jsonParser.makeHttpRequest(scanResultUrl, "POST", parameters);
+					Log.d("Attempt to update scan results tally", json.toString());
+					success = json.getInt(tagSuccess);
+					
+					if(success == 1)
+					{
+						Log.d("leaderboard", "SCAN: huntParticipantId is: " + huntParticipantId + ", timeElapsed= " + timeElapsedHours);
+						return json.getString(tagMessage);			
+					}
+					else
+					{
+						Log.d("Updating scan results failed!", json.getString(tagMessage));
+						return json.getString(tagMessage);
+					}
+				
+			} catch (JSONException e) {
+			
+				Log.d("leaderboard", e+"");
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(final String fileUrl) {
+			mScanResultTask = null;
+			
+			if (fileUrl != null) {
+				Toast.makeText(ScanQRCodeActivity.this, fileUrl, Toast.LENGTH_LONG).show();	
+			} else {
+				Toast.makeText(ScanQRCodeActivity.this, "Nothing returned from the database", Toast.LENGTH_LONG).show();
+			}		
+		}
+
+		@Override
+		protected void onCancelled() {
+			mScanResultTask = null;
+		}
+	}
+	
+	public class GetHuntParticipantIdTask extends AsyncTask<String, String, String> {
+		
+		@Override
+		protected String doInBackground(String... args) {
+			//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
+			
+				int success;
+
+				List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+				
+				//http://stackoverflow.com/questions/8603583/sending-integer-to-http-server-using-namevaluepair
+				parameters.add(new BasicNameValuePair("huntId", Integer.toString(huntId)));
+				parameters.add(new BasicNameValuePair("userId", Integer.toString(userId)));
+				
+				try{
+					Log.d("request", "starting");
+					JSONObject jsonGetHuntParticipantId = jsonParser.makeHttpRequest(getHuntParticipantIdUrl, "POST", parameters);
+					Log.d("Get User Id Attempt", jsonGetHuntParticipantId.toString());
+					success = jsonGetHuntParticipantId.getInt(tagSuccess);
+					
+					if(success == 1)
+					{
+						huntParticipantIdResult = jsonGetHuntParticipantId.getJSONObject("result");
+						huntParticipantId = huntParticipantIdResult.getInt("HuntParticipantId");
+						huntParticipantIdReturned = true;
+						Log.d("leaderboard", "hunt participant id is: " + huntParticipantId);
+						return jsonGetHuntParticipantId.getString(tagMessage);
+						
+					}
+					else
+					{
+						Log.d("Getting hunt participant Id failed!", jsonGetHuntParticipantId.getString(tagMessage));
+						return jsonGetHuntParticipantId.getString(tagMessage);
+					}
+				
+			} catch (JSONException e) {
+			
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(final String fileUrl) {
+			mGetHuntParticipantIdTask = null;
+			
+			if(huntParticipantIdReturned)
+			{
+				editor.putInt(huntId + " userParticipantId", huntParticipantId);
+				editor.putBoolean(huntId + " userParticipantIdReturned", true);
+				editor.commit(); 
+			}
+			if (fileUrl != null) {
+				Toast.makeText(ScanQRCodeActivity.this, fileUrl, Toast.LENGTH_LONG).show();	
+			} else {
+				Toast.makeText(ScanQRCodeActivity.this, "Nothing returned from the database", Toast.LENGTH_LONG).show();
+			}		
+		}
+
+		@Override
+		protected void onCancelled() {
+			mGetHuntParticipantIdTask = null;
+		}
 	}
 
 }

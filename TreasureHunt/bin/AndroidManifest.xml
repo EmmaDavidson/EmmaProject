@@ -49,6 +49,10 @@
             android:name="com.application.treasurehunt.RegisterWithHuntActivity"
             android:label="@string/title_activity_register_with_hunt" >
         </activity>
+        <activity
+            android:name="com.application.treasurehunt.LogoutActivity"
+            android:label="@string/title_activity_logout" >
+        </activity>
     </application>
 
 </manifest>

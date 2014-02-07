@@ -10,17 +10,30 @@
 
     <Button
         android:id="@+id/scan_qr_code_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="52dp"
+        android:text="@string/scan_qr_code" />
+
+    <Chronometer
+        android:id="@+id/chronometer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/scan_qr_code" />
-    
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="18dp"
+        android:text="Chronometer" />
+
     <TextView
-    android:id="@+id/scan_content_received"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textIsSelectable="true"
-    android:layout_centerHorizontal="true" 
-    android:layout_below="@id/scan_qr_code_button"/>
+        android:id="@+id/scan_content_received"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/scan_qr_code_button"
+        android:layout_below="@+id/scan_qr_code_button"
+        android:layout_marginTop="21dp"
+        android:textIsSelectable="true" />
 
 </RelativeLayout>

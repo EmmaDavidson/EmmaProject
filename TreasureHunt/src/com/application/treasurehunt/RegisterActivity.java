@@ -9,12 +9,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.application.treasurehunt.LoginActivity.UserLoginTask;
-import com.application.treasurehunt.RegisterWithHuntActivity.GetUserIdTask;
 
 import Utilities.JSONParser;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -82,6 +83,12 @@ public class RegisterActivity extends Activity {
 					}
 				});
 		
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			ActionBar actionBar = getActionBar();
+			actionBar.setTitle("Treasure Hunt");
+			actionBar.setSubtitle("Register");
+		}
 		
 	}
 
@@ -248,6 +255,27 @@ public class RegisterActivity extends Activity {
 		, 10000);	
 		
 	}
+	
+		//http://developer.android.com/training/basics/activity-lifecycle/recreating.html
+		@Override
+		public void onSaveInstanceState(Bundle savedInstanceState)
+		{	
+			savedInstanceState.putString("REGISTER_EMAIL_ADDRESS", mEmailView.getText().toString());
+			savedInstanceState.putString("REGISTER_NAME", mNameView.getText().toString());
+			savedInstanceState.putString("REGISTER_PASSWORD", mPasswordView.getText().toString());	
+			
+			super.onSaveInstanceState(savedInstanceState);
+		}
+
+		@Override
+		public void onRestoreInstanceState(Bundle savedInstanceState)
+		{
+			super.onRestoreInstanceState(savedInstanceState);
+			
+			mEmailView.setText(savedInstanceState.getString("REGISTER_EMAIL_ADDRESS"));
+			mNameView.setText(savedInstanceState.getString("REGISTER_NAME"));
+			mPasswordView.setText(savedInstanceState.getString("REGISTER_PASSWORD"));	
+		}
 	
 
 	

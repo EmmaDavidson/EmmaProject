@@ -1,10 +1,10 @@
 package sqlLiteDatabase;
 
 public class Hunt {
-	  private long huntId;
+	  private int huntId;
 	  private String huntName;
 
-	  public long getHuntId() {
+	  public int getHuntId() {
 	    return huntId;
 	  }
 
