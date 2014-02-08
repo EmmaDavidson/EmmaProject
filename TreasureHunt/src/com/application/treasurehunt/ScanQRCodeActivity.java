@@ -99,8 +99,7 @@ public class ScanQRCodeActivity extends Activity implements OnClickListener {
 		//http://developer.android.com/guide/topics/data/data-storage.html#pref
 		userId = settings.getInt("currentUserId", 0);
 		huntId = settings.getInt("currentHuntId", 0);
-		startTime = settings.getLong("1 startTime", 100);
-		Log.d("leaderboard", "The start time retrieved from the editor is: " + startTime);
+		
 		Log.d("leaderboard", "The hunt retrieved from the editor is: " + huntId);
 
 		scanButton = (Button)findViewById(R.id.scan_qr_code_button);
@@ -241,24 +240,25 @@ public class ScanResultTask extends AsyncTask<String, String, String> {
 				
 				//NEED TO FIND REFERENCES
 				//http://stackoverflow.com/questions/10862845/how-to-set-android-chronometer-base-time-from-date-object
-				
-				float elapsedTime = System.currentTimeMillis() - startTime;
+				startTime = settings.getLong(huntId + " startTime", 0);
+				Log.d("leaderboard", "The start time retrieved from the editor is: " + startTime);
+				Log.d("leaderboard", "Current millis time: " + System.currentTimeMillis());
+				long elapsedTime = System.currentTimeMillis() - startTime;
 				Log.d("leaderboard", "elapsed time from last scan: " + elapsedTime);
 				
 				//http://stackoverflow.com/questions/625433/how-to-convert-milliseconds-to-x-mins-x-seconds-in-java
 				//http://stackoverflow.com/questions/10593834/displaying-seconds-in-3-decimal-places-java
-				float timeElapsedSeconds = (elapsedTime / 1000) % 60;
-				float timeElapsedMinutes = ((elapsedTime / (1000.0f)) / 60.0f) % 60.0f;
-				float timeElapsedHours = (elapsedTime /(1000.0f*60.0f*60.0f) %24.0f);
-				
-				Log.d("leaderboard","elapsedTime in hours"+ Float.toString(timeElapsedHours));
-				Log.d("leaderboard","elapsedTime in minutes: "+ timeElapsedMinutes);
+				long timeElapsedSeconds = (elapsedTime / 1000);
 				Log.d("leaderboard","elapsedTime in seconds: "+ timeElapsedSeconds);
+
+				double timeElapsedHours = (elapsedTime /(1000.0f*60.0f*60.0f));
+				Log.d("leaderboard","elapsedTime in hours with calc "+ timeElapsedHours);
 				
+	
 				//http://stackoverflow.com/questions/8603583/sending-integer-to-http-server-using-namevaluepair
 				//Chose elapsed hours because it may take some time to complete the hunt
 				parameters.add(new BasicNameValuePair("huntParticipantId", Integer.toString(huntParticipantId)));
-				parameters.add(new BasicNameValuePair("timeElapsed", Float.toString(timeElapsedHours)));
+				parameters.add(new BasicNameValuePair("timeElapsed", ""+ timeElapsedHours));
 				//Don't need to save the tally as it will update in the php call
 				//http://stackoverflow.com/questions/3866524/mysql-update-column-1
 				

@@ -783,14 +783,11 @@ public class SaveStartTimeTask extends AsyncTask<String, String, String> {
 	@Override
 	protected void onPostExecute(final String fileUrl) {
 		mSaveStartTimeTask = null;
-		
-		if(huntAlreadyStarted)
-		{
+	
 			editor.putBoolean(huntId + " isHuntAlreadyStarted", huntAlreadyStarted);
-			editor.putLong(huntId + " startTime", (long) startTime);
+			editor.putLong(huntId + " startTime", startTime);
 			editor.commit(); 
 			startTimeSaved = true;
-		}
 		
 		if (fileUrl != null) {
 			
@@ -838,7 +835,7 @@ public class CheckIfHuntStartedTask extends AsyncTask<String, String, String> {
 				Log.d("leaderboard", huntAlreadyStarted + " huntAlreadyStarted value");
 				startTimeResult = checkIfAlreadyStartedJson.getJSONObject("result");
 				Log.d("leaderboard", checkIfAlreadyStartedJson.getJSONObject("result")+"");
-				startTime = (long) startTimeResult.getLong("StartTime");
+				startTime = startTimeResult.getLong("StartTime");
 				
 				//Cant do shared pref in here because its ui thread
 				return checkIfAlreadyStartedJson.getString(tagMessage);
