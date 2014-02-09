@@ -65,7 +65,8 @@ public class LoginActivity extends Activity {
 	boolean currentUserIdReturned;
 	
 	int userId = 0;
-	
+	String userName;
+	Intent homepageActivityIntent;
 	public JSONParser jsonParser;
 
 	@Override
@@ -250,10 +251,8 @@ public class UserLoginTask extends AsyncTask<String, String, String>{
 			if(success == 1)
 			{
 				Log.d("Login Successful!", retrievedJsonObject.toString());
-				Intent chooseHuntActivityIntent = new Intent(LoginActivity.this, ChooseHuntActivity.class);
 				//finish();
 				loginSuccessful = true;
-				startActivity(chooseHuntActivityIntent);
 				
 				return retrievedJsonObject.getString(tagMessage);
 			}
@@ -277,10 +276,7 @@ public class UserLoginTask extends AsyncTask<String, String, String>{
 		
 		if(loginSuccessful)
 		{
-			while(!currentUserIdReturned)
-			{
 				attemptToReturnUserId();
-			}
 		}
 
 		if (fileUrl != null) {
@@ -347,6 +343,10 @@ public class GetUserIdTask extends AsyncTask<String, String, String> {
 				userIdResult = jsonFindUserId.getJSONObject("result");
 				currentUserIdReturned = true;
 				userId = userIdResult.getInt("UserId");
+				userName = userIdResult.getString("Name");
+				homepageActivityIntent = new Intent(LoginActivity.this, HomepageActivity.class);
+				//homepageActivityIntent.putExtra("userName", userName);
+				startActivity(homepageActivityIntent);
 				return jsonFindUserId.getString(tagMessage);
 				
 			}
@@ -372,6 +372,7 @@ public class GetUserIdTask extends AsyncTask<String, String, String> {
 			SharedPreferences settings = getSharedPreferences("UserPreferencesFile", 0);
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putInt("currentUserId", userId);
+			editor.putString("currentUserName", userName);
 			editor.commit();
 
 		} else {

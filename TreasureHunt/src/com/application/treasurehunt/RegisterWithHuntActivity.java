@@ -101,8 +101,6 @@ public class RegisterWithHuntActivity extends Activity{
 	SharedPreferences.Editor editor;
 	SharedPreferences settings;
 	
-	
-	
 	int huntId;
 
 	@Override

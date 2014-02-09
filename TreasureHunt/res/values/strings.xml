@@ -37,5 +37,13 @@
     <string name="register_hunt_label">Register</string>
     <string name="shared_preferences">MySharedPreferencesFile</string>
     <string name="title_activity_logout">LogoutActivity</string>
+    <string name="title_activity_homepage">HomepageActivity</string>
+    <string name="my_hunts_label">My hunts</string>
+    <string name="browse_hunts_label">Browse Hunts</string>
+    <string name="title_activity_my_hunts">MyHuntsActivity</string>
+    <string name="title_activity_stats">StatsActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
 
 </resources>

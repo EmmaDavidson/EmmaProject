@@ -65,6 +65,38 @@ public class HuntDAO {
     cursor.close();
     return listOfHunts;
   }
+  
+  public Hunt addUserHunt(String comment)
+  {
+	  ContentValues values = new ContentValues();
+	    values.put(MySQLiteHelper.COLUMN_USER_HUNTS_HUNTNAME, comment);
+	    long insertId = database.insert(MySQLiteHelper.TABLE_USER_HUNTS, null,
+	        values);
+	    Cursor cursor = database.query(MySQLiteHelper.TABLE_USER_HUNTS,
+	        allColumns, null, null,
+	        null, null, null);
+	    cursor.moveToFirst();
+	    Hunt newComment = cursorToHunt(cursor);
+	    cursor.close();
+	    return newComment;
+  }
+  
+  public List<Hunt> getAllUserHunts() {
+	    List<Hunt> listOfHunts = new ArrayList<Hunt>();
+
+	    Cursor cursor = database.query(MySQLiteHelper.TABLE_USER_HUNTS,
+	        allColumns, null, null, null, null, null);
+
+	    cursor.moveToFirst();
+	    while (!cursor.isAfterLast()) {
+	      Hunt hunt = cursorToHunt(cursor);
+	      listOfHunts.add(hunt);
+	      cursor.moveToNext();
+	    }
+	    
+	    cursor.close();
+	    return listOfHunts;
+	  }
 
   //http://stackoverflow.com/questions/6781954/android-3-0-couldnt-read-row-column-from-cursor-window
   private Hunt cursorToHunt(Cursor cursor) {

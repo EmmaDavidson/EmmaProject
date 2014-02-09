@@ -70,8 +70,6 @@ public class ChooseHuntActivity extends Activity implements OnItemClickListener 
 		
 		mListView = (ListView) findViewById(R.id.hunt_list_view);		
 		
-		Intent intent = getIntent();
-		
 		attemptReturnHunts();
 		
 		findViewById(R.id.hunt_refresh_button).setOnClickListener(

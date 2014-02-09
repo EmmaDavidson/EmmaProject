@@ -53,6 +53,18 @@
             android:name="com.application.treasurehunt.LogoutActivity"
             android:label="@string/title_activity_logout" >
         </activity>
+        <activity
+            android:name="com.application.treasurehunt.HomepageActivity"
+            android:label="@string/title_activity_homepage" >
+        </activity>
+        <activity
+            android:name="com.application.treasurehunt.MyHuntsActivity"
+            android:label="@string/title_activity_my_hunts" >
+        </activity>
+        <activity
+            android:name="com.application.treasurehunt.StatsActivity"
+            android:label="@string/title_activity_stats" >
+        </activity>
     </application>
 
 </manifest>
