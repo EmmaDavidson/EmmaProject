@@ -58,7 +58,7 @@ public class RegisterWithHuntActivity extends Activity{
 
 	Intent scanQRCodeActivity;
 	
-	public JSONParser jsonParser = new JSONParser();
+	private JSONParser jsonParser = new JSONParser();
 	
 	boolean startTimeSaved;
 	

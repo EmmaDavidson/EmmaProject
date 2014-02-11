@@ -45,14 +45,14 @@ import android.widget.Toast;
 
 //http://mobile.tutsplus.com/tutorials/android/android-sdk-create-a-barcode-reader/ - ZXING
 //https://github.com/DushyanthMaguluru/ZBarScanner for ZBAR - USING THIS CURRENTLY, referencing the source forge project
-//Whole Activity taken from this either of these websites
+//Whole Activity taken from this either of these websites - now with my own added features for timing and saving to the database
 
 public class ScanQRCodeActivity extends Activity implements OnClickListener {
 
 	private static final String getHuntParticipantIdUrl = "http://192.168.1.74:80/webservice/getHuntParticipantId.php";
 	private static final String scanResultUrl = "http://192.168.1.74:80/webservice/updateScanResults.php";
 	
-	public JSONParser jsonParser = new JSONParser();
+	private JSONParser jsonParser = new JSONParser();
 	
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";

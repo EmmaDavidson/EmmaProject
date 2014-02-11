@@ -36,7 +36,7 @@ import android.widget.Toast;
 //http://net.tutsplus.com/tutorials/php/php-database-access-are-you-doing-it-correctly/
 public class ChooseHuntActivity extends Activity implements OnItemClickListener {
 
-	public JSONParser jsonParser = new JSONParser();
+	private JSONParser jsonParser = new JSONParser();
 	private static final String myChooseHuntUrl =  "http://192.168.1.74:80/webservice/choosehunt.php";
 	//private static final String myChooseHuntUrl =  "http://143.117.190.106:80/webservice/choosehunt.php";
 	

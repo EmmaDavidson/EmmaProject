@@ -42,7 +42,7 @@ public class RegisterActivity extends Activity {
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	
-	public JSONParser jsonParser = new JSONParser();
+	private JSONParser jsonParser = new JSONParser();
 	
 	private UserRegisterTask mAuthTask = null;
 	private SetUserRoleTask mUserRoleTask = null;

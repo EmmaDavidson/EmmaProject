@@ -67,7 +67,7 @@ public class LoginActivity extends Activity {
 	int userId = 0;
 	String userName;
 	Intent homepageActivityIntent;
-	public JSONParser jsonParser;
+	private JSONParser jsonParser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

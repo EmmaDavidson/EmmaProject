@@ -46,7 +46,7 @@ public class MyHuntsActivity extends Activity {
 	
 	ReturnUserHuntsTask mReturnUserHuntsTask;
 	
-	public JSONParser jsonParser = new JSONParser();
+	private JSONParser jsonParser;
 	private static final String returnUserHuntsUrl =  "http://192.168.1.74:80/webservice/chooseUserHunt.php";
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
@@ -75,6 +75,8 @@ public class MyHuntsActivity extends Activity {
 			actionBar.setTitle("Treasure Hunt");
 			actionBar.setSubtitle("My hunts");
 		}
+		
+		jsonParser = new JSONParser();
 		
 		mListView = (ExpandableListView) findViewById(R.id.list_of_user_hunts_id);
 		
@@ -236,9 +238,9 @@ public class MyHuntsActivity extends Activity {
 						//check here to make sure that user hasn't already registered with this hunt
 						//http://stackoverflow.com/questions/4508979/android-listview-get-selected-item
 						String selectedHunt = listDataHeader.get(groupPosition);
-					    
-						//Instead of starting a new activity, it only starts if the stats or map button pressed
-						//Intent registerWithHuntintent = new Intent(MyHuntsActivity.this, RegisterWithHuntActivity.class);
+					
+					    //NEED TO GET THE HUNT ID AND PUT IN THE EDITOR
+						editor.putInt("currentHuntId", 1); //NEEDS FIXED
 						editor.putString("currentHuntName", selectedHunt);
 						editor.commit(); 
 						
@@ -246,16 +248,15 @@ public class MyHuntsActivity extends Activity {
 						{
 							Intent registerWithHuntIntent = new Intent(MyHuntsActivity.this, RegisterWithHuntActivity.class);
 							startActivity(registerWithHuntIntent);
+						
 						}
 						else
 						{
-							Intent statsActivityIntent = new Intent(MyHuntsActivity.this, StatsActivity.class);
-							startActivity(statsActivityIntent);
+							Intent leaderboardActivity = new Intent(MyHuntsActivity.this, LeaderboardActivity.class);
+							startActivity(leaderboardActivity);
+			
 						}
-						
-						//If the Continue is clicked then go to scan page
-						//If the stats is clicked then go to the stats page
-						return false;
+						return true;
 					}
 					
 				});
@@ -277,7 +278,6 @@ public class MyHuntsActivity extends Activity {
 						//startActivity(registerWithHuntintent);
 					}
 				});
-				
 			} 
 			else 
 			{

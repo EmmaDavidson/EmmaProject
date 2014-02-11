@@ -65,6 +65,10 @@
             android:name="com.application.treasurehunt.StatsActivity"
             android:label="@string/title_activity_stats" >
         </activity>
+        <activity
+            android:name="com.application.treasurehunt.LeaderboardActivity"
+            android:label="@string/title_activity_leaderboard" >
+        </activity>
     </application>
 
 </manifest>

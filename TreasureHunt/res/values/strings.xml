@@ -42,8 +42,8 @@
     <string name="browse_hunts_label">Browse Hunts</string>
     <string name="title_activity_my_hunts">MyHuntsActivity</string>
     <string name="title_activity_stats">StatsActivity</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="leaderboard_header">Leaderboard</string>
+    <string name="my_stats_header">My stats</string>
+    <string name="title_activity_leaderboard">LeaderboardActivity</string>
 
 </resources>

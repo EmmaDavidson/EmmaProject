@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 //ENTIRE CLASS COPIED IN FROM THE WEBSITE BELOW
 //http://www.androidhive.info/2013/07/android-expandable-list-view-tutorial/
+//http://stackoverflow.com/questions/19494572/cannot-instantiate-the-type-expandablelistadapter
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 	private Context context;
