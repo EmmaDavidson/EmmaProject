@@ -12,6 +12,10 @@ public class Hunt {
 	  public String getHuntName() {
 	    return huntName;
 	  }
+	  
+	  public void setHuntId(int huntId) {
+		    this.huntId = huntId;
+		  }
 
 	  public void setHuntName(String hunt) {
 	    this.huntName = hunt;

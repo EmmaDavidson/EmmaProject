@@ -12,6 +12,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
   
   public static final String TABLE_USER_HUNTS = "UserHunt";
   public static final String COLUMN_USER_HUNTS_HUNTNAME = "HuntName";
+  public static final String COLUMN_USER_HUNTS_ID = "HuntId";
   
   public static final String TABLE_HUNT_LEADERBOARD = "Leaderboard";
   public static final String COLUMN_LEADERBOARD_USERNAME = "UserName";
@@ -28,7 +29,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
       + " text not null); " ;
   
   private static final String DATABASE_CREATE_USER_HUNTS =  "create table " 
-		  + TABLE_USER_HUNTS + " ("  + COLUMN_USER_HUNTS_HUNTNAME
+		  + TABLE_USER_HUNTS + " ("  + COLUMN_USER_HUNTS_ID + " INTEGER NOT NULL, " + COLUMN_USER_HUNTS_HUNTNAME
 	      + " text not null); " ;
   
   //http://stackoverflow.com/questions/15424382/sqlite-database-android-create-table

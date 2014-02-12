@@ -51,6 +51,7 @@ public class MyHuntsActivity extends Activity {
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	private static JSONArray tagResult;
+	private static JSONArray tagIdResult;
 	
 	SharedPreferences.Editor editor;
 	SharedPreferences settings;
@@ -180,11 +181,12 @@ public class MyHuntsActivity extends Activity {
 				{
 					Log.d("Returning of hunts successful!", json.toString());
 					tagResult = json.getJSONArray("results");
+					tagIdResult = json.getJSONArray("huntIds");
 					
 					//-http://stackoverflow.com/questions/8411154/null-pointer-exception-while-inserting-json-array-into-sqlite-database
 					for(int i=0; i < tagResult.length(); i++)
 					{
-						huntDataSource.addUserHunt(tagResult.getJSONArray(i).getJSONObject(0).getString("HuntName"));
+						huntDataSource.addUserHunt(tagIdResult.getJSONObject(i).getInt("HuntId"), tagResult.getJSONArray(i).getJSONObject(0).getString("HuntName"));
 					}
 					
 					return tagMessage.toString();
@@ -237,24 +239,27 @@ public class MyHuntsActivity extends Activity {
 						
 						//check here to make sure that user hasn't already registered with this hunt
 						//http://stackoverflow.com/questions/4508979/android-listview-get-selected-item
-						String selectedHunt = listDataHeader.get(groupPosition);
+						Hunt chosenHunt = huntDataSource.getParticularHunt(listDataHeader.get(groupPosition));
 					
+						if(chosenHunt != null)
 					    //NEED TO GET THE HUNT ID AND PUT IN THE EDITOR
-						editor.putInt("currentHuntId", 1); //NEEDS FIXED
-						editor.putString("currentHuntName", selectedHunt);
-						editor.commit(); 
-						
-						if(childPosition == 0)
 						{
-							Intent registerWithHuntIntent = new Intent(MyHuntsActivity.this, RegisterWithHuntActivity.class);
-							startActivity(registerWithHuntIntent);
-						
-						}
-						else
-						{
-							Intent leaderboardActivity = new Intent(MyHuntsActivity.this, LeaderboardActivity.class);
-							startActivity(leaderboardActivity);
-			
+							editor.putInt("currentHuntId", chosenHunt.getHuntId()); //NEEDS FIXED
+							editor.putString("currentHuntName", chosenHunt.getHuntName());
+							editor.commit(); 
+							
+							if(childPosition == 0)
+							{
+								Intent registerWithHuntIntent = new Intent(MyHuntsActivity.this, RegisterWithHuntActivity.class);
+								startActivity(registerWithHuntIntent);
+							
+							}
+							else
+							{
+								Intent leaderboardActivity = new Intent(MyHuntsActivity.this, LeaderboardActivity.class);
+								startActivity(leaderboardActivity);
+				
+							}
 						}
 						return true;
 					}

@@ -14,7 +14,6 @@ public class LeaderboardDAO {
 	 private SQLiteDatabase database;
 	  private MySQLiteHelper dbHelper;
 	  private String[] allColumns = { MySQLiteHelper.COLUMN_LEADERBOARD_USERNAME, MySQLiteHelper.COLUMN_LEADERBOARD_TALLY, MySQLiteHelper.COLUMN_LEADERBOARD_ELAPSED_TIME };
-	  private String[] oneColumn = {  MySQLiteHelper.COLUMN_LEADERBOARD_USERNAME };
 	  public LeaderboardDAO(Context context) {
 	    dbHelper = new MySQLiteHelper(context);
 	  }

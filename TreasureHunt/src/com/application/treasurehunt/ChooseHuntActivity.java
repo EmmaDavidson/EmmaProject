@@ -54,6 +54,20 @@ public class ChooseHuntActivity extends Activity implements OnItemClickListener 
 	
 	private ListView mListView;
 	
+	Handler handlerForUpdatingHuntList;
+	
+	//http://stackoverflow.com/questions/12220239/repeat-task-in-android
+		//http://stackoverflow.com/questions/6242268/repeat-a-task-with-a-time-delay/6242292#6242292
+		final Runnable updateHuntsList = new Runnable(){
+			@Override
+			public void run()
+			{
+				huntDataSource.updateDatabaseLocally();
+				attemptReturnHunts();
+				handlerForUpdatingHuntList.postDelayed(updateHuntsList, 10000);
+			}
+		};
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,15 +84,15 @@ public class ChooseHuntActivity extends Activity implements OnItemClickListener 
 		
 		mListView = (ListView) findViewById(R.id.hunt_list_view);		
 		
-		attemptReturnHunts();
+		handlerForUpdatingHuntList.post(updateHuntsList);
 		
-		findViewById(R.id.hunt_refresh_button).setOnClickListener(
+		/*findViewById(R.id.hunt_refresh_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
 						updateListOfHunts();
 					}
-				}); 
+				}); */
 		
 		settings = getSharedPreferences("UserPreferencesFile", 0);
 		editor = settings.edit();
@@ -111,12 +125,19 @@ public class ChooseHuntActivity extends Activity implements OnItemClickListener 
 		return super.onOptionsItemSelected(item);
 	}
 	
-	private void updateListOfHunts()
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		handlerForUpdatingHuntList.removeCallbacks(updateHuntsList);
+	}
+	
+	/*private void updateListOfHunts()
 	{
 		//get this to happen automatically at some point // refreshes itself
 		huntDataSource.updateDatabaseLocally();
 		attemptReturnHunts();
-	}
+	}*/
 	
 	private void attemptReturnHunts() {
 		if (mAuthTask != null) {

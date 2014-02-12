@@ -11,21 +11,28 @@ import org.json.JSONObject;
 
 import sqlLiteDatabase.Leaderboard;
 import sqlLiteDatabase.LeaderboardDAO;
+import Utilities.ExpandableListAdapter;
 import Utilities.JSONParser;
+import Utilities.LeaderboardListAdapter;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LeaderboardActivity extends Activity {
@@ -44,6 +51,10 @@ public class LeaderboardActivity extends Activity {
 	ReturnLeaderboardTask mLeaderboardTask;
 	ListView mListView;
 	LeaderboardDAO leaderboardDataSource;
+		
+	Handler handlerForUpdatingLeaderboard;
+	
+	PendingIntent mPendingIntent;
 	
 	int currentHuntId;
 	
@@ -51,6 +62,19 @@ public class LeaderboardActivity extends Activity {
 	
 	SharedPreferences.Editor editor;
 	SharedPreferences settings;
+	
+	//http://stackoverflow.com/questions/12220239/repeat-task-in-android
+	//http://stackoverflow.com/questions/6242268/repeat-a-task-with-a-time-delay/6242292#6242292
+	final Runnable updateLeaderboardList = new Runnable(){
+		@Override
+		public void run()
+		{
+			leaderboardDataSource.updateDatabaseLocally();
+			attemptToReturnLeaderboard();
+			handlerForUpdatingLeaderboard.postDelayed(updateLeaderboardList, 10000);
+		}
+	};
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,20 +97,22 @@ public class LeaderboardActivity extends Activity {
 		
 		settings = getSharedPreferences("UserPreferencesFile", 0);
 		editor = settings.edit();
-	
-		currentHuntId = 1;//settings.getInt("currentHuntId", 0);
 		
-		attemptToReturnLeaderboard();
+		handlerForUpdatingLeaderboard = new Handler();
+	
+		currentHuntId = settings.getInt("currentHuntId", 0);
+		
+		//http://stackoverflow.com/questions/12220239/repeat-task-in-android
+		handlerForUpdatingLeaderboard.post(updateLeaderboardList);
 	}
 	
-	//For use with a refresh button
-	private void updateListOfHunts()
+	@Override
+	protected void onPause()
 	{
-		//get this to happen automatically at some point // refreshes itself
-		leaderboardDataSource.updateDatabaseLocally();
-		attemptToReturnLeaderboard();
+		super.onPause();
+		handlerForUpdatingLeaderboard.removeCallbacks(updateLeaderboardList);
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -212,16 +238,10 @@ public class LeaderboardActivity extends Activity {
 			if (fileUrl != null) 
 			{	
 				List<Leaderboard> listOfLeaderboardResults = leaderboardDataSource.getAllResults();
-				//Only want it to display certain columns
-				
-				List<String> leaderboardNames = new ArrayList<String>();
-				for(int i=0; i< listOfLeaderboardResults.size();i++)
-				{
-					leaderboardNames.add(listOfLeaderboardResults.get(i).getUserName());
-				}
 				
 				//Need to change this back to leaderboard for displaying all of the values... displaying in a table instead!
-				final ArrayAdapter<String> adapter = new ArrayAdapter<String>(LeaderboardActivity.this, android.R.layout.simple_list_item_1, leaderboardNames);
+				//Android book - The Big Nerd Ranch Guide
+				LeaderboardListAdapter adapter = new LeaderboardListAdapter(LeaderboardActivity.this, listOfLeaderboardResults);
 				mListView.setAdapter(adapter);	
 			
 			} 

@@ -22,10 +22,11 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
+        public static final int leaderboard_image=0x7f020001;
     }
     public static final class id {
-        public static final int action_forgot_password=0x7f080024;
-        public static final int action_settings=0x7f080023;
+        public static final int action_forgot_password=0x7f080027;
+        public static final int action_settings=0x7f080026;
         public static final int browse_hunts_button=0x7f080003;
         public static final int choose_hunt_label=0x7f080000;
         public static final int chronometer=0x7f08001d;
@@ -37,8 +38,11 @@ public final class R {
         public static final int hunt_refresh_button=0x7f080001;
         public static final int hunts_list_header_label=0x7f080021;
         public static final int hunts_list_item_label=0x7f080022;
+        public static final int imageView1=0x7f080025;
         public static final int leaderboard_list_view=0x7f080007;
+        public static final int leaderboard_name=0x7f080024;
         public static final int leaderboard_table_layout=0x7f080006;
+        public static final int leaderboard_tally_score=0x7f080023;
         public static final int list_of_user_hunts_id=0x7f08000e;
         public static final int login=0x7f080014;
         public static final int login_email_address=0x7f08000c;
@@ -76,7 +80,8 @@ public final class R {
         public static final int fragment_leaderboard=0x7f03000a;
         public static final int hunts_group_list=0x7f03000b;
         public static final int hunts_group_list_item=0x7f03000c;
-        public static final int login=0x7f03000d;
+        public static final int leaderboard_list_item=0x7f03000d;
+        public static final int login=0x7f03000e;
     }
     public static final class menu {
         public static final int add_question=0x7f070000;
