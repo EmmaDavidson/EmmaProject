@@ -38,5 +38,10 @@
             </views:RegisterView>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type vm:LeaderboardViewModel}">
+            <views:LeaderboardView>
+            </views:LeaderboardView>
+        </DataTemplate>
+
     </Application.Resources>
 </Application>

@@ -1,7 +1,4 @@
-﻿<Window x:Class="TreasureHuntDesktopApplication.FullClient.Views.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:dxn="http://schemas.devexpress.com/winfx/2008/xaml/navbar" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" x:Class="TreasureHuntDesktopApplication.FullClient.Views.MainWindow"
         Height="500"
         Width="750"
         Title="Treasure Hunt"
@@ -10,12 +7,9 @@
 
 
     <Grid>
-        <Grid.Background>
-            <ImageBrush Stretch="None" Opacity="0.5" ImageSource="C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\treasure_map1.jpg"></ImageBrush>
-        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="47*"/>
-            
+
             <RowDefinition Height="425*"/>
         </Grid.RowDefinitions>
         <Border BorderThickness="7" Grid.Row="0" >
@@ -25,6 +19,7 @@
         </Border>
         <ContentControl Content="{Binding CurrentViewModel}" Grid.Row="1"/>
         <Image Source="C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\Treasure Hunt Logo Transparent.png" Margin="-79,0,474,412" Grid.RowSpan="2"/>
+
     </Grid>
-    
+
 </Window>

@@ -20,6 +20,7 @@ using System.Windows.Documents;
 using TreasureHuntDesktopApplication.FullClient.Messages;
 using TreasureHuntDesktopApplication.FullClient.Project_Utilities;
 using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
+using TreasureHuntDesktopApplication.FullClient.Utilities;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 {
@@ -31,6 +32,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         public RelayCommand ViewQrCodeCommand { get; private set; }
         public RelayCommand PrintQRCodesCommand { get; private set; }
         public RelayCommand BackCommand { get; private set; }
+        public RelayCommand LeaderboardCommand { get; private set; }
         private String myFileDirectory = "C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\";
 
         public ViewHuntViewModel(ITreasureHuntService _serviceClient)
@@ -40,6 +42,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             ViewQrCodeCommand = new RelayCommand(() => ExecuteViewQrCodeCommand(), () => IsSingleQuestionSelected());
             PrintQRCodesCommand = new RelayCommand(() => ExecutePrintQRCodesCommand(), () => IsValidListOfQuestions());
             BackCommand = new RelayCommand(() => ExecuteBackCommand());
+            LeaderboardCommand = new RelayCommand(() => ExecuteLeaderboardCommand());
             
              Messenger.Default.Register<SelectedHuntMessage>
              (
@@ -116,7 +119,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         //make internal
         private void RefreshQuestions()
         {
-            if(this.currentTreasureHunt != null)
+            if (this.currentTreasureHunt != null)
             {
                 List<long> questionIds = this.serviceClient.GetHuntQuestions(this.currentTreasureHunt).ToList();
                 List<question> listOfQuestionsFromHunt = new List<question>();
@@ -131,7 +134,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
                     Questions = listOfQuestionsFromHunt.AsEnumerable();
                 }
-             }
+            }
         }
 
         #endregion
@@ -190,7 +193,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             if (!DoesQuestionAlreadyExist(NewQuestion))
             {
-                String locationOfQrCodeImage = myFileDirectory + "QRCodes\\" + this.newQuestion + ".png";
+                String locationOfQrCodeImage = myFileDirectory + "QRCodes\\" + this.CurrentTreasureHunt.HuntId + " " + this.newQuestion + ".png";
 
                 question brandNewQuestion = new question();
                 brandNewQuestion.Question1 = this.newQuestion;
@@ -284,6 +287,14 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "SearchHuntViewModel" });
             NewQuestion = null;
+        }
+
+        private void ExecuteLeaderboardCommand()
+        {
+            hunt currentHunt = CurrentTreasureHunt;
+            Messenger.Default.Send<LeaderboardMessage>(new LeaderboardMessage() { CurrentHunt = currentHunt });
+            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "LeaderboardViewModel" });
+           
         }
 
         private bool DoesQuestionAlreadyExist(string newQuestion)

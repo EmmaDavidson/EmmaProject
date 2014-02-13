@@ -19,8 +19,10 @@ using System.Xml.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
+[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "huntparticipants_ibfk_1", "hunt", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.hunt), "huntparticipants", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.huntparticipant), true)]
 [assembly: EdmRelationshipAttribute("treasurehuntdbModel", "huntquestions_ibfk_1", "hunt", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.hunt), "huntquestions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.huntquestion), true)]
 [assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userhunt_ibfk_2", "hunt", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.hunt), "userhunt", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userhunt), true)]
+[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "huntparticipants_ibfk_2", "user", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.user), "huntparticipants", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.huntparticipant), true)]
 [assembly: EdmRelationshipAttribute("treasurehuntdbModel", "huntquestions_ibfk_2", "questions", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.question), "huntquestions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.huntquestion), true)]
 [assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userrole_ibfk_1", "role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.role), "userrole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userrole), true)]
 [assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userhunt_ibfk_1", "user", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.user), "userhunt", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userhunt), true)]
@@ -92,6 +94,22 @@ namespace TreasureHuntDesktopApplication.Data
             }
         }
         private ObjectSet<hunt> _hunts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<huntparticipant> huntparticipants
+        {
+            get
+            {
+                if ((_huntparticipants == null))
+                {
+                    _huntparticipants = base.CreateObjectSet<huntparticipant>("huntparticipants");
+                }
+                return _huntparticipants;
+            }
+        }
+        private ObjectSet<huntparticipant> _huntparticipants;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -202,6 +220,14 @@ namespace TreasureHuntDesktopApplication.Data
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the huntparticipants EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTohuntparticipants(huntparticipant huntparticipant)
+        {
+            base.AddObject("huntparticipants", huntparticipant);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the huntquestions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddTohuntquestions(huntquestion huntquestion)
@@ -273,12 +299,14 @@ namespace TreasureHuntDesktopApplication.Data
         /// <param name="huntId">Initial value of the HuntId property.</param>
         /// <param name="huntName">Initial value of the HuntName property.</param>
         /// <param name="password">Initial value of the Password property.</param>
-        public static hunt Createhunt(global::System.Int64 huntId, global::System.String huntName, global::System.String password)
+        /// <param name="huntDescription">Initial value of the HuntDescription property.</param>
+        public static hunt Createhunt(global::System.Int64 huntId, global::System.String huntName, global::System.String password, global::System.String huntDescription)
         {
             hunt hunt = new hunt();
             hunt.HuntId = huntId;
             hunt.HuntName = huntName;
             hunt.Password = password;
+            hunt.HuntDescription = huntDescription;
             return hunt;
         }
 
@@ -360,10 +388,56 @@ namespace TreasureHuntDesktopApplication.Data
         private global::System.String _Password;
         partial void OnPasswordChanging(global::System.String value);
         partial void OnPasswordChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String HuntDescription
+        {
+            get
+            {
+                return _HuntDescription;
+            }
+            set
+            {
+                OnHuntDescriptionChanging(value);
+                ReportPropertyChanging("HuntDescription");
+                _HuntDescription = StructuralObject.SetValidValue(value, false, "HuntDescription");
+                ReportPropertyChanged("HuntDescription");
+                OnHuntDescriptionChanged();
+            }
+        }
+        private global::System.String _HuntDescription;
+        partial void OnHuntDescriptionChanging(global::System.String value);
+        partial void OnHuntDescriptionChanged();
 
         #endregion
 
         #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "huntparticipants_ibfk_1", "huntparticipants")]
+        public EntityCollection<huntparticipant> huntparticipants
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<huntparticipant>("treasurehuntdbModel.huntparticipants_ibfk_1", "huntparticipants");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<huntparticipant>("treasurehuntdbModel.huntparticipants_ibfk_1", "huntparticipants", value);
+                }
+            }
+        }
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -405,6 +479,270 @@ namespace TreasureHuntDesktopApplication.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_2", "userhunt", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="treasurehuntdbModel", Name="huntparticipant")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class huntparticipant : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new huntparticipant object.
+        /// </summary>
+        /// <param name="huntParticipantId">Initial value of the HuntParticipantId property.</param>
+        /// <param name="huntId">Initial value of the HuntId property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="tally">Initial value of the Tally property.</param>
+        /// <param name="elapsedTime">Initial value of the ElapsedTime property.</param>
+        public static huntparticipant Createhuntparticipant(global::System.Int64 huntParticipantId, global::System.Int64 huntId, global::System.Int64 userId, global::System.Int64 tally, global::System.Single elapsedTime)
+        {
+            huntparticipant huntparticipant = new huntparticipant();
+            huntparticipant.HuntParticipantId = huntParticipantId;
+            huntparticipant.HuntId = huntId;
+            huntparticipant.UserId = userId;
+            huntparticipant.Tally = tally;
+            huntparticipant.ElapsedTime = elapsedTime;
+            return huntparticipant;
+        }
+
+        #endregion
+
+        #region Simple Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 HuntParticipantId
+        {
+            get
+            {
+                return _HuntParticipantId;
+            }
+            set
+            {
+                if (_HuntParticipantId != value)
+                {
+                    OnHuntParticipantIdChanging(value);
+                    ReportPropertyChanging("HuntParticipantId");
+                    _HuntParticipantId = StructuralObject.SetValidValue(value, "HuntParticipantId");
+                    ReportPropertyChanged("HuntParticipantId");
+                    OnHuntParticipantIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _HuntParticipantId;
+        partial void OnHuntParticipantIdChanging(global::System.Int64 value);
+        partial void OnHuntParticipantIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 HuntId
+        {
+            get
+            {
+                return _HuntId;
+            }
+            set
+            {
+                OnHuntIdChanging(value);
+                ReportPropertyChanging("HuntId");
+                _HuntId = StructuralObject.SetValidValue(value, "HuntId");
+                ReportPropertyChanged("HuntId");
+                OnHuntIdChanged();
+            }
+        }
+        private global::System.Int64 _HuntId;
+        partial void OnHuntIdChanging(global::System.Int64 value);
+        partial void OnHuntIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, "UserId");
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int64 _UserId;
+        partial void OnUserIdChanging(global::System.Int64 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Tally
+        {
+            get
+            {
+                return _Tally;
+            }
+            set
+            {
+                OnTallyChanging(value);
+                ReportPropertyChanging("Tally");
+                _Tally = StructuralObject.SetValidValue(value, "Tally");
+                ReportPropertyChanged("Tally");
+                OnTallyChanged();
+            }
+        }
+        private global::System.Int64 _Tally;
+        partial void OnTallyChanging(global::System.Int64 value);
+        partial void OnTallyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Single ElapsedTime
+        {
+            get
+            {
+                return _ElapsedTime;
+            }
+            set
+            {
+                OnElapsedTimeChanging(value);
+                ReportPropertyChanging("ElapsedTime");
+                _ElapsedTime = StructuralObject.SetValidValue(value, "ElapsedTime");
+                ReportPropertyChanged("ElapsedTime");
+                OnElapsedTimeChanged();
+            }
+        }
+        private global::System.Single _ElapsedTime;
+        partial void OnElapsedTimeChanging(global::System.Single value);
+        partial void OnElapsedTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Double> StartTime
+        {
+            get
+            {
+                return _StartTime;
+            }
+            set
+            {
+                OnStartTimeChanging(value);
+                ReportPropertyChanging("StartTime");
+                _StartTime = StructuralObject.SetValidValue(value, "StartTime");
+                ReportPropertyChanged("StartTime");
+                OnStartTimeChanged();
+            }
+        }
+        private Nullable<global::System.Double> _StartTime;
+        partial void OnStartTimeChanging(Nullable<global::System.Double> value);
+        partial void OnStartTimeChanged();
+
+        #endregion
+
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "huntparticipants_ibfk_1", "hunt")]
+        public hunt hunt
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.huntparticipants_ibfk_1", "hunt").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.huntparticipants_ibfk_1", "hunt").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<hunt> huntReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.huntparticipants_ibfk_1", "hunt");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<hunt>("treasurehuntdbModel.huntparticipants_ibfk_1", "hunt", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "huntparticipants_ibfk_2", "user")]
+        public user user
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.huntparticipants_ibfk_2", "user").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.huntparticipants_ibfk_2", "user").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<user> userReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.huntparticipants_ibfk_2", "user");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<user>("treasurehuntdbModel.huntparticipants_ibfk_2", "user", value);
                 }
             }
         }
@@ -976,6 +1314,28 @@ namespace TreasureHuntDesktopApplication.Data
         #endregion
 
         #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "huntparticipants_ibfk_2", "huntparticipants")]
+        public EntityCollection<huntparticipant> huntparticipants
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<huntparticipant>("treasurehuntdbModel.huntparticipants_ibfk_2", "huntparticipants");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<huntparticipant>("treasurehuntdbModel.huntparticipants_ibfk_2", "huntparticipants", value);
+                }
+            }
+        }
     
         /// <summary>
         /// No Metadata Documentation available.

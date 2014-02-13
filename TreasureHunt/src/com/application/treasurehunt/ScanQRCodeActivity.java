@@ -191,8 +191,18 @@ public class ScanQRCodeActivity extends Activity implements OnClickListener {
 	{
 		if (resultCode == RESULT_OK) 
 	    {	
-			contentText.setText("QUESTION: " + intent.getStringExtra(ZBarConstants.SCAN_RESULT));
-			saveScanResult();
+			if(intent.getStringExtra(ZBarConstants.SCAN_RESULT).contains(huntId+""))
+			{
+				String questionReturned = intent.getStringExtra(ZBarConstants.SCAN_RESULT);
+				//http://stackoverflow.com/questions/8694984/remove-part-of-string
+				String questionReturnedWithoutHuntId = questionReturned.replace(huntId+"", "");
+				contentText.setText("QUESTION: " + questionReturnedWithoutHuntId);
+				saveScanResult();
+			}
+			else
+			{
+				Toast.makeText(this, "This was an invalid scan for this hunt", Toast.LENGTH_SHORT).show();
+			}
 
 	    } else if(resultCode == RESULT_CANCELED) {
 	        Toast.makeText(this, "Camera unavailable", Toast.LENGTH_SHORT).show();

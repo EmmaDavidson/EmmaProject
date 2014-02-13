@@ -56,5 +56,11 @@ namespace TreasureHuntDesktopApplication.DataService
 
         [OperationContract]
         IEnumerable<hunt> GetTreasureHuntsForParticularUser(user user);
+
+        [OperationContract]
+        List<huntparticipant> GetHuntParticipants(hunt currentTreasureHunt);
+
+        [OperationContract]
+        user GetParticipantName(long participant);
     }
 }

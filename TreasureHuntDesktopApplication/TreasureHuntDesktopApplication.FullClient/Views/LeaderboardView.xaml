@@ -1,0 +1,27 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="TreasureHuntDesktopApplication.FullClient.Views.LeaderboardView" 
+             mc:Ignorable="d" 
+             Height="449"
+             Width="750">
+    <Grid>
+        <Label Foreground="DarkSlateGray" FontWeight="ExtraBold" FontFamily="Boopee" FontSize="40" Content="Leaderboard" HorizontalAlignment="Left" Margin="311,10,0,0" VerticalAlignment="Top"/>
+        <ListView Grid.Row="0" Background="Azure"  ItemsSource="{Binding LeaderboardResults}" HorizontalAlignment="Left" Height="268" Margin="117,70,0,0" VerticalAlignment="Top" Width="586">
+            <ListView.View>
+                <GridView>
+                    <!-- Knowledge from the Agile project and also http://www.wpf-tutorial.com/listview-control/listview-with-gridview/-->
+                    <GridViewColumn Header="Name" Width="280" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Tally" Width="150" DisplayMemberBinding="{Binding Tally}"/>
+                    <GridViewColumn Header="ElapsedTime (Hours)" Width="150" DisplayMemberBinding="{Binding ElapsedTime}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Back" Command="{Binding BackCommand}"  HorizontalAlignment="Left" Margin="582,352,0,0" VerticalAlignment="Top" Width="121" Height="34"/>
+        <Button Content="Refresh Leaderboard" Command="{Binding RefreshCommand}"  HorizontalAlignment="Left" Margin="117,352,0,0" VerticalAlignment="Top" Width="119" Height="34"/>
+
+
+    </Grid>
+</UserControl>

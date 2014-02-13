@@ -4,16 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="621e4bc28b574e37aca4cf205bf90630" Name="Diagram1">
-        <EntityTypeShape EntityType="treasurehuntdbModel.hunt" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.huntquestion" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.question" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.role" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.user" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.userhunt" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.userrole" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="0d545a5b06ce4b63a2b188cabfd049f2" Name="Diagram1">
+        <EntityTypeShape EntityType="treasurehuntdbModel.hunt" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.huntparticipant" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.huntquestion" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.question" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.role" Width="1.5" PointX="3.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.user" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.userhunt" Width="1.5" PointX="6" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="treasurehuntdbModel.userrole" Width="1.5" PointX="6" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="treasurehuntdbModel.huntparticipants_ibfk_1" ManuallyRouted="false" />
         <AssociationConnector Association="treasurehuntdbModel.huntquestions_ibfk_1" ManuallyRouted="false" />
         <AssociationConnector Association="treasurehuntdbModel.userhunt_ibfk_2" ManuallyRouted="false" />
+        <AssociationConnector Association="treasurehuntdbModel.huntparticipants_ibfk_2" ManuallyRouted="false" />
         <AssociationConnector Association="treasurehuntdbModel.huntquestions_ibfk_2" ManuallyRouted="false" />
         <AssociationConnector Association="treasurehuntdbModel.userrole_ibfk_1" ManuallyRouted="false" />
         <AssociationConnector Association="treasurehuntdbModel.userhunt_ibfk_1" ManuallyRouted="false" />

@@ -16,7 +16,7 @@
 	    }
 
 	     
-	    $query  = " SELECT Name, Password FROM user WHERE email = :Email";
+	    $query  = " SELECT Name, Password, UserId FROM user WHERE email = :Email";
 	
 	    $query_params = array(
 	        ':Email' => $_POST['email']
@@ -36,26 +36,57 @@
 	        die(json_encode($response));
 	    }
 	  	     		
-	    $row = $stmt->fetch();
+	    	$row = $stmt->fetch();
+
 	    	if ($row) {
 
-				if($_POST['password'] === $row['Password'])
-				{
+				$query2  = " SELECT RoleId FROM userrole WHERE userId = :UserId";
+				$userIdResult = $row['UserId'];
+				echo json_encode($userIdResult);
+	    			$query_params2 = array(':UserId' => $userIdResult);
+
+	  			 try {
+	     				   
+	        			$stmt2   = $db->prepare($query2);
+	        			$result2 = $stmt2->execute($query_params2);
+	    				}
+	    			catch (PDOException $ex) {
+	       
+	        			$response["success"] = 0;
+	        			$response["message"] = "Database Error1. Please Try Again!";
+	        			die(json_encode($response));
+	    				}
 				
-					$response["success"] = 1;
-	   		        	$response["message"] = "Successfully logged in!";
-	    				echo json_encode($response);
-				}
-				else
+				$row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+				echo json_encode($row2);
+
+				if($row2['RoleId'] == 1)
 				{
 					$response["success"] = 0;
-	   		        	$response["message"] = "Login details incorrect.";
+	   		        	$response["message"] = "You cannot log into this application with this email address";
 	    				echo json_encode($response);
+					
+	      			}
+				else		
+				{
+
+					if($_POST['password'] === $row['Password'])
+					{
+						$response["success"] = 1;
+	   		        		$response["message"] = "Successfully logged in!";
+	    					echo json_encode($response);
+					}
+					else
+					{
+						$response["success"] = 0;
+	   		        		$response["message"] = "Login details incorrect.";
+	    					echo json_encode($response);
+					}		
 				}
-	      
+
 	  		  }
 		else
-
 			{
 				$response["success"] = 0;
 	   		        $response["message"] = "User does not exist.";

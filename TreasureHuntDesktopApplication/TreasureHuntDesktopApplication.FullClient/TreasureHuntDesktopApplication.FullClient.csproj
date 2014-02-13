@@ -55,6 +55,16 @@
     <Reference Include="Aspose.Words">
       <HintPath>..\packages\Aspose.Words.13.10.0\lib\net3.5\Aspose.Words.dll</HintPath>
     </Reference>
+    <Reference Include="DevExpress.Data.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Images.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Core.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Docking.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Grid.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Grid.v13.1.Core, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Layout.v13.1.Core, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.NavBar.v13.1, Version=13.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DocX">
       <HintPath>..\packages\DocX.1.0.0.12\lib\DocX.dll</HintPath>
     </Reference>
@@ -133,6 +143,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Messages\CurrentUserMessage.cs" />
+    <Compile Include="Messages\LeaderboardMessage.cs" />
     <Compile Include="Messages\PrintMessage.cs" />
     <Compile Include="Messages\SelectedHuntMessage.cs" />
     <Compile Include="Messages\SelectedQuestionMessage.cs" />
@@ -146,7 +157,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\Participant.cs" />
     <Compile Include="ViewModel\CreateHuntViewModel.cs" />
+    <Compile Include="ViewModel\LeaderboardViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\PrintViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
@@ -157,6 +170,9 @@
     <Compile Include="ViewModel\ViewQRCodeViewModel.cs" />
     <Compile Include="Views\CreateHuntView.xaml.cs">
       <DependentUpon>CreateHuntView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LeaderboardView.xaml.cs">
+      <DependentUpon>LeaderboardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -177,6 +193,10 @@
       <DependentUpon>ViewQRCodeView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CreateHuntView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LeaderboardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -239,6 +259,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -253,6 +274,9 @@
     </None>
     <AppDesigner Include="Properties\" />
     <None Include="Service References\TreasureHuntService\TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TreasureHuntService\TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntparticipant.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\TreasureHuntService\TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question.datasource">
@@ -285,7 +309,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\" />
     <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>

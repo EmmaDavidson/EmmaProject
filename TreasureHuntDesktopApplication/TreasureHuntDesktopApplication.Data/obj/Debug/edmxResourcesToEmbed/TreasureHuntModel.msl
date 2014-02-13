@@ -7,6 +7,19 @@
           <ScalarProperty Name="HuntId" ColumnName="HuntId" />
           <ScalarProperty Name="HuntName" ColumnName="HuntName" />
           <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="HuntDescription" ColumnName="HuntDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="huntparticipants">
+      <EntityTypeMapping TypeName="treasurehuntdbModel.huntparticipant">
+        <MappingFragment StoreEntitySet="huntparticipants">
+          <ScalarProperty Name="HuntParticipantId" ColumnName="HuntParticipantId" />
+          <ScalarProperty Name="HuntId" ColumnName="HuntId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Tally" ColumnName="Tally" />
+          <ScalarProperty Name="ElapsedTime" ColumnName="ElapsedTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

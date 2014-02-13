@@ -24,6 +24,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         readonly static PrintViewModel printViewModel = new PrintViewModel(serviceClient);
         readonly static LoginViewModel loginViewModel = new LoginViewModel(serviceClient);
         readonly static RegisterViewModel registerViewModel = new RegisterViewModel(serviceClient);
+        readonly static LeaderboardViewModel leaderboardViewModel = new LeaderboardViewModel(serviceClient);
 
 
         public ViewModelBase CurrentViewModel
@@ -83,6 +84,10 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             else if (requestedUpdateViewModel == "RegisterViewModel")
             {
                 CurrentViewModel = MainViewModel.registerViewModel;
+            }
+            else if (requestedUpdateViewModel == "LeaderboardViewModel")
+            {
+                CurrentViewModel = MainViewModel.leaderboardViewModel;
             }
 
         }

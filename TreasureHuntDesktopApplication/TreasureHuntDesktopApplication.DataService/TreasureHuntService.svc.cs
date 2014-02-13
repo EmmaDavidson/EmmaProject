@@ -180,5 +180,27 @@ namespace TreasureHuntDesktopApplication.DataService
                 context.ObjectStateManager.ChangeObjectState(userHunt, System.Data.EntityState.Added);
             }
         }
+        //-http://stackoverflow.com/questions/15576282/sorting-a-c-sharp-list-by-multiple-columns
+        //-http://stackoverflow.com/questions/18525253/wpf-listt-sort
+        public List<huntparticipant> GetHuntParticipants(hunt currentTreasureHunt)
+        {
+            using (var context = new TreasureHuntEntities())
+            {
+                if (currentTreasureHunt == null) return null;
+                var returnedHuntParticipants = context.huntparticipants.Where(c => c.HuntId == currentTreasureHunt.HuntId).OrderByDescending(c => c.ElapsedTime).ThenByDescending(s => s.Tally).ToList();
+                returnedHuntParticipants.ForEach(e => context.ObjectStateManager.ChangeObjectState(e, System.Data.EntityState.Detached));
+                return returnedHuntParticipants;
+            }
+        }
+
+        public user GetParticipantName(long userId)
+        {
+            using (var context = new TreasureHuntEntities())
+            {
+                var returnedHuntParticipant = context.users.Where(c => c.UserId == userId).Single();
+                context.ObjectStateManager.ChangeObjectState(returnedHuntParticipant, System.Data.EntityState.Detached);
+                return returnedHuntParticipant;
+            }
+        }
     }
 }

@@ -1,9 +1,14 @@
+//http://uk1.php.net/array_push
+//http://stackoverflow.com/questions/676677/how-to-add-elements-to-an-empty-array-in-php
+//http://stackoverflow.com/questions/3045619/need-to-store-values-from-foreach-loop-into-array
+//http://stackoverflow.com/questions/9050685/can-you-append-strings-to-variables-in-php
+//http://stackoverflow.com/questions/13170230/php-combine-two-associative-arrays-into-one-array
 <?php
 
 	require("config.inc.php");
 
 	try {	
-		$query = "SELECT HuntId FROM huntparticipants WHERE UserId = 25 ";
+		$query = "SELECT HuntId FROM huntparticipants WHERE UserId = :UserId ";
 		$query_params = array(
 	        ':UserId' => $_POST['userId']
 	   	 );
@@ -25,6 +30,7 @@
 
             if($hunts)
 	    {
+		$response["huntIds"] = $hunts;
 		$response["results"] = array();
 		foreach($hunts as $huntIdReturned)
 		{

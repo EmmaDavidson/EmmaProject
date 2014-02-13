@@ -113,7 +113,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             get
             {
-                return 1;
+                return 1000;
             }
         }
 
@@ -121,7 +121,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         {
             get
             {
-                return 1000;
+                return 10;
             }
         }
 
@@ -176,7 +176,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 hunt newHunt = new hunt();
                 newHunt.HuntName = this.huntName;
                 newHunt.Password = this.Password;
-                //newHunt.Description = this.Description
+                newHunt.HuntDescription = this.Description;
                 long huntId = this.serviceClient.SaveNewHunt(newHunt);
 
                 userrole newUserRole = this.serviceClient.GetUserRole(this.currentUser);

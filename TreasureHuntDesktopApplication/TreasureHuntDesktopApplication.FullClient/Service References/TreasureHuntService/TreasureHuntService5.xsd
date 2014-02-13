@@ -200,4 +200,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetHuntParticipants">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data" minOccurs="0" name="currentTreasureHunt" nillable="true" type="q19:hunt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHuntParticipantsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data" minOccurs="0" name="GetHuntParticipantsResult" nillable="true" type="q20:ArrayOfhuntparticipant" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetParticipantName">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="participant" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetParticipantNameResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data" minOccurs="0" name="GetParticipantNameResult" nillable="true" type="q21:user" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
