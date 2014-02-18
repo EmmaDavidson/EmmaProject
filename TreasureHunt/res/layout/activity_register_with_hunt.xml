@@ -12,6 +12,7 @@
         android:id="@+id/hunt_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="" />
 
     <TextView
@@ -19,12 +20,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/hunt_name_label"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_marginTop="25dp"
         android:text="" />
 
     <Button
         android:id="@+id/register_hunt_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/start_treasure_hunt_button"
         android:layout_centerHorizontal="true"
@@ -33,12 +35,12 @@
 
     <Button
         android:id="@+id/start_treasure_hunt_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="42dp"
-        android:text="Begin Hunt" />
+        android:text="Play" />
 
     <ProgressBar
         android:id="@+id/hunt_description_progress_bar"
@@ -48,13 +50,5 @@
         android:layout_alignTop="@+id/hunt_description_box"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:id="@+id/refresh_button"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/hunt_description_box"
-        android:layout_centerHorizontal="true"
-        android:text="Refresh" />
 
 </RelativeLayout>

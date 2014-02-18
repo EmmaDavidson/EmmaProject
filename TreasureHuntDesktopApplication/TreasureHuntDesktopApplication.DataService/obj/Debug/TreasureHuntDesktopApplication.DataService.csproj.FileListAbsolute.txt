@@ -1,3 +1,4 @@
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.DataService\obj\Debug\TreasureHuntDesktopApplication.DataService.csprojResolveAssemblyReference.cache
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.DataService\bin\TreasureHuntDesktopApplication.DataService.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.DataService\bin\TreasureHuntDesktopApplication.DataService.pdb
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.DataService\bin\EntityFramework.dll
@@ -8,6 +9,5 @@ C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\Treasu
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.DataService\bin\TreasureHuntDesktopApplication.Data.pdb
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.DataService\bin\EntityFramework.xml
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.DataService\bin\EntityFramework.SqlServer.xml
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.DataService\obj\Debug\TreasureHuntDesktopApplication.DataService.csprojResolveAssemblyReference.cache
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.DataService\obj\Debug\TreasureHuntDesktopApplication.DataService.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.DataService\obj\Debug\TreasureHuntDesktopApplication.DataService.pdb

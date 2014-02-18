@@ -1,50 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="treasurehuntdbModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="treasurehuntdbModelStoreContainer">
-    <EntitySet Name="hunt" EntityType="treasurehuntdbModel.Store.hunt" store:Type="Tables" Schema="treasurehuntdb" />
-    <EntitySet Name="huntparticipants" EntityType="treasurehuntdbModel.Store.huntparticipants" store:Type="Tables" Schema="treasurehuntdb" />
-    <EntitySet Name="huntquestions" EntityType="treasurehuntdbModel.Store.huntquestions" store:Type="Tables" Schema="treasurehuntdb" />
-    <EntitySet Name="questions" EntityType="treasurehuntdbModel.Store.questions" store:Type="Tables" Schema="treasurehuntdb" />
-    <EntitySet Name="role" EntityType="treasurehuntdbModel.Store.role" store:Type="Tables" Schema="treasurehuntdb" />
-    <EntitySet Name="user" EntityType="treasurehuntdbModel.Store.user" store:Type="Tables" Schema="treasurehuntdb" />
-    <EntitySet Name="userhunt" EntityType="treasurehuntdbModel.Store.userhunt" store:Type="Tables" Schema="treasurehuntdb" />
-    <EntitySet Name="userrole" EntityType="treasurehuntdbModel.Store.userrole" store:Type="Tables" Schema="treasurehuntdb" />
-    <AssociationSet Name="huntparticipants_ibfk_1" Association="treasurehuntdbModel.Store.huntparticipants_ibfk_1">
-      <End Role="hunt" EntitySet="hunt" />
-      <End Role="huntparticipants" EntitySet="huntparticipants" />
-    </AssociationSet>
-    <AssociationSet Name="huntparticipants_ibfk_2" Association="treasurehuntdbModel.Store.huntparticipants_ibfk_2">
-      <End Role="user" EntitySet="user" />
-      <End Role="huntparticipants" EntitySet="huntparticipants" />
-    </AssociationSet>
-    <AssociationSet Name="huntquestions_ibfk_1" Association="treasurehuntdbModel.Store.huntquestions_ibfk_1">
-      <End Role="hunt" EntitySet="hunt" />
-      <End Role="huntquestions" EntitySet="huntquestions" />
-    </AssociationSet>
-    <AssociationSet Name="huntquestions_ibfk_2" Association="treasurehuntdbModel.Store.huntquestions_ibfk_2">
-      <End Role="questions" EntitySet="questions" />
-      <End Role="huntquestions" EntitySet="huntquestions" />
-    </AssociationSet>
-    <AssociationSet Name="userhunt_ibfk_1" Association="treasurehuntdbModel.Store.userhunt_ibfk_1">
-      <End Role="user" EntitySet="user" />
-      <End Role="userhunt" EntitySet="userhunt" />
-    </AssociationSet>
-    <AssociationSet Name="userhunt_ibfk_2" Association="treasurehuntdbModel.Store.userhunt_ibfk_2">
-      <End Role="hunt" EntitySet="hunt" />
-      <End Role="userhunt" EntitySet="userhunt" />
-    </AssociationSet>
-    <AssociationSet Name="userhunt_ibfk_3" Association="treasurehuntdbModel.Store.userhunt_ibfk_3">
-      <End Role="userrole" EntitySet="userrole" />
-      <End Role="userhunt" EntitySet="userhunt" />
-    </AssociationSet>
-    <AssociationSet Name="userrole_ibfk_1" Association="treasurehuntdbModel.Store.userrole_ibfk_1">
-      <End Role="role" EntitySet="role" />
-      <End Role="userrole" EntitySet="userrole" />
-    </AssociationSet>
-    <AssociationSet Name="userrole_ibfk_2" Association="treasurehuntdbModel.Store.userrole_ibfk_2">
-      <End Role="user" EntitySet="user" />
-      <End Role="userrole" EntitySet="userrole" />
-    </AssociationSet>
+<Schema Namespace="virapy_treasurehuntdbModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="virapy_treasurehuntdbModelStoreContainer">
+    <EntitySet Name="hunt" EntityType="virapy_treasurehuntdbModel.Store.hunt" store:Type="Tables" Schema="virapy_treasurehuntdb" />
+    <EntitySet Name="huntparticipants" EntityType="virapy_treasurehuntdbModel.Store.huntparticipants" store:Type="Tables" Schema="virapy_treasurehuntdb" />
+    <EntitySet Name="huntquestions" EntityType="virapy_treasurehuntdbModel.Store.huntquestions" store:Type="Tables" Schema="virapy_treasurehuntdb" />
+    <EntitySet Name="questions" EntityType="virapy_treasurehuntdbModel.Store.questions" store:Type="Tables" Schema="virapy_treasurehuntdb" />
+    <EntitySet Name="role" EntityType="virapy_treasurehuntdbModel.Store.role" store:Type="Tables" Schema="virapy_treasurehuntdb" />
+    <EntitySet Name="user" EntityType="virapy_treasurehuntdbModel.Store.user" store:Type="Tables" Schema="virapy_treasurehuntdb" />
+    <EntitySet Name="userhunt" EntityType="virapy_treasurehuntdbModel.Store.userhunt" store:Type="Tables" Schema="virapy_treasurehuntdb" />
+    <EntitySet Name="userrole" EntityType="virapy_treasurehuntdbModel.Store.userrole" store:Type="Tables" Schema="virapy_treasurehuntdb" />
   </EntityContainer>
   <EntityType Name="hunt">
     <Key>
@@ -115,112 +79,4 @@
     <Property Name="RoleId" Type="uint" Nullable="false" />
     <Property Name="UserId" Type="uint" Nullable="false" />
   </EntityType>
-  <Association Name="huntparticipants_ibfk_1">
-    <End Role="hunt" Type="treasurehuntdbModel.Store.hunt" Multiplicity="1" />
-    <End Role="huntparticipants" Type="treasurehuntdbModel.Store.huntparticipants" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="hunt">
-        <PropertyRef Name="HuntId" />
-      </Principal>
-      <Dependent Role="huntparticipants">
-        <PropertyRef Name="HuntId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="huntparticipants_ibfk_2">
-    <End Role="user" Type="treasurehuntdbModel.Store.user" Multiplicity="1" />
-    <End Role="huntparticipants" Type="treasurehuntdbModel.Store.huntparticipants" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="huntparticipants">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="huntquestions_ibfk_1">
-    <End Role="hunt" Type="treasurehuntdbModel.Store.hunt" Multiplicity="1" />
-    <End Role="huntquestions" Type="treasurehuntdbModel.Store.huntquestions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="hunt">
-        <PropertyRef Name="HuntId" />
-      </Principal>
-      <Dependent Role="huntquestions">
-        <PropertyRef Name="HuntId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="huntquestions_ibfk_2">
-    <End Role="questions" Type="treasurehuntdbModel.Store.questions" Multiplicity="1" />
-    <End Role="huntquestions" Type="treasurehuntdbModel.Store.huntquestions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="questions">
-        <PropertyRef Name="QuestionId" />
-      </Principal>
-      <Dependent Role="huntquestions">
-        <PropertyRef Name="QuestionId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="userhunt_ibfk_1">
-    <End Role="user" Type="treasurehuntdbModel.Store.user" Multiplicity="1" />
-    <End Role="userhunt" Type="treasurehuntdbModel.Store.userhunt" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="userhunt">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="userhunt_ibfk_2">
-    <End Role="hunt" Type="treasurehuntdbModel.Store.hunt" Multiplicity="1" />
-    <End Role="userhunt" Type="treasurehuntdbModel.Store.userhunt" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="hunt">
-        <PropertyRef Name="HuntId" />
-      </Principal>
-      <Dependent Role="userhunt">
-        <PropertyRef Name="HuntId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="userhunt_ibfk_3">
-    <End Role="userrole" Type="treasurehuntdbModel.Store.userrole" Multiplicity="1" />
-    <End Role="userhunt" Type="treasurehuntdbModel.Store.userhunt" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="userrole">
-        <PropertyRef Name="UserRoleId" />
-      </Principal>
-      <Dependent Role="userhunt">
-        <PropertyRef Name="UserRoleId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="userrole_ibfk_1">
-    <End Role="role" Type="treasurehuntdbModel.Store.role" Multiplicity="1" />
-    <End Role="userrole" Type="treasurehuntdbModel.Store.userrole" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="role">
-        <PropertyRef Name="RoleId" />
-      </Principal>
-      <Dependent Role="userrole">
-        <PropertyRef Name="RoleId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="userrole_ibfk_2">
-    <End Role="user" Type="treasurehuntdbModel.Store.user" Multiplicity="1" />
-    <End Role="userrole" Type="treasurehuntdbModel.Store.userrole" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="UserId" />
-      </Principal>
-      <Dependent Role="userrole">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ using TreasureHuntDesktopApplication.FullClient.TreasureHuntService;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 {
-    class LoginViewModel : ViewModelBase, IDataErrorInfo
+    public class LoginViewModel : ViewModelBase, IDataErrorInfo
     {
         #region Setup
         ITreasureHuntService serviceClient;
@@ -28,6 +29,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
             LoginUserCommand = new RelayCommand(() => ExecuteLoginUserCommand(), () => IsValidDetails());
             RegisterCommand = new RelayCommand(() => ExecuteRegisterCommand());
+
         }
         #endregion
 
@@ -43,7 +45,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 RaisePropertyChanged("Password");
             }
         }
-
 
         private String emailAddress;
         public String EmailAddress
@@ -96,7 +97,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             }
         }
 
-        private bool IsValidDetails()
+        public bool IsValidDetails()
         {
             foreach (string property in ValidatedProperties)
                 if (GetValidationMessage(property) != null)
@@ -108,15 +109,17 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
         #region Commands
 
-        private void ExecuteLoginUserCommand()
+        public void ExecuteLoginUserCommand()
         { 
                 user user = this.serviceClient.GetUser(this.emailAddress);
 
                 if (user == null)
                 {
-                    MessageBoxResult messageBox = MessageBox.Show("User does not exist");
+      
+                    MessageBoxResult messageBox = MessageBox.Show("User does not exist", "Invalid details");
                     EmailAddress = String.Empty;
                     Password = String.Empty;
+                
                 }
                 else
                 { 
@@ -125,14 +128,25 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                     {
                         if (String.Equals(user.Password, this.password, StringComparison.OrdinalIgnoreCase))
                         {
+                            EmailAddress = String.Empty;
+                            Password = String.Empty;
                             Messenger.Default.Send<CurrentUserMessage>(new CurrentUserMessage() { CurrentUser = user });
                             Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "SearchHuntViewModel" });
                             Messenger.Default.Send<ViewUpdatedMessage>(new ViewUpdatedMessage() { UpdatedView = true });
                         }
+                        else 
+                        {
+                            
+                            MessageBoxResult messageBox = MessageBox.Show("Incorrect username or password", "Incorrect Details");
+                            Password = String.Empty;
+                        }
                     }
                     else 
                     {
-                        MessageBoxResult messageBox = MessageBox.Show("You cannot access this application with your email address");
+                        MessageBoxResult messageBox = MessageBox.Show("You cannot access this application with your email address", "Invalid user for this application");
+                        EmailAddress = String.Empty;
+                        Password = String.Empty;
+                     
                     }
                 }
         }
@@ -230,5 +244,15 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             return null;
         }
         #endregion
+
+        #region Other 
+        //-http://stackoverflow.com/questions/6278720/wpf-toggle-panel-visibility
+        public Object convert(object value)
+        {
+            return (Visibility)value == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        }
+        #endregion
     }
+
+  
 }

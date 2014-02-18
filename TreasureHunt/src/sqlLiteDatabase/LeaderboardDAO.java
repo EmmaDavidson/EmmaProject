@@ -68,7 +68,6 @@ public class LeaderboardDAO {
 	    return leaderboardEntries;
 	  }
 	  
-
 	  //http://stackoverflow.com/questions/6781954/android-3-0-couldnt-read-row-column-from-cursor-window
 	  private Leaderboard cursorToLeaderboardEntry(Cursor cursor) {
 		  Leaderboard leaderboardResult = new Leaderboard();

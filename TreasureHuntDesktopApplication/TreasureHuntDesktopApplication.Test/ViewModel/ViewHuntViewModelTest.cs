@@ -18,6 +18,7 @@ namespace TreasureHuntDesktopApplication.Test
 
         public ViewHuntViewModel viewModel;
         Mock<ITreasureHuntService> serviceClient;
+
         
         public const string newQuestion = "My new treasure hunt user";
 
@@ -53,9 +54,6 @@ namespace TreasureHuntDesktopApplication.Test
             huntQuestions.Add(myFakeQuestion);
 
             Questions = huntQuestions.AsEnumerable();
-
-
-
         }
 
         public String NewQuestion
@@ -82,6 +80,8 @@ namespace TreasureHuntDesktopApplication.Test
             }
         }
 
+
+
         public question CurrentQuestion
         {
             get
@@ -96,15 +96,15 @@ namespace TreasureHuntDesktopApplication.Test
 
         public IEnumerable<question> Questions
         {
-            get { return viewModel.Questions; }
+            get 
+            { 
+                return viewModel.Questions; 
+            }
             set
             {
                 viewModel.Questions = value;
-
             }
         }
-
-
         #endregion
 
         #region Validation Tests
@@ -113,7 +113,7 @@ namespace TreasureHuntDesktopApplication.Test
         {
             String nullNewQuestion = null;
             NewQuestion = nullNewQuestion;
-            //Assert.False(viewModel.IsValidNewQuestion());
+            Assert.False(viewModel.IsValidNewQuestion());
             Assert.False(viewModel.SaveQuestionCommand.CanExecute(""));
         }
 
@@ -122,18 +122,20 @@ namespace TreasureHuntDesktopApplication.Test
         {
             String WhitespaceNewQuestion = String.Empty;
             NewQuestion = WhitespaceNewQuestion;
-            //Assert.False(viewModel.IsValidNewQuestion());
+            Assert.False(viewModel.IsValidNewQuestion());
             Assert.False(viewModel.SaveQuestionCommand.CanExecute(""));
         }
 
         [Test]
-        public void NewQuestionValidWhenLessThanMaxLength()
+        public void NewQuestionInValidWhenLessThanMinLength() 
         {
-            String LongNewQuestion = "abcdefghijklmnopqrstuvwxyzabcdefg";
+            String LongNewQuestion = "abcdefgh";
             NewQuestion = LongNewQuestion;
-            //Assert.True(viewModel.IsValidNewQuestion());
-            Assert.True(viewModel.SaveQuestionCommand.CanExecute(""));
+            Assert.False(viewModel.IsValidNewQuestion());
+            Assert.False(viewModel.SaveQuestionCommand.CanExecute(""));
         }
+
+        //Test for max length ommited as length too long to check
         #endregion
 
         #region Service Call Tests
@@ -150,8 +152,8 @@ namespace TreasureHuntDesktopApplication.Test
            
            viewModel.SaveQuestionCommand.Execute(new Object());
 
-           serviceClient.Verify(s => s.GetHuntQuestions(It.IsAny<hunt>()), Times.Exactly(1));
-           serviceClient.Verify(s => s.GetQuestion(It.IsAny<long>()), Times.Exactly(1));
+           serviceClient.Verify(s => s.GetHuntQuestions(It.IsAny<hunt>()), Times.Exactly(2));
+           serviceClient.Verify(s => s.GetQuestion(It.IsAny<long>()), Times.Exactly(2));
 
            Assert.AreEqual(listOfQuestions.ToArray(), this.Questions.ToArray()); 
         }
@@ -173,15 +175,19 @@ namespace TreasureHuntDesktopApplication.Test
         public void ShouldCreateTreasureHuntDocument()
         {
             viewModel.SaveQuestionCommand.Execute(new object());
-            Assert.IsTrue(File.Exists("C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\Documents\\My Fake Hunt QR Codes Sheet.docx"), "The file does not exist");
+            viewModel.ExecutePrintQRCodesCommand();
+            String location = "C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\Documents\\My Fake Hunt QR Codes Sheet.docx";
+            //viewModel.PrintQRCodesCommand.Execute(new object());
+            Assert.IsTrue(File.Exists(location), "The file does not exist");
         }
 
         [Test]
         public void ShouldCreateQRCodeImage()
         {   
             this.NewQuestion = "My new treasure hunt user";
-            viewModel.SaveQuestionCommand.Execute(new object());
-            Assert.IsTrue(File.Exists("C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\QRCodes\\My new treasure hunt user.png"), "The file does not exist");
+            String location = "C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\QRCodes\\My new treasure hunt user.png";
+            viewModel.EncodeQRCode(location);
+            Assert.IsTrue(File.Exists(location), "The file does not exist");
         }
         #endregion
     }

@@ -8,30 +8,30 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".HomepageActivity" >
 
-    <Button
-        android:id="@+id/browse_hunts_button"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/homepage_username"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="135dp"
-        android:text="@string/browse_hunts_label" />
+        android:layout_marginTop="21dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:text="" />
 
     <Button
         android:id="@+id/my_hunts_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/browse_hunts_button"
-        android:layout_centerVertical="true"
-        android:text="@string/my_hunts_label" />
+        android:layout_alignLeft="@+id/homepage_username"
+        android:layout_below="@+id/homepage_username"
+        android:layout_marginTop="16dp"
+        android:text="My Hunts" />
 
-    <TextView
-        android:id="@+id/homepage_username"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/browse_hunts_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/browse_hunts_button"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="21dp"
-        android:text="" />
+        android:layout_alignLeft="@+id/my_hunts_button"
+        android:layout_below="@+id/my_hunts_button"
+        android:text="Browse Hunts" />
 
 </RelativeLayout>

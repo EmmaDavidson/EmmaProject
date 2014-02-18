@@ -1,3 +1,4 @@
+C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Test\obj\Debug\TreasureHuntDesktopApplication.Test.csprojResolveAssemblyReference.cache
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Test\bin\Debug\TreasureHuntDesktopApplication.Test.dll.config
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Test\bin\Debug\TreasureHuntDesktopApplication.Test.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Test\bin\Debug\TreasureHuntDesktopApplication.Test.pdb
@@ -22,6 +23,5 @@ C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\Treasu
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Test\bin\Debug\Moq.xml
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Test\bin\Debug\nunit.framework.xml
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Test\bin\Debug\System.Windows.Interactivity.xml
-C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Test\obj\Debug\TreasureHuntDesktopApplication.Test.csprojResolveAssemblyReference.cache
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Test\obj\Debug\TreasureHuntDesktopApplication.Test.dll
 C:\Users\Emma\Documents\GitHub\EmmaProject\TreasureHuntDesktopApplication\TreasureHuntDesktopApplication.Test\obj\Debug\TreasureHuntDesktopApplication.Test.pdb

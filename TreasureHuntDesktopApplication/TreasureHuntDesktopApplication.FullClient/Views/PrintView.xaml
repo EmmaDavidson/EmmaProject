@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             Height="500"
-             Width="600">
+             Height="400"
+             Width="750">
     <Grid>
         <DocumentViewer Name="documentviewer" Document="{Binding DocumentViewer}"></DocumentViewer>
         <Button Command="{Binding BackCommand}" Content="Back" HorizontalAlignment="Left" Margin="240,0,0,0" VerticalAlignment="Top" Width="60" Height="28"/>

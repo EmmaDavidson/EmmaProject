@@ -45,5 +45,10 @@
     <string name="leaderboard_header">Leaderboard</string>
     <string name="my_stats_header">My stats</string>
     <string name="title_activity_leaderboard">LeaderboardActivity</string>
-
+    <string name="title_activity_map">MapActivity</string>
+    <string name="started">Started:</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longtitude">Longtitude:</string>
+    <string name="elapsed_time">Elapsed Time:</string>
+ 	<string name="altitude">Altitude:</string>
 </resources>

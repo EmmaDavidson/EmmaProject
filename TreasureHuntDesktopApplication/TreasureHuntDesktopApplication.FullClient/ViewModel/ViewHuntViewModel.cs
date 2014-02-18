@@ -29,20 +29,20 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #region Setup
         ITreasureHuntService serviceClient;
         public RelayCommand SaveQuestionCommand { get; private set; }
-        public RelayCommand ViewQrCodeCommand { get; private set; }
         public RelayCommand PrintQRCodesCommand { get; private set; }
         public RelayCommand BackCommand { get; private set; }
         public RelayCommand LeaderboardCommand { get; private set; }
+        public RelayCommand LogoutCommand { get; private set; }
         private String myFileDirectory = "C:\\Users\\Emma\\Documents\\GitHub\\EmmaProject\\TreasureHuntDesktopApplication\\";
 
         public ViewHuntViewModel(ITreasureHuntService _serviceClient)
         {
             serviceClient = _serviceClient;
             SaveQuestionCommand = new RelayCommand(() => ExecuteSaveQuestionCommand(), () => IsValidNewQuestion());
-            ViewQrCodeCommand = new RelayCommand(() => ExecuteViewQrCodeCommand(), () => IsSingleQuestionSelected());
             PrintQRCodesCommand = new RelayCommand(() => ExecutePrintQRCodesCommand(), () => IsValidListOfQuestions());
             BackCommand = new RelayCommand(() => ExecuteBackCommand());
             LeaderboardCommand = new RelayCommand(() => ExecuteLeaderboardCommand());
+            LogoutCommand = new RelayCommand(() => ExecuteLogoutCommand());
             
              Messenger.Default.Register<SelectedHuntMessage>
              (
@@ -85,7 +85,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             }
         }
 
-        private bool IsValidNewQuestion()
+        public bool IsValidNewQuestion()
         {
             foreach (string property in ValidatedProperties)
                 if (GetValidationMessage(property) != null)
@@ -210,6 +210,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 String messageBoxText = "This question already exists.";
                 String caption = "Question Already Exists";
                 MessageBoxResult box = MessageBox.Show(messageBoxText, caption);
+                NewQuestion = String.Empty;
             }
         }
 
@@ -221,25 +222,18 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             serviceClient.SaveNewHuntQuestion(newHuntQuestion);
         }
 
-        private void EncodeQRCode(String locationOfQrCodeImage)
+        public void EncodeQRCode(String locationOfQrCodeImage)
         {
             //-http://www.youtube.com/watch?v=3CSifXK62Tk
             QRCodeEncoder encoder = new QRCodeEncoder();
-            Bitmap generatedQrCodeImage = encoder.Encode(this.NewQuestion);
+            Bitmap generatedQrCodeImage = encoder.Encode(CurrentTreasureHunt.HuntId + " " + this.NewQuestion);
             generatedQrCodeImage.Save(locationOfQrCodeImage, ImageFormat.Jpeg);
 
             RefreshQuestions();
         }
 
-        private void ExecuteViewQrCodeCommand()
-        {
-            Messenger.Default.Send<SelectedQuestionMessage>(new SelectedQuestionMessage() { SelectedQuestion = this.currentQuestion });
-            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "ViewQRCodeViewModel" });
-            Messenger.Default.Send<SelectedHuntMessage>(new SelectedHuntMessage() { CurrentHunt = this.currentTreasureHunt  });
-        }
-
         //make internal
-        private void ExecutePrintQRCodesCommand()
+        public void ExecutePrintQRCodesCommand()
         {
             NewQuestion = null;
             //-http://cathalscorner.blogspot.co.uk/2009/04/docx-version-1002-released.html
@@ -250,6 +244,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             using (DocX documentOfQRCodes = DocX.Create(newDocumentFileLocation))
             {
                 Novacode.Paragraph p = documentOfQRCodes.InsertParagraph(this.currentTreasureHunt.HuntName);
+                Novacode.Paragraph space = documentOfQRCodes.InsertParagraph("");
                 documentOfQRCodes.InsertParagraph();
                 using (var currentQuestionQRCode = this.questions.GetEnumerator())
                 {
@@ -259,8 +254,8 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                         {
                             documentOfQRCodes.InsertParagraph(currentQuestionQRCode.Current.Question1);
                             Novacode.Paragraph q = documentOfQRCodes.InsertParagraph();
-                            
-                            string locationOfImage = myFileDirectory + "QRCodes\\" + currentQuestionQRCode.Current.Question1 + ".png";
+
+                            string locationOfImage = myFileDirectory + "QRCodes\\" + CurrentTreasureHunt.HuntId + " " + currentQuestionQRCode.Current.Question1 + ".png";
                             Novacode.Image img = documentOfQRCodes.AddImage(@locationOfImage);
 
                             Picture pic1 = img.CreatePicture();
@@ -295,6 +290,12 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             Messenger.Default.Send<LeaderboardMessage>(new LeaderboardMessage() { CurrentHunt = currentHunt });
             Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "LeaderboardViewModel" });
            
+        }
+
+        private void ExecuteLogoutCommand()
+        {
+
+            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "LoginViewModel" });
         }
 
         private bool DoesQuestionAlreadyExist(string newQuestion)

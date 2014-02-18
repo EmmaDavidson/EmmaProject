@@ -14,18 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="20dp"
         android:text="@string/scan_qr_code" />
-
-    <Chronometer
-        android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="18dp"
-        android:text="Chronometer" />
 
     <TextView
         android:id="@+id/scan_content_received"
@@ -33,7 +23,18 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/scan_qr_code_button"
         android:layout_below="@+id/scan_qr_code_button"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="55dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/scan_result_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/scan_content_received"
+        android:layout_below="@+id/scan_qr_code_button"
+        android:layout_marginTop="17dp"
+        android:text="Result:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

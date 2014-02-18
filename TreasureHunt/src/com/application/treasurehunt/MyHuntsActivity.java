@@ -37,17 +37,15 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MyHuntsActivity extends Activity {
+public class MyHuntsActivity extends Activity implements OnChildClickListener{
 
 	ExpandableListView mListView;
-	List<String> listDataHeader;
-	//http://www.androidhive.info/2013/07/android-expandable-list-view-tutorial/
-	HashMap<String, List<String>> listDataChild;
+	
 	
 	ReturnUserHuntsTask mReturnUserHuntsTask;
 	
 	private JSONParser jsonParser;
-	private static final String returnUserHuntsUrl =  "http://192.168.1.74:80/webservice/chooseUserHunt.php";
+	private static final String returnUserHuntsUrl =  "http://lowryhosting.com/emmad/chooseUserHunt.php";
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	private static JSONArray tagResult;
@@ -85,10 +83,22 @@ public class MyHuntsActivity extends Activity {
 		editor = settings.edit();
 		
 		currentUserId = settings.getInt("currentUserId", 0);
-	        
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
 		
+		attemptToReturnUserHunts();
+		
+	}
+	
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		huntDataSource.updateDatabaseLocally();
 		attemptToReturnUserHunts();
 	}
 	
@@ -126,6 +136,73 @@ public class MyHuntsActivity extends Activity {
 		menu.add(Menu.NONE, 1, Menu.NONE, "Log out");
 		return true;
 	} 
+	
+	//http://www.androidhive.info/2013/07/android-expandable-list-view-tutorial/
+	public void updateUI(final List<String> listDataHeader, HashMap<String, List<String>> listDataChild)
+	{
+	
+		final ExpandableListAdapter adapter = new ExpandableListAdapter(MyHuntsActivity.this, listDataHeader, listDataChild);
+		mListView.setAdapter(adapter);
+		int noValuesList = mListView.getCount();
+		
+		mListView.setOnChildClickListener(new OnChildClickListener()
+		{
+
+			@Override
+			public boolean onChildClick(ExpandableListView parent,
+					View v, int groupPosition, int childPosition,
+					long id) {
+				
+				//check here to make sure that user hasn't already registered with this hunt
+				//http://stackoverflow.com/questions/4508979/android-listview-get-selected-item
+				Hunt chosenHunt = huntDataSource.getParticularHunt(listDataHeader.get(groupPosition));
+			
+				if(chosenHunt != null)
+				{
+					editor.putInt("currentHuntId", chosenHunt.getHuntId()); //NEEDS FIXED
+					editor.putString("currentHuntName", chosenHunt.getHuntName());
+					editor.commit(); 
+					
+					if(childPosition == 0)
+					{
+						Intent registerWithHuntIntent = new Intent(MyHuntsActivity.this, RegisterWithHuntActivity.class);
+						startActivity(registerWithHuntIntent);
+					
+					}
+					else if (childPosition == 1)
+					{
+						Intent leaderboardActivity = new Intent(MyHuntsActivity.this, LeaderboardActivity.class);
+						startActivity(leaderboardActivity);
+					}
+					else
+					{
+						//Intent mapActivity = new Intent(MyHuntsActivity.this, MapActivity.class);
+						//startActivity(mapActivity);
+					}
+				}
+				return true;
+			}
+			
+		});
+		
+		//http://stackoverflow.com/questions/16189651/android-listview-selected-item-stay-highlighted
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				//check here to make sure that user hasn't already registered with this hunt
+				//http://stackoverflow.com/questions/4508979/android-listview-get-selected-item
+				Hunt selectedHunt = (Hunt) ((Menu) adapter).getItem(position);
+			    
+				//Instead of starting a new activity, it only starts if the stats or map button pressed
+				//Intent registerWithHuntintent = new Intent(MyHuntsActivity.this, RegisterWithHuntActivity.class);
+				editor.putString("currentHuntName", selectedHunt.getHuntName());
+				editor.commit(); 
+
+				//startActivity(registerWithHuntintent);
+			}
+		});
+	}
 	
 	//http://mobileorchard.com/android-app-development-menus-part-1-options-menu/
 	@Override
@@ -212,6 +289,14 @@ public class MyHuntsActivity extends Activity {
 
 			if (fileUrl != null) 
 			{	
+				List<String> listDataHeader;
+				//http://www.androidhive.info/2013/07/android-expandable-list-view-tutorial/
+				HashMap<String, List<String>> listDataChild;
+				
+		        listDataHeader = new ArrayList<String>();
+		        listDataChild = new HashMap<String, List<String>>();
+				
+				Toast.makeText(MyHuntsActivity.this, fileUrl, Toast.LENGTH_LONG).show();
 				List<Hunt> listOfHunts = huntDataSource.getAllUserHunts();
 				
 				//For every listOfHunts, add the header with its name
@@ -220,69 +305,14 @@ public class MyHuntsActivity extends Activity {
 					listDataHeader.add(listOfHunts.get(i).getHuntName().toString());
 					List<String> huntOptions = new ArrayList<String>();
 					huntOptions.add("Continue");
-					huntOptions.add("Stats");
+					huntOptions.add("Leaderboard");
+					huntOptions.add("Map");
 					
 					listDataChild.put(listDataHeader.get(i), huntOptions);		
 				}
 				
 		        
-				final ExpandableListAdapter adapter = new ExpandableListAdapter(MyHuntsActivity.this, listDataHeader, listDataChild);
-				mListView.setAdapter(adapter);	
-				
-				mListView.setOnChildClickListener(new OnChildClickListener()
-				{
-
-					@Override
-					public boolean onChildClick(ExpandableListView parent,
-							View v, int groupPosition, int childPosition,
-							long id) {
-						
-						//check here to make sure that user hasn't already registered with this hunt
-						//http://stackoverflow.com/questions/4508979/android-listview-get-selected-item
-						Hunt chosenHunt = huntDataSource.getParticularHunt(listDataHeader.get(groupPosition));
-					
-						if(chosenHunt != null)
-					    //NEED TO GET THE HUNT ID AND PUT IN THE EDITOR
-						{
-							editor.putInt("currentHuntId", chosenHunt.getHuntId()); //NEEDS FIXED
-							editor.putString("currentHuntName", chosenHunt.getHuntName());
-							editor.commit(); 
-							
-							if(childPosition == 0)
-							{
-								Intent registerWithHuntIntent = new Intent(MyHuntsActivity.this, RegisterWithHuntActivity.class);
-								startActivity(registerWithHuntIntent);
-							
-							}
-							else
-							{
-								Intent leaderboardActivity = new Intent(MyHuntsActivity.this, LeaderboardActivity.class);
-								startActivity(leaderboardActivity);
-				
-							}
-						}
-						return true;
-					}
-					
-				});
-				
-				//http://stackoverflow.com/questions/16189651/android-listview-selected-item-stay-highlighted
-				mListView.setOnItemClickListener(new OnItemClickListener() {
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-						
-						//check here to make sure that user hasn't already registered with this hunt
-						//http://stackoverflow.com/questions/4508979/android-listview-get-selected-item
-						Hunt selectedHunt = (Hunt) ((Menu) adapter).getItem(position);
-					    
-						//Instead of starting a new activity, it only starts if the stats or map button pressed
-						//Intent registerWithHuntintent = new Intent(MyHuntsActivity.this, RegisterWithHuntActivity.class);
-						editor.putString("currentHuntName", selectedHunt.getHuntName());
-						editor.commit(); 
-
-						//startActivity(registerWithHuntintent);
-					}
-				});
+				updateUI(listDataHeader, listDataChild);
 			} 
 			else 
 			{
@@ -294,6 +324,13 @@ public class MyHuntsActivity extends Activity {
 		protected void onCancelled() {
 			mReturnUserHuntsTask = null;
 		}
+	}
+
+	@Override
+	public boolean onChildClick(ExpandableListView parent, View v,
+			int groupPosition, int childPosition, long id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

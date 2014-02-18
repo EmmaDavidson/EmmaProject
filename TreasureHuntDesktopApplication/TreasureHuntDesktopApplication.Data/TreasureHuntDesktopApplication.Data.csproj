@@ -59,7 +59,9 @@
     <Content Include="Schema\treasurehuntdb%281%29.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <EntityDeploy Include="TreasureHuntModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/map_image" />
+
+    <TextView
+        android:id="@+id/longtitude_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/map_data_longtitude"
+        android:layout_alignBottom="@+id/map_data_longtitude"
+        android:layout_toRightOf="@+id/imageView1"
+        android:text="Longitude:" />
+
+    <TextView
+        android:id="@+id/latitude_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/longtitude_label"
+        android:layout_alignLeft="@+id/longtitude_label"
+        android:text="Latitude:" />
+
+    <TextView
+        android:id="@+id/altitude_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/map_data_altitude"
+        android:layout_alignBottom="@+id/map_data_altitude"
+        android:layout_toRightOf="@+id/imageView1"
+        android:text="Altitude:" />
+
+    <TextView
+        android:id="@+id/map_data_altitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/map_data_longtitude"
+        android:layout_centerHorizontal="true"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/map_data_latitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/map_data_altitude"
+        android:layout_alignParentTop="true"
+        android:text="Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/map_data_longtitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/map_data_altitude"
+        android:layout_below="@+id/map_data_latitude"
+        android:text="Text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</RelativeLayout>

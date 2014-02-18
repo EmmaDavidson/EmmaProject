@@ -14,12 +14,13 @@ using TreasureHuntDesktopApplication.FullClient.Utilities;
 
 namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 {
-    class LeaderboardViewModel : ViewModelBase
+    public class LeaderboardViewModel : ViewModelBase
     {
         #region Setup
         ITreasureHuntService serviceClient;
         public RelayCommand BackCommand { get; private set; }
         public RelayCommand RefreshCommand { get; private set; }
+        public RelayCommand LogoutCommand { get; private set; }
         DispatcherTimer refreshTimer = new DispatcherTimer();
 
         public LeaderboardViewModel(ITreasureHuntService _serviceClient)
@@ -27,6 +28,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             serviceClient = _serviceClient;
             BackCommand = new RelayCommand(() => ExecuteBackCommand());
             RefreshCommand = new RelayCommand(() => RefreshLeaderboard());
+            LogoutCommand = new RelayCommand(() => ExecuteLogoutCommand());
 
             Messenger.Default.Register<LeaderboardMessage>
              (
@@ -36,13 +38,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
              );
 
-            RefreshLeaderboard();
-
-            //-http://msdn.microsoft.com/en-us/library/system.windows.threading.dispatchertimer%28v=vs.110%29.aspx
-            //refreshTimer.Interval = TimeSpan.FromSeconds(10);
-            //refreshTimer.Tick += new EventHandler(leaderboardUpdater);
-            //refreshTimer.
-            //refreshTimer.Start();
+            RefreshLeaderboard();    
         }
 
         #region Received Message Methods
@@ -58,7 +54,10 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         private ObservableCollection<Participant> leaderboardResults;
         public ObservableCollection<Participant> LeaderboardResults
         {
-            get { return this.leaderboardResults; }
+            get 
+            {
+                return this.leaderboardResults; 
+            }
             set
             {
                 this.leaderboardResults = value;
@@ -79,12 +78,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         }
         #endregion
 
-        #region Methods
+        #region Commands and methods
         private void leaderboardUpdater(object sender, EventArgs e)
         {
             RefreshLeaderboard();
         }
-
 
         private void ExecuteBackCommand()
         {
@@ -93,7 +91,12 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             Messenger.Default.Send<SelectedHuntMessage>(new SelectedHuntMessage() { CurrentHunt = this.currentTreasureHunt });
         }
 
-        private void RefreshLeaderboard()
+        private void ExecuteLogoutCommand()
+        {
+            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "LoginViewModel" });
+        }
+
+        public void RefreshLeaderboard()
         {
             if (this.currentTreasureHunt != null)
             {

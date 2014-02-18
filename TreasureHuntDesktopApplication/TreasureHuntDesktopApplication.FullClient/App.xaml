@@ -18,11 +18,6 @@
         </views:SearchHuntView>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:ViewQRCodeViewModel}">
-        <views:ViewQRCodeView>
-        </views:ViewQRCodeView>
-    </DataTemplate>
-
     <DataTemplate DataType="{x:Type vm:PrintViewModel}">
             <views:PrintView>
             </views:PrintView>

@@ -11,13 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.TextView;
 
 
 //ENTIRE CLASS COPIED IN FROM THE WEBSITE BELOW
 //http://www.androidhive.info/2013/07/android-expandable-list-view-tutorial/
 //http://stackoverflow.com/questions/19494572/cannot-instantiate-the-type-expandablelistadapter
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
+public class ExpandableListAdapter extends BaseExpandableListAdapter{
 
 	private Context context;
     private List<String> listDataHeader; // header titles
@@ -109,4 +111,5 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
 }

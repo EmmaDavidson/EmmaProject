@@ -37,10 +37,11 @@ public class LoginActivity extends Activity {
 	//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
 	
 	//http://stackoverflow.com/questions/5806220/how-to-connect-to-my-http-localhost-web-server-from-android-emulator-in-eclips
-	private static final String myLoginUrl =  "http://192.168.1.74:80/webservice/login.php";
-	private static final String getUserIdUrl =  "http://192.168.1.74:80/webservice/returnCurrentUserId.php";
+	private static final String myLoginUrl =  "http://lowryhosting.com/emmad/login.php";
+	//private static final String myLoginUrl = "http://192.168.1.74:80/webservice/choosehunt.php";
+	private static final String getUserIdUrl =  "http://lowryhosting.com/emmad/returnCurrentUserId.php";
+	//private static final String getUserIdUrl =  "http://192.168.1.74:80/webservice/returnCurrentUserId.php";
 	
-	//private static final String myLoginUrl =  "http://143.117.190.106:81/webservice/login.php";
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	
@@ -67,7 +68,7 @@ public class LoginActivity extends Activity {
 	int userId = 0;
 	String userName;
 	Intent homepageActivityIntent;
-	private JSONParser jsonParser;
+	public JSONParser jsonParser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +123,14 @@ public class LoginActivity extends Activity {
 		mPasswordView.setText(null);
 	}
 	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		mEmailView.setText(null);
+		mPasswordView.setText(null);
+	}
+	
 	private void attemptLogin() {		
 
 		mEmail = mEmailView.getText().toString();
@@ -150,7 +159,7 @@ public class LoginActivity extends Activity {
 					}
 				}
 			}	
-			, 10000);
+			, 100000);
 			
 			//mEmailView.setText(null);
 			//mPasswordView.setText(null);
@@ -225,7 +234,7 @@ public class UserLoginTask extends AsyncTask<String, String, String>{
 		pDialog = new ProgressDialog(LoginActivity.this);
         pDialog.setMessage("Attempting login...");
 		pDialog.setIndeterminate(false);
-		pDialog.setCancelable(true);
+		pDialog.setCancelable(false);
 		pDialog.show();
 	}
 	

@@ -4,24 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0d545a5b06ce4b63a2b188cabfd049f2" Name="Diagram1">
-        <EntityTypeShape EntityType="treasurehuntdbModel.hunt" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.huntparticipant" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.huntquestion" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.question" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.role" Width="1.5" PointX="3.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.user" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.userhunt" Width="1.5" PointX="6" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="treasurehuntdbModel.userrole" Width="1.5" PointX="6" PointY="3.625" IsExpanded="true" />
-        <AssociationConnector Association="treasurehuntdbModel.huntparticipants_ibfk_1" ManuallyRouted="false" />
-        <AssociationConnector Association="treasurehuntdbModel.huntquestions_ibfk_1" ManuallyRouted="false" />
-        <AssociationConnector Association="treasurehuntdbModel.userhunt_ibfk_2" ManuallyRouted="false" />
-        <AssociationConnector Association="treasurehuntdbModel.huntparticipants_ibfk_2" ManuallyRouted="false" />
-        <AssociationConnector Association="treasurehuntdbModel.huntquestions_ibfk_2" ManuallyRouted="false" />
-        <AssociationConnector Association="treasurehuntdbModel.userrole_ibfk_1" ManuallyRouted="false" />
-        <AssociationConnector Association="treasurehuntdbModel.userhunt_ibfk_1" ManuallyRouted="false" />
-        <AssociationConnector Association="treasurehuntdbModel.userrole_ibfk_2" ManuallyRouted="false" />
-        <AssociationConnector Association="treasurehuntdbModel.userhunt_ibfk_3" ManuallyRouted="false" />
+      <Diagram DiagramId="175f734eae814d9090bc9c0d013891d9" Name="Diagram1">
+        <EntityTypeShape EntityType="virapy_treasurehuntdbModel.hunt" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virapy_treasurehuntdbModel.huntparticipant" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virapy_treasurehuntdbModel.huntquestion" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virapy_treasurehuntdbModel.question" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virapy_treasurehuntdbModel.role" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virapy_treasurehuntdbModel.user" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virapy_treasurehuntdbModel.userhunt" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="virapy_treasurehuntdbModel.userrole" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -51,6 +51,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>TreasureChest.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aspose.Words">
       <HintPath>..\packages\Aspose.Words.13.10.0\lib\net3.5\Aspose.Words.dll</HintPath>
@@ -167,7 +170,6 @@
     <Compile Include="ViewModel\ViewHuntViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Compile Include="ViewModel\ViewQRCodeViewModel.cs" />
     <Compile Include="Views\CreateHuntView.xaml.cs">
       <DependentUpon>CreateHuntView.xaml</DependentUpon>
     </Compile>
@@ -188,9 +190,6 @@
     </Compile>
     <Compile Include="Views\ViewHuntView.xaml.cs">
       <DependentUpon>ViewHuntView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ViewQRCodeView.xaml.cs">
-      <DependentUpon>ViewQRCodeView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CreateHuntView.xaml">
       <SubType>Designer</SubType>
@@ -234,10 +233,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewHuntView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ViewQRCodeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -309,9 +304,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -360,6 +352,15 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Images\Splashscreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Splashscreen.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="TreasureChest.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

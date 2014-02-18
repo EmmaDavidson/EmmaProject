@@ -17,12 +17,14 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         ITreasureHuntService serviceClient;
         public RelayCommand SearchHuntCommand { get; private set; }
         public RelayCommand CreateNewHuntCommand { get; private set; }
+        public RelayCommand LogoutCommand { get; private set; }
 
         public SearchHuntViewModel(ITreasureHuntService _serviceClient)
         {
             serviceClient = _serviceClient;
             SearchHuntCommand = new RelayCommand(() => ExecuteSearchHuntCommand(), () => IsValidHunt());
             CreateNewHuntCommand = new RelayCommand(() => ExecuteCreateHuntCommand());
+            LogoutCommand = new RelayCommand(() => ExecuteLogoutCommand());
             RefreshTreasureHunts();
 
             Messenger.Default.Register<ViewUpdatedMessage>
@@ -133,6 +135,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         private void ExecuteCreateHuntCommand()
         {
             Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "CreateHuntViewModel" });
+        }
+
+        private void ExecuteLogoutCommand()
+        {
+            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "LoginViewModel" });
         }
 
         #endregion

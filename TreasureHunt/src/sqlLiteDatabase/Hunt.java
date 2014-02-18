@@ -3,7 +3,6 @@ package sqlLiteDatabase;
 public class Hunt {
 	  private int huntId;
 	  private String huntName;
-	  private String huntDescription;
 
 	  public int getHuntId() {
 	    return huntId;
@@ -24,10 +23,6 @@ public class Hunt {
 	  public String getHuntPassword() {
 		    return huntName;
 		  }
-	  
-	  public String getHuntDescription() {
-		  return huntDescription;
-	  }
 
 
 	  // Will be used by the ArrayAdapter in the ListView

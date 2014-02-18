@@ -11,6 +11,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import sqlLiteDatabase.MapData;
+import sqlLiteDatabase.MapDataDAO;
+
 import com.application.treasurehunt.RegisterActivity.UserRegisterTask;
 
 import Utilities.JSONParser;
@@ -39,19 +42,12 @@ import android.widget.AdapterView.OnItemClickListener;
 public class RegisterWithHuntActivity extends Activity{
 	
 	//Home
-	private static final String getHuntIdUrl =  "http://192.168.1.74:80/webservice/returnCurrentHuntId.php";
-	private static final String registerUserWithHuntUrl =  "http://192.168.1.74:80/webservice/huntParticipantSave.php";
-	private static final String getHuntDescriptionUrl = "http://192.168.1.74:80/webservice/getHuntDescription.php";
-	private static final String checkIfUserRegisteredUrl = "http://192.168.1.74:80/webservice/checkUserHuntRegistration.php";
-	private static final String saveStartTimeUrl = "http://192.168.1.74:80/webservice/saveHuntStartTime.php";
-	private static final String checkIfHuntStartedUrl = "http://192.168.1.74:80/webservice/checkIfHuntStarted.php";
-	
-	//University
-	//private static final String getUserIdUrl =  "http://143.117.190.106:80/webservice/returnCurrentUserId.php";
-	//private static final String getHuntIdUrl =  "http://143.117.190.106:80/webservice/returnCurrentHuntId.php";
-	//private static final String registerUserWithHuntUrl =  "http://143.117.190.106:80/webservice/huntParticipantSave.php";
-	//private static final String getHuntDescription = "http://143.117.190.106:80/webservice/huntDescription.php";
-	//private static final String checkIfUserRegisteredUrl = "http://143.117.190.106:80/webservice/checkUserHuntRegistration.php";
+	private static final String getHuntIdUrl =  "http://lowryhosting.com/emmad/returnCurrentHuntId.php";
+	private static final String registerUserWithHuntUrl =  "http://lowryhosting.com/emmad/huntParticipantSave.php";
+	private static final String getHuntDescriptionUrl = "http://lowryhosting.com/emmad/getHuntDescription.php";
+	private static final String checkIfUserRegisteredUrl = "http://lowryhosting.com/emmad/checkUserHuntRegistration.php";
+	private static final String saveStartTimeUrl = "http://lowryhosting.com/emmad/saveHuntStartTime.php";
+	private static final String checkIfHuntStartedUrl = "http://lowryhosting.com/emmad/checkIfHuntStarted.php";
 	
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
@@ -96,12 +92,14 @@ public class RegisterWithHuntActivity extends Activity{
 	
 	Button mBeginHuntButton;
 	Button mRegisterButton;
-	Button mRefreshButton;
 	
 	SharedPreferences.Editor editor;
 	SharedPreferences settings;
 	
 	int huntId;
+	
+	MapDataDAO mMapDataSource;
+	MapManager mMapManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,16 +119,9 @@ public class RegisterWithHuntActivity extends Activity{
 		mRegisterButton = (Button) findViewById(R.id.register_hunt_button);
 		mRegisterButton.setEnabled(false);
 		
-		mRefreshButton = (Button) findViewById(R.id.refresh_button);
-		mRefreshButton.setVisibility(Button.INVISIBLE);
-		
-		mRefreshButton.setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						refreshData();	
-					}
-				});
+		mMapDataSource = new MapDataDAO(this);
+		mMapDataSource.open();
+		mMapManager = mMapManager.get(this);
 		
 		mRegisterButton.setOnClickListener(
 				new View.OnClickListener() {
@@ -195,6 +186,10 @@ public class RegisterWithHuntActivity extends Activity{
 		{
 			checkIfHuntAlreadyStarted();
 		}	
+		else
+		{
+			mBeginHuntButton.setText("Continue");
+		}
 		
 		mBeginHuntButton.setOnClickListener(
 				new View.OnClickListener() {
@@ -208,14 +203,19 @@ public class RegisterWithHuntActivity extends Activity{
 						{
 							//http://stackoverflow.com/questions/3944344/how-to-display-the-time-elapsed-onto-ui-screen-of-the-android
 							attemptToSaveStartTime();
+							
+							MapData mMapData = new MapData();
+							mMapData = mMapDataSource.insertMapData(1, huntId);
+							
+							mMapManager.startTrackingMap(mMapData);
+							
 							Log.d("leaderboard", startTime+ " = start time");
 							scanQRCodeActivity = new Intent(RegisterWithHuntActivity.this, ScanQRCodeActivity.class);
 							startActivity(scanQRCodeActivity);
 						}	
 						else
 						{
-							Log.d("leaderboard", "should change Begin Hunt to Continue");
-							mBeginHuntButton.setText("Continue");
+							Log.d("leaderboard", "should change Begin Hunt to Continue");							
 							
 							editor.putLong(huntId + " startTime", (long) startTime);
 							editor.putBoolean(huntId + " isHuntAlreadyStarted", huntAlreadyStarted);
@@ -258,12 +258,6 @@ public class RegisterWithHuntActivity extends Activity{
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-	
-	private void refreshData()
-	{
-		checkIfUserHasAlreadyRegistered();
-		mRefreshButton.setVisibility(Button.INVISIBLE);
 	}
 	
 	private void attemptToSaveStartTime()
@@ -314,7 +308,6 @@ public class RegisterWithHuntActivity extends Activity{
 					{
 						mUserRegisteredTask.cancel(true);
 						Toast.makeText(RegisterWithHuntActivity.this, "Connection timeout. Please try again.", Toast.LENGTH_LONG).show();
-						mRefreshButton.setVisibility(Button.VISIBLE);
 					}
 				}
 			}
@@ -860,6 +853,8 @@ public class CheckIfHuntStartedTask extends AsyncTask<String, String, String> {
 		editor.putBoolean(huntId + " isHuntAlreadyStarted", huntAlreadyStarted);
 		editor.putLong(huntId + " startTime", (long) startTime);
 		editor.commit(); 
+		
+		
 		
 		if (fileUrl != null) {
 			Toast.makeText(RegisterWithHuntActivity.this, fileUrl, Toast.LENGTH_LONG).show();	

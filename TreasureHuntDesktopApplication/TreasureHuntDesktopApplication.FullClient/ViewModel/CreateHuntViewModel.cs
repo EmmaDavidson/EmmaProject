@@ -21,12 +21,15 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         ITreasureHuntService serviceClient;
         public RelayCommand SaveHuntNameCommand { get; private set; }
         public RelayCommand BackCommand { get; private set; }
+        public RelayCommand LogoutCommand { get; private set; }
 
         public CreateHuntViewModel(ITreasureHuntService _serviceClient)
         {
             serviceClient = _serviceClient;
-            SaveHuntNameCommand = new RelayCommand(() => ExecuteSaveHuntNameCommand(), () => IsValidHuntName());
+            SaveHuntNameCommand = new RelayCommand(() => ExecuteSaveHuntNameCommand(), () => IsValidDetails());
             BackCommand = new RelayCommand(() => ExecuteBackCommand());
+            LogoutCommand = new RelayCommand(() => ExecuteLogoutCommand());
+
 
             Messenger.Default.Register<CurrentUserMessage>
             (
@@ -158,7 +161,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         }
 
         //-http://www.youtube.com/watch?v=OOHDie8BdGI
-        private bool IsValidHuntName()
+        public bool IsValidDetails()
         {
             foreach(string property in ValidatedProperties)
                 if(GetValidationMessage(property) != null)
@@ -169,7 +172,8 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #endregion
 
         #region Commands
-        private void ExecuteSaveHuntNameCommand()
+        //Change this to private and use reflection for testing
+        public void ExecuteSaveHuntNameCommand()
         {
             if (!DoesHuntAlreadyExist(HuntName))
             {
@@ -199,10 +203,11 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
                 HuntName = null;
                 Password = null;
                 RetypedPassword = null;
+                Description = null;
             }
             else 
             {
-                String messageBoxText = "This hunt already exists.";
+                String messageBoxText = "This hunt already exists in the database.";
                 String caption = "Hunt Already Exists";
                 MessageBoxResult box = MessageBox.Show(messageBoxText, caption);
                 HuntName = null;
@@ -235,6 +240,13 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             HuntName = null;
             Password = String.Empty;
             RetypedPassword = String.Empty;
+            Description = String.Empty;
+        }
+
+        private void ExecuteLogoutCommand()
+        {
+
+            Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "LoginViewModel" });
         }
 
         #endregion

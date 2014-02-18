@@ -29,9 +29,9 @@ import android.widget.Toast;
 public class RegisterActivity extends Activity {
 
 	//Home
-	private static final String myRegisterUrl =  "http://192.168.1.74:80/webservice/register.php";
-	private static final String getUserIdUrl =  "http://192.168.1.74:80/webservice/returnCurrentUserId.php";
-	private static final String setUserRoleUrl =  "http://192.168.1.74:80/webservice/setUserRole.php";
+	private static final String myRegisterUrl =  "http://lowryhosting.com/emmad/register.php";
+	private static final String getUserIdUrl =  "http://lowryhosting.com/emmad/returnCurrentUserId.php";
+	private static final String setUserRoleUrl =  "http://lowryhosting.com/emmad/setUserRole.php";
 	
 	//University
 	//private static final String myRegisterUrl =  "http://143.117.190.106:80/webservice/register.php";
@@ -42,7 +42,7 @@ public class RegisterActivity extends Activity {
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
 	
-	private JSONParser jsonParser = new JSONParser();
+	public JSONParser jsonParser = new JSONParser();
 	
 	private UserRegisterTask mAuthTask = null;
 	private SetUserRoleTask mUserRoleTask = null;
@@ -288,7 +288,7 @@ public class UserRegisterTask extends AsyncTask<String, String, String> {
 			pDialog = new ProgressDialog(RegisterActivity.this);
             pDialog.setMessage("Attempting register...");
 			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(true);
+			pDialog.setCancelable(false);
 			pDialog.show();
 		}
 		

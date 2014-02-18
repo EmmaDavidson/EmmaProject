@@ -133,7 +133,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             }
         }
 
-        private bool IsValidDetails()
+        public bool IsValidDetails()
         {
             foreach (string property in ValidatedProperties)
                 if (GetValidationMessage(property) != null)
@@ -144,7 +144,7 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         #endregion
 
         #region Commands
-        private void ExecuteRegisterUserCommand()
+        public void ExecuteRegisterUserCommand()
         {
             user newUser = new user();
             newUser.Email = this.emailAddress;
@@ -161,14 +161,14 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
 
                 this.serviceClient.SaveUserRole(newUserRole);
 
-                MessageBoxResult messageBox = MessageBox.Show("You have successfully registered!");
+                MessageBoxResult messageBox = MessageBox.Show("You have successfully registered!", "Success");
 
                 Messenger.Default.Send<UpdateViewMessage>(new UpdateViewMessage() { UpdateViewTo = "LoginViewModel" });
             }
             else 
             {
                 //-http://www.c-sharpcorner.com/UploadFile/mahesh/messagebox-in-wpf/
-                MessageBoxResult messageBox = MessageBox.Show("This email address already exists!");
+                MessageBoxResult messageBox = MessageBox.Show("This email address already exists!", "Invalid details");
                 EmailAddress = String.Empty;
             }
 

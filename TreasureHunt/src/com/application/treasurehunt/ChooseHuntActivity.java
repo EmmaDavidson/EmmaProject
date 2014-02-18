@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import sqlLiteDatabase.Hunt;
 import sqlLiteDatabase.HuntDAO;
 
+import Utilities.ChooseHuntListAdapter;
 import Utilities.JSONParser;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -34,11 +35,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 //http://net.tutsplus.com/tutorials/php/php-database-access-are-you-doing-it-correctly/
-public class ChooseHuntActivity extends Activity implements OnItemClickListener {
+public class ChooseHuntActivity extends Activity{
 
-	private JSONParser jsonParser = new JSONParser();
-	private static final String myChooseHuntUrl =  "http://192.168.1.74:80/webservice/choosehunt.php";
-	//private static final String myChooseHuntUrl =  "http://143.117.190.106:80/webservice/choosehunt.php";
+	public JSONParser jsonParser = new JSONParser();
+	private static final String myChooseHuntUrl =  "http://lowryhosting.com/emmad/choosehunt.php";
 	
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";
@@ -82,20 +82,17 @@ public class ChooseHuntActivity extends Activity implements OnItemClickListener 
 			actionBar.setSubtitle("Choose a hunt");
 		}
 		
-		mListView = (ListView) findViewById(R.id.hunt_list_view);		
+		mListView = (ListView) findViewById(R.id.hunt_list_view);	
 		
+		huntDataSource.updateDatabaseLocally();
+		
+		////http://stackoverflow.com/questions/12220239/repeat-task-in-android
+		handlerForUpdatingHuntList = new Handler();
 		handlerForUpdatingHuntList.post(updateHuntsList);
-		
-		/*findViewById(R.id.hunt_refresh_button).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						updateListOfHunts();
-					}
-				}); */
 		
 		settings = getSharedPreferences("UserPreferencesFile", 0);
 		editor = settings.edit();
+		
 	}
 
 	//http://mobileorchard.com/android-app-development-menus-part-1-options-menu/
@@ -184,7 +181,7 @@ public class ReturnHuntsTask extends AsyncTask<String, String, String> {
 		pDialog = new ProgressDialog(ChooseHuntActivity.this);
         pDialog.setMessage("Attempting to get treasure hunts...");
 		pDialog.setIndeterminate(false);
-		pDialog.setCancelable(true);
+		pDialog.setCancelable(false);
 		pDialog.show();
 	}
 	
@@ -240,7 +237,7 @@ public class ReturnHuntsTask extends AsyncTask<String, String, String> {
 		if (fileUrl != null) 
 		{	
 			List<Hunt> listOfHunts = huntDataSource.getAllHunts();
-			final ArrayAdapter<Hunt> adapter = new ArrayAdapter<Hunt>(ChooseHuntActivity.this, android.R.layout.simple_list_item_1, listOfHunts);
+			final ChooseHuntListAdapter adapter = new ChooseHuntListAdapter(ChooseHuntActivity.this, listOfHunts);
 			mListView.setAdapter(adapter);	
 			
 			//http://stackoverflow.com/questions/16189651/android-listview-selected-item-stay-highlighted
@@ -273,12 +270,6 @@ public class ReturnHuntsTask extends AsyncTask<String, String, String> {
 	}
 }
 
-
-@Override
-public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-	// TODO Auto-generated method stub
-	
-}
 
 }
 

@@ -18,6 +18,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
   public static final String COLUMN_LEADERBOARD_USERNAME = "UserName";
   public static final String COLUMN_LEADERBOARD_TALLY = "Tally";
   public static final String COLUMN_LEADERBOARD_ELAPSED_TIME = "ElapsedTime";
+  
+  public static final String TABLE_MAPS = "Map";
+  public static final String COLUMM_MAPS_PARTICIPANT_ID = "HuntParticipantId";
+  public static final String COLUMN_MAPS_HUNT_ID = "HuntId";
+  public static final String COLUMN_MAPS_LATITUDE = "Latitude";
+  public static final String COLUMN_MAPS_LONGTITUDE = "Longtitude";
+  public static final String COLUMN_MAPS_ALTITUDE = "Altitude";
+  public static final String COLUMN_MAPS_TIME_STAMP= "TimeStamp";
 
   private static final String DATABASE_NAME = "TreasureHunt.db";
   private static final int DATABASE_VERSION = 1;
@@ -37,6 +45,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
   private static final String DATABASE_CREATE_LEADERBOARD =  "create table " 
 		  + TABLE_HUNT_LEADERBOARD + " (" + COLUMN_LEADERBOARD_USERNAME + " name not null, " +
 	        COLUMN_LEADERBOARD_TALLY + " INTEGER NOT NULL, " + COLUMN_LEADERBOARD_ELAPSED_TIME + " FLOAT NOT NULL); ";
+  
+  //MIGHT NEED TO CHANGE START DATE TO DOUBLE
+  private static final String DATABASE_CREATE_MAPS = "create table " + TABLE_MAPS + " (" + COLUMM_MAPS_PARTICIPANT_ID + " INTEGER NOT NULL, "
+		  									+ COLUMN_MAPS_HUNT_ID + " INTEGER NOT NULL," 
+		  									+ COLUMN_MAPS_LATITUDE + " real, " + COLUMN_MAPS_LONGTITUDE + " real, " 
+		  									 + COLUMN_MAPS_ALTITUDE + " real, " + COLUMN_MAPS_TIME_STAMP + " INTEGER NOT NULL); " ;
 
   public MySQLiteHelper(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,8 +61,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     database.execSQL(DATABASE_CREATE);
     database.execSQL(DATABASE_CREATE_USER_HUNTS);
     database.execSQL(DATABASE_CREATE_LEADERBOARD);
+    database.execSQL(DATABASE_CREATE_MAPS);
   }
 
+  //WE REALLY WANT A HELPER FOR EACH DIFFERENT TABLE - UPDATE LATER 
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     Log.w(MySQLiteHelper.class.getName(),
@@ -57,7 +73,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     db.execSQL("DROP TABLE IF EXISTS " + TABLE_HUNTS);
     db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_HUNTS);
     db.execSQL("DROP TABLE IF EXISTS " + TABLE_HUNT_LEADERBOARD);
+    db.execSQL("DROP TABLE IF EXISTS " + TABLE_MAPS);
     onCreate(db);
   }
+  
 
 } 

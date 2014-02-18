@@ -17,20 +17,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
-#region EDM Relationship Metadata
-
-[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "huntparticipants_ibfk_1", "hunt", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.hunt), "huntparticipants", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.huntparticipant), true)]
-[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "huntquestions_ibfk_1", "hunt", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.hunt), "huntquestions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.huntquestion), true)]
-[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userhunt_ibfk_2", "hunt", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.hunt), "userhunt", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userhunt), true)]
-[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "huntparticipants_ibfk_2", "user", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.user), "huntparticipants", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.huntparticipant), true)]
-[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "huntquestions_ibfk_2", "questions", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.question), "huntquestions", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.huntquestion), true)]
-[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userrole_ibfk_1", "role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.role), "userrole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userrole), true)]
-[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userhunt_ibfk_1", "user", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.user), "userhunt", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userhunt), true)]
-[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userrole_ibfk_2", "user", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.user), "userrole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userrole), true)]
-[assembly: EdmRelationshipAttribute("treasurehuntdbModel", "userhunt_ibfk_3", "userrole", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(TreasureHuntDesktopApplication.Data.userrole), "userhunt", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(TreasureHuntDesktopApplication.Data.userhunt), true)]
-
-#endregion
-
 namespace TreasureHuntDesktopApplication.Data
 {
     #region Contexts
@@ -286,7 +272,7 @@ namespace TreasureHuntDesktopApplication.Data
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="treasurehuntdbModel", Name="hunt")]
+    [EdmEntityTypeAttribute(NamespaceName="virapy_treasurehuntdbModel", Name="hunt")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class hunt : EntityObject
@@ -415,82 +401,12 @@ namespace TreasureHuntDesktopApplication.Data
 
         #endregion
 
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "huntparticipants_ibfk_1", "huntparticipants")]
-        public EntityCollection<huntparticipant> huntparticipants
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<huntparticipant>("treasurehuntdbModel.huntparticipants_ibfk_1", "huntparticipants");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<huntparticipant>("treasurehuntdbModel.huntparticipants_ibfk_1", "huntparticipants", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "huntquestions_ibfk_1", "huntquestions")]
-        public EntityCollection<huntquestion> huntquestions
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<huntquestion>("treasurehuntdbModel.huntquestions_ibfk_1", "huntquestions");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<huntquestion>("treasurehuntdbModel.huntquestions_ibfk_1", "huntquestions", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userhunt_ibfk_2", "userhunt")]
-        public EntityCollection<userhunt> userhunts
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_2", "userhunt");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_2", "userhunt", value);
-                }
-            }
-        }
-
-        #endregion
-
     }
     
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="treasurehuntdbModel", Name="huntparticipant")]
+    [EdmEntityTypeAttribute(NamespaceName="virapy_treasurehuntdbModel", Name="huntparticipant")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class huntparticipant : EntityObject
@@ -669,92 +585,12 @@ namespace TreasureHuntDesktopApplication.Data
 
         #endregion
 
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "huntparticipants_ibfk_1", "hunt")]
-        public hunt hunt
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.huntparticipants_ibfk_1", "hunt").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.huntparticipants_ibfk_1", "hunt").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<hunt> huntReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.huntparticipants_ibfk_1", "hunt");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<hunt>("treasurehuntdbModel.huntparticipants_ibfk_1", "hunt", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "huntparticipants_ibfk_2", "user")]
-        public user user
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.huntparticipants_ibfk_2", "user").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.huntparticipants_ibfk_2", "user").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<user> userReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.huntparticipants_ibfk_2", "user");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<user>("treasurehuntdbModel.huntparticipants_ibfk_2", "user", value);
-                }
-            }
-        }
-
-        #endregion
-
     }
     
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="treasurehuntdbModel", Name="huntquestion")]
+    [EdmEntityTypeAttribute(NamespaceName="virapy_treasurehuntdbModel", Name="huntquestion")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class huntquestion : EntityObject
@@ -857,92 +693,12 @@ namespace TreasureHuntDesktopApplication.Data
 
         #endregion
 
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "huntquestions_ibfk_1", "hunt")]
-        public hunt hunt
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.huntquestions_ibfk_1", "hunt").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.huntquestions_ibfk_1", "hunt").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<hunt> huntReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.huntquestions_ibfk_1", "hunt");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<hunt>("treasurehuntdbModel.huntquestions_ibfk_1", "hunt", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "huntquestions_ibfk_2", "questions")]
-        public question question
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<question>("treasurehuntdbModel.huntquestions_ibfk_2", "questions").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<question>("treasurehuntdbModel.huntquestions_ibfk_2", "questions").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<question> questionReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<question>("treasurehuntdbModel.huntquestions_ibfk_2", "questions");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<question>("treasurehuntdbModel.huntquestions_ibfk_2", "questions", value);
-                }
-            }
-        }
-
-        #endregion
-
     }
     
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="treasurehuntdbModel", Name="question")]
+    [EdmEntityTypeAttribute(NamespaceName="virapy_treasurehuntdbModel", Name="question")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class question : EntityObject
@@ -1045,38 +801,12 @@ namespace TreasureHuntDesktopApplication.Data
 
         #endregion
 
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "huntquestions_ibfk_2", "huntquestions")]
-        public EntityCollection<huntquestion> huntquestions
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<huntquestion>("treasurehuntdbModel.huntquestions_ibfk_2", "huntquestions");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<huntquestion>("treasurehuntdbModel.huntquestions_ibfk_2", "huntquestions", value);
-                }
-            }
-        }
-
-        #endregion
-
     }
     
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="treasurehuntdbModel", Name="role")]
+    [EdmEntityTypeAttribute(NamespaceName="virapy_treasurehuntdbModel", Name="role")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class role : EntityObject
@@ -1153,38 +883,12 @@ namespace TreasureHuntDesktopApplication.Data
 
         #endregion
 
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userrole_ibfk_1", "userrole")]
-        public EntityCollection<userrole> userroles
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<userrole>("treasurehuntdbModel.userrole_ibfk_1", "userrole");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<userrole>("treasurehuntdbModel.userrole_ibfk_1", "userrole", value);
-                }
-            }
-        }
-
-        #endregion
-
     }
     
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="treasurehuntdbModel", Name="user")]
+    [EdmEntityTypeAttribute(NamespaceName="virapy_treasurehuntdbModel", Name="user")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class user : EntityObject
@@ -1313,82 +1017,12 @@ namespace TreasureHuntDesktopApplication.Data
 
         #endregion
 
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "huntparticipants_ibfk_2", "huntparticipants")]
-        public EntityCollection<huntparticipant> huntparticipants
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<huntparticipant>("treasurehuntdbModel.huntparticipants_ibfk_2", "huntparticipants");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<huntparticipant>("treasurehuntdbModel.huntparticipants_ibfk_2", "huntparticipants", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userhunt_ibfk_1", "userhunt")]
-        public EntityCollection<userhunt> userhunts
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_1", "userhunt");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_1", "userhunt", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userrole_ibfk_2", "userrole")]
-        public EntityCollection<userrole> userroles
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<userrole>("treasurehuntdbModel.userrole_ibfk_2", "userrole");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<userrole>("treasurehuntdbModel.userrole_ibfk_2", "userrole", value);
-                }
-            }
-        }
-
-        #endregion
-
     }
     
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="treasurehuntdbModel", Name="userhunt")]
+    [EdmEntityTypeAttribute(NamespaceName="virapy_treasurehuntdbModel", Name="userhunt")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class userhunt : EntityObject
@@ -1517,130 +1151,12 @@ namespace TreasureHuntDesktopApplication.Data
 
         #endregion
 
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userhunt_ibfk_2", "hunt")]
-        public hunt hunt
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.userhunt_ibfk_2", "hunt").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.userhunt_ibfk_2", "hunt").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<hunt> huntReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<hunt>("treasurehuntdbModel.userhunt_ibfk_2", "hunt");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<hunt>("treasurehuntdbModel.userhunt_ibfk_2", "hunt", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userhunt_ibfk_1", "user")]
-        public user user
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.userhunt_ibfk_1", "user").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.userhunt_ibfk_1", "user").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<user> userReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.userhunt_ibfk_1", "user");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<user>("treasurehuntdbModel.userhunt_ibfk_1", "user", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userhunt_ibfk_3", "userrole")]
-        public userrole userrole
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<userrole>("treasurehuntdbModel.userhunt_ibfk_3", "userrole").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<userrole>("treasurehuntdbModel.userhunt_ibfk_3", "userrole").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<userrole> userroleReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<userrole>("treasurehuntdbModel.userhunt_ibfk_3", "userrole");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<userrole>("treasurehuntdbModel.userhunt_ibfk_3", "userrole", value);
-                }
-            }
-        }
-
-        #endregion
-
     }
     
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="treasurehuntdbModel", Name="userrole")]
+    [EdmEntityTypeAttribute(NamespaceName="virapy_treasurehuntdbModel", Name="userrole")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class userrole : EntityObject
@@ -1740,108 +1256,6 @@ namespace TreasureHuntDesktopApplication.Data
         private global::System.Int64 _UserId;
         partial void OnUserIdChanging(global::System.Int64 value);
         partial void OnUserIdChanged();
-
-        #endregion
-
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userrole_ibfk_1", "role")]
-        public role role
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<role>("treasurehuntdbModel.userrole_ibfk_1", "role").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<role>("treasurehuntdbModel.userrole_ibfk_1", "role").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<role> roleReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<role>("treasurehuntdbModel.userrole_ibfk_1", "role");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<role>("treasurehuntdbModel.userrole_ibfk_1", "role", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userrole_ibfk_2", "user")]
-        public user user
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.userrole_ibfk_2", "user").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.userrole_ibfk_2", "user").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<user> userReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<user>("treasurehuntdbModel.userrole_ibfk_2", "user");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<user>("treasurehuntdbModel.userrole_ibfk_2", "user", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("treasurehuntdbModel", "userhunt_ibfk_3", "userhunt")]
-        public EntityCollection<userhunt> userhunts
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_3", "userhunt");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<userhunt>("treasurehuntdbModel.userhunt_ibfk_3", "userhunt", value);
-                }
-            }
-        }
 
         #endregion
 

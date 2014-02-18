@@ -125,7 +125,7 @@ public class HuntDAO {
   private Hunt cursorToUserHunt(Cursor cursor) {
 	    Hunt hunt = new Hunt();
 	    hunt.setHuntId(cursor.getInt(0));
-	    hunt.setHuntName(cursor.getString(1)); 
+	    hunt.setHuntName(cursor.getString(1));
 	    return hunt;
 	  }
 } 

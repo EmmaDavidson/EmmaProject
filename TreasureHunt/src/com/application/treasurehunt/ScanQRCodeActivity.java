@@ -10,8 +10,10 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import sqlLiteDatabase.MapData;
+import sqlLiteDatabase.MapDataDAO;
+
 import com.application.treasurehunt.RegisterWithHuntActivity.CheckIfUserRegisteredTask;
-import com.application.treasurehunt.services.HuntTimerService;
 import com.dm.zbar.android.scanner.ZBarConstants;
 import com.dm.zbar.android.scanner.ZBarScannerActivity;
 //import com.google.zxing.integration.android.IntentIntegrator;
@@ -49,8 +51,8 @@ import android.widget.Toast;
 
 public class ScanQRCodeActivity extends Activity implements OnClickListener {
 
-	private static final String getHuntParticipantIdUrl = "http://192.168.1.74:80/webservice/getHuntParticipantId.php";
-	private static final String scanResultUrl = "http://192.168.1.74:80/webservice/updateScanResults.php";
+	private static final String getHuntParticipantIdUrl = "http://lowryhosting.com/emmad/getHuntParticipantId.php";
+	private static final String scanResultUrl = "http://lowryhosting.com/emmad/updateScanResults.php";
 	
 	private JSONParser jsonParser = new JSONParser();
 	
@@ -70,6 +72,9 @@ public class ScanQRCodeActivity extends Activity implements OnClickListener {
 	
 	SharedPreferences settings;
 	SharedPreferences.Editor editor;
+	
+	MapDataDAO mMapDataSource;
+	MapManager mMapManager;
 	
 	long startTime;
 	
@@ -92,6 +97,10 @@ public class ScanQRCodeActivity extends Activity implements OnClickListener {
 			actionBar.setTitle("Treasure Hunt");
 			actionBar.setSubtitle("Scan a QR code");
 		}
+		
+		mMapDataSource = new MapDataDAO(this);
+		mMapDataSource.open();
+		mMapManager = mMapManager.get(this);
 		
 		settings = getSharedPreferences("UserPreferencesFile", 0);
 		editor = settings.edit();
@@ -196,8 +205,12 @@ public class ScanQRCodeActivity extends Activity implements OnClickListener {
 				String questionReturned = intent.getStringExtra(ZBarConstants.SCAN_RESULT);
 				//http://stackoverflow.com/questions/8694984/remove-part-of-string
 				String questionReturnedWithoutHuntId = questionReturned.replace(huntId+"", "");
-				contentText.setText("QUESTION: " + questionReturnedWithoutHuntId);
+				contentText.setText(questionReturnedWithoutHuntId);
 				saveScanResult();
+				
+				//set up the map for the scan
+				//MapData newMap = new MapData();
+				//newMap = mMapDataSource.insertMapData(1);
 			}
 			else
 			{

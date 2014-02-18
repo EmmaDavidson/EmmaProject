@@ -52,6 +52,19 @@ namespace TreasureHuntDesktopApplication.Test.ViewModel
             }
         }
 
+        public user CurrentUser
+        {
+            get 
+            { 
+                return viewModel.CurrentUser; 
+            }
+            set
+            {
+
+                viewModel.CurrentUser = value;
+            }
+        }
+
         public IEnumerable<hunt> TreasureHunts
         {
             get
@@ -64,11 +77,13 @@ namespace TreasureHuntDesktopApplication.Test.ViewModel
             }     
         }
 
+
+
         #endregion
 
         #region Validation Tests
         [Test]
-        public void ShouldReturnFalseIfCurrentTreasureHuntIsNull()
+        public void ShouldReturnInvalidIfCurrentTreasureHuntIsNull()
         {
             this.CurrentTreasureHunt = null;
             Assert.False(viewModel.IsValidHunt());
@@ -79,13 +94,20 @@ namespace TreasureHuntDesktopApplication.Test.ViewModel
         #region RefreshingDataTests/ServiceCalls
 
         [Test]
-        public void ShouldReturnAllTreasureHuntsFromDatabase()
+        public void ShouldReturnAllTreasureHuntsFromDatabaseForAParticularUser()
         {
-            serviceClient.Setup<hunt[]>(s => s.GetTreasureHunts()).Returns(returnedHunts.ToArray());
+            user fakeUser = new user();
+            fakeUser.Name="Current users name";
+            fakeUser.UserId = 1;
 
-            viewModel.RefreshTreasureHunts(); 
-            serviceClient.Verify(s => s.GetTreasureHunts(), Times.Exactly(2));
-            Assert.AreEqual(returnedHunts, this.TreasureHunts);
+            CurrentUser = fakeUser;
+
+            serviceClient.Setup<hunt[]>(s => s.GetTreasureHuntsForParticularUser(fakeUser)).Returns(returnedHunts.ToArray());
+
+            viewModel.RefreshTreasureHunts();
+
+            serviceClient.Verify(s => s.GetTreasureHuntsForParticularUser(fakeUser), Times.Exactly(1));
+            Assert.AreEqual(returnedHunts, TreasureHunts);
         }
         #endregion
     }

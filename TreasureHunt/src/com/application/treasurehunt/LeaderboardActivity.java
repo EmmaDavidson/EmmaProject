@@ -40,7 +40,7 @@ public class LeaderboardActivity extends Activity {
 	 
 	private JSONParser jsonParser;
 	
-	private static final String returnLeaderboardUrl =  "http://192.168.1.74:80/webservice/returnHuntLeaderboardResults.php";
+	private static final String returnLeaderboardUrl =  "http://lowryhosting.com/emmad/returnHuntLeaderboardResults.php";
 	
 	private static final String tagSuccess = "success";
 	private static final String tagMessage = "message";

@@ -20,7 +20,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
         readonly static CreateHuntViewModel createHuntViewModel = new CreateHuntViewModel(serviceClient);
         readonly static ViewHuntViewModel viewHuntViewModel = new ViewHuntViewModel(serviceClient);
         readonly static SearchHuntViewModel searchHuntViewModel = new SearchHuntViewModel(serviceClient);
-        readonly static ViewQRCodeViewModel viewQRCodeViewModel = new ViewQRCodeViewModel(serviceClient);
         readonly static PrintViewModel printViewModel = new PrintViewModel(serviceClient);
         readonly static LoginViewModel loginViewModel = new LoginViewModel(serviceClient);
         readonly static RegisterViewModel registerViewModel = new RegisterViewModel(serviceClient);
@@ -60,10 +59,6 @@ namespace TreasureHuntDesktopApplication.FullClient.ViewModel
             if (requestedUpdateViewModel == "ViewHuntViewModel")
             {
                 CurrentViewModel = MainViewModel.viewHuntViewModel;
-            }
-            else if (requestedUpdateViewModel == "ViewQRCodeViewModel")
-            {
-                CurrentViewModel = MainViewModel.viewQRCodeViewModel;
             }
             else if (requestedUpdateViewModel == "SearchHuntViewModel")
             {

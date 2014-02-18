@@ -10,6 +10,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.hardware.location.gps"/>
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -69,6 +71,15 @@
             android:name="com.application.treasurehunt.LeaderboardActivity"
             android:label="@string/title_activity_leaderboard" >
         </activity>
+        <activity
+            android:name="com.application.treasurehunt.MapActivity"
+            android:label="@string/title_activity_map" >
+        </activity>
+        <receiver android:name="com.application.treasurehunt.TrackingLocationReceiver" android:exported="false">
+            <intent-filter>
+            	<action android:name="com.application.treasurehunt.ACTION_LOCATION" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
