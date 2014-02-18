@@ -42,7 +42,6 @@
 
 				$query2  = " SELECT RoleId FROM userrole WHERE userId = :UserId";
 				$userIdResult = $row['UserId'];
-				echo json_encode($userIdResult);
 	    			$query_params2 = array(':UserId' => $userIdResult);
 
 	  			 try {
@@ -58,8 +57,6 @@
 	    				}
 				
 				$row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
-
-				echo json_encode($row2);
 
 				if($row2['RoleId'] == 1)
 				{

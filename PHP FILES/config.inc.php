@@ -1,8 +1,8 @@
 <?php
-	$username = "Emma";
-	$password = "password";
-	$host = "localhost";
-	$dbname = "treasurehuntdb";
+	$username = "virapy_emmad";
+	$password = "davidsone1";
+	$host = "174.136.15.132";
+	$dbname = "virapy_treasurehuntdb";
 
 //FROM = http://www.mybringback.com/tutorial-series/13016/android-mysql-php-json-part-3-working-with-a-remote-server-and-mysql/
 
