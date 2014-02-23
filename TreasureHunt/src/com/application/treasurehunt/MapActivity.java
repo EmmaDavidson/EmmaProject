@@ -11,7 +11,16 @@ public class MapActivity extends SingleFragmentActivity {
 	@Override
 	protected Fragment createFragment()
 	{
-		return new MapFragment();
+		
+		int participantId = getIntent().getIntExtra("userParticipantIdForMap", -1);
+		if(participantId != -1)
+		{
+			return MapFragment.newInstance(participantId);
+		}
+		else
+		{
+			return new MapFragment();
+		}
 	}
 
 }

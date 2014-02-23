@@ -19,6 +19,7 @@ import com.application.treasurehunt.R;
 	{
 		private Context context;
 		private List<Leaderboard> listOfLeaderboardResults;
+		
 		public LeaderboardListAdapter(Context thisContext, List<Leaderboard> leaderboardResults)
 		{
 			super(thisContext, 0, leaderboardResults);

@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ScanQRCodeActivity" >
+    tools:context=".ScanQRCodeActivity" 
+    android:background="#FFBDA78A">
 
     <Button
         android:id="@+id/scan_qr_code_button"
@@ -15,17 +16,19 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="@string/scan_qr_code" />
+        android:text="@string/scan_qr_code"
+        android:background="#FF54C8E2" />
 
     <TextView
         android:id="@+id/scan_content_received"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignLeft="@+id/scan_qr_code_button"
         android:layout_below="@+id/scan_qr_code_button"
         android:layout_marginTop="55dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textIsSelectable="true" />
+        android:textIsSelectable="true" 
+        android:background="@drawable/scan_question_result"/>
 
     <TextView
         android:id="@+id/scan_result_label"

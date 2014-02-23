@@ -1,54 +1,130 @@
 package com.application.treasurehunt;
 
-import java.util.List;
-
 import com.application.treasurehunt.R;
 import com.application.treasurehunt.R.id;
 import com.application.treasurehunt.R.layout;
 
-import sqlLiteDatabase.Leaderboard;
+import sqlLiteDatabase.LastLocationLoader;
 import sqlLiteDatabase.MapData;
-import sqlLiteDatabase.MapDataDAO;
-import Utilities.LeaderboardListAdapter;
-import Utilities.MapDataListAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MapFragment extends Fragment {
 
-	MapManager mMapManager;
-	MapDataDAO mMapDAO;
-	private MapData mMapData;
+	Button mUpdateButton;
+	Button mMapButton;
+	TextView mStarted, mLatitude, mLongtitude, mAltitude, mElapsedTime;
+	
+	private MapData mRun;
 	private Location mLastLocation;
 	
-	SharedPreferences.Editor editor;
-	SharedPreferences settings;
+	private MapManager mRunManager;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+		mRunManager = MapManager.get(getActivity());
+				
+		Bundle args = getArguments();
+		if(args != null)
+		{
+			int participantId = args.getInt("userParticipantIdForMap",-1);
+			if(participantId != -1)
+			{
+				LoaderManager lm = getLoaderManager();
+				mRun = mRunManager.getRun(participantId);
+				lm.initLoader(0, args, new LocationLoaderCallbacks());
+				//mLastLocation = mRunManager.getLastLocationForRun(participantId);
+				
+			}
+		}
+		
+		
+	}
 	
-	ListView mMapDataListView;
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
+		View view = inflater.inflate(R.layout.fragment_map, container, false);
+
+		mStarted = (TextView) view.findViewById(R.id.start);
+		mLatitude = (TextView) view.findViewById(R.id.latitude);
+		mLongtitude = (TextView) view.findViewById(R.id.longtitude);
+		mAltitude = (TextView) view.findViewById(R.id.altitude);
+		mElapsedTime = (TextView) view.findViewById(R.id.elapsedTime);
+		mMapButton = (Button) view.findViewById(R.id.map_button);
+		//mUpdateButton = (Button) view.findViewById(R.id.update_info);
+		
+		mMapButton.setOnClickListener(new OnClickListener()
+				{
+					@Override
+					public void onClick(View v)
+					{
+						Intent mapIntent = new Intent(getActivity(), GoogleMapActivity.class);
+						mapIntent.putExtra("userParticipantIdForMap", mRun.getParticipantId());
+						startActivity(mapIntent);
+					}
+				});
+		
+		mRunManager.startTrackingRun(mRun);
+		updateUI();
+
+		return view;
+	}
 	
-	private int currentHuntId;
+	public void updateUI()
+	{
+		boolean started = mRunManager.isTrackingRun();
+		boolean trackingThisRun = mRunManager.isTrackingRun(mRun);
+		
+		if(mRun!= null && mLastLocation !=null)
+		{
+			mLatitude.setText(Double.toString(mLastLocation.getLatitude()));
+			mLongtitude.setText(Double.toString(mLastLocation.getLongitude()));
+			mAltitude.setText(Double.toString(mLastLocation.getAltitude()));
+			mMapButton.setEnabled(true);
+		}
+		else
+			{
+				mMapButton.setEnabled(false);
+			}
+
+	}
 	
 	private BroadcastReceiver mLocationReceiver = new LocationReceiver()
 	{
 		@Override
 		protected void onLocationReceived(Context context, Location loc)
 		{
-			mLastLocation = loc;
-			if(isVisible())
-			{
-				updateUI();
-			}
+				if(!mRunManager.isTrackingRun(mRun))
+				{
+					return;
+				}
+				mLastLocation = loc;
+				if(isVisible())
+				{
+					updateUI();
+				}
+			
 		}
 		
 		@Override 
@@ -59,33 +135,6 @@ public class MapFragment extends Fragment {
 			Toast.makeText(getActivity(), toastText, Toast.LENGTH_LONG).show();
 		}
 	};
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
-		mMapManager = MapManager.get(getActivity());
-		
-		mMapDAO = new MapDataDAO(getActivity());
-		mMapDAO.open();
-		
-		settings = getActivity().getSharedPreferences("UserPreferencesFile", 0);
-		editor = settings.edit();
-		
-		currentHuntId = settings.getInt("currentHuntId", 0);	
-	}
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
-		View view = inflater.inflate(R.layout.fragment_map, container, false);
-		mMapDataListView = (ListView) view.findViewById(R.id.map_list_view);
-		//Here is where all of the text on screen should be set up
-		updateUI();
-		
-		return view;
-	}
 	
 	@Override
 	public void onStart()
@@ -101,32 +150,39 @@ public class MapFragment extends Fragment {
 		super.onStop();
 	}
 	
-	private void updateUI()
+	public static MapFragment newInstance(int participantId)
 	{
-		boolean started = mMapManager.isTrackingHunt();
-		
-		//Have to get the proper participant id here
-		List<MapData> listOfLeaderboardResults = mMapDAO.getAllMapDataForParticularParticipantId(1, currentHuntId);
-		
-		//Need to change this back to leaderboard for displaying all of the values... displaying in a table instead!
-		//Android book - The Big Nerd Ranch Guide
-		MapDataListAdapter adapter = new MapDataListAdapter(getActivity(), listOfLeaderboardResults);
-		mMapDataListView.setAdapter(adapter);	
-		
-		//This has to be passed in from when the map has already been first started
-		/*if(mMapData != null)
-		{
-			//Need to do call of async to get the start time
-			if(mMapData != null && mLastLocation != null)
-			{
-				//Update the data on screen of what you want
-				mLatitiudeTextView.setText(Double.toString(mLastLocation.getLatitude()));
-				mLongtitudeTextView.setText(Double.toString(mLastLocation.getLongitude()));
-				mAltitudeTextView.setText(Double.toString(mLastLocation.getAltitude()));
-				//get the duration by calling the async method
-				//i.e. need to do the conversion for elapsed time
-				//mDurationTextView.setText(MapData.formatDuration(durationSeconds));
-			}
-		}*/
+		Bundle args = new Bundle();
+		args.putInt("userParticipantIdForMap", participantId);
+		MapFragment rf = new MapFragment();
+		rf.setArguments(args);
+		return rf;
 	}
+	
+	public class LocationLoaderCallbacks implements LoaderCallbacks<Location> {
+
+		@Override
+		public Loader<Location> onCreateLoader(int id, Bundle args) {
+			return new LastLocationLoader(getActivity(), args.getInt("userParticipantIdForMap")); //ARGSRUNID
+		}
+
+		@Override
+		public void onLoadFinished(Loader<Location> l, Location location) {
+			mLastLocation = location;
+			updateUI();
+			
+		}
+
+		@Override
+		public void onLoaderReset(Loader<Location> arg0) {
+			//DO NOTHINGS
+			
+		}
+
+
+	}
+
+	
 }
+
+

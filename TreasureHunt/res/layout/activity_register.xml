@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".RegisterActivity" >
+    tools:context=".RegisterActivity" 
+    android:background="#FFBDA78A">
 
     <TextView
         android:id="@+id/register_label"
@@ -58,11 +59,12 @@
 
     <Button
         android:id="@+id/register_save_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/register_password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="17dp"
+        android:background="#FF54C8E2"
         android:text="@string/save" />
 
 </RelativeLayout>

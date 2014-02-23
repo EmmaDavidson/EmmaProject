@@ -50,5 +50,11 @@
     <string name="latitude">Latitude:</string>
     <string name="longtitude">Longtitude:</string>
     <string name="elapsed_time">Elapsed Time:</string>
- 	<string name="altitude">Altitude:</string>
+    <string name="altitude">Altitude:</string>
+
+    <color name="light_brown">#FFBDA78A</color>
+
+    <string name="title_activity_map_list">MapListActivity</string>
+    <string name="title_activity_google_map">GoogleMapActivity</string>
+
 </resources>

@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
@@ -18,39 +19,39 @@ public class MapManager {
 	private static final String TAG = "MapManager";
 	public static final String ACTION_LOCATION = "com.application.treasurehunt.ACTION_LOCATION";
 	
-	private static MapManager mMapManager;
-	private Context mAppContext;
-	private LocationManager mLocationManager;
-	
-	private MapDataDAO mMapDAO;
-	private int currentHuntParticipantId;
-	private int currentHuntId;
+	MapDataDAO mHelper;
 	
 	SharedPreferences.Editor editor;
 	SharedPreferences settings;
 	
+	private static MapManager sRunManager;
+	private Context mAppContext;
+	private LocationManager mLocationManager;
+	private int currentHuntParticipantId;
+
 	private MapManager(Context appContext)
 	{
 		mAppContext = appContext;
 		mLocationManager = (LocationManager) mAppContext.getSystemService(Context.LOCATION_SERVICE);
 		
-		mMapDAO = new MapDataDAO(mAppContext);
-		mMapDAO.open();
+		mHelper = new MapDataDAO(appContext);
+		mHelper.open();
 		
-		settings = mAppContext.getSharedPreferences("UserPreferencesFile", 0);
+		
+		
+		settings = appContext.getSharedPreferences("UserPreferencesFile", 0);
 		editor = settings.edit();
 		
-		currentHuntParticipantId = settings.getInt("CurrentMapParticipantId", 0);
-		currentHuntId = settings.getInt("currentHuntId", 0);
+		currentHuntParticipantId = settings.getInt("userParticipantIdForMap", -1);
 	}
 	
 	public static MapManager get(Context c)
 	{
-		if(mMapManager == null)
+		if(sRunManager == null)
 		{
-			mMapManager = new MapManager(c.getApplicationContext());
+			sRunManager = new MapManager(c.getApplicationContext());
 		}
-		return mMapManager;
+		return sRunManager;
 	}
 	
 	private PendingIntent getLocationPendingIntent(boolean shouldCreate)
@@ -92,50 +93,99 @@ public class MapManager {
 		}
 	}
 	
-	public boolean isTrackingHunt()
+	public boolean isTrackingRun()
 	{
 		return getLocationPendingIntent(false) != null;
 	}
 	
-	public void startTrackingMap(MapData map)
+	
+	//Actually creates and inserts a new run into the database
+	public MapData startNewRun(int participantId)
 	{
-		currentHuntParticipantId = map.getParticipantId();
-		editor.putInt("CurrentMapParticipantId", currentHuntParticipantId);
+		MapData run = insertRun(participantId);
+		startTrackingRun(run);
+		return run;
+	}
+	
+	//startNewRun passes the id to this method to begin tracking it 
+	//RunFragment will use this directly to when it restarts tracking on an existing run
+	//The participantId is saved and allows it to be retrieved later 
+	public void startTrackingRun(MapData run)
+	{
+		currentHuntParticipantId = run.getParticipantId();
+		editor.putInt("userParticipantIdForMap", currentHuntParticipantId);
 		editor.commit();
 		startLocationUpdates();
 	}
 	
-	public void stopMap()
+	//Stops location updates and clears out the id of the current run
+	public void stopRun()
 	{
 		stopLocationUpdates();
 		currentHuntParticipantId = -1;
-		editor.remove("CurrentMapParticipantId");
+		editor.remove("userParticipantIdForMap");
 		editor.commit();
 	}
 	
-	public void insertLocation(Location loc)
+	public MapData insertRun(int participantId)
 	{
+		MapData run = new MapData();
+		run.setParticipantId(participantId);
+		mHelper.insertRun(run);
+		Log.i("Mapping", "Run entered into the database");
+		return run;
+	}
+	
+	public void insertLocation(Location loc)
+	{	//I added this in
+		currentHuntParticipantId = settings.getInt("userParticipantIdForMap", -1);
+		
 		if(currentHuntParticipantId != -1)
 		{
-			mMapDAO.insertLocation(currentHuntParticipantId, loc, currentHuntId);
+			mHelper.insertLocation(currentHuntParticipantId, loc);
+			Log.i("Mapping", "A location has been entered into the database for participantId: " + currentHuntParticipantId);
 		}
 		else
 		{
-			Log.e("Map", "Location received with no tracking map");
+			Log.e("Mapping", "Location received with no tracking run; ignoring");
 		}
 	}
 	
-	public List<MapData> queryMaps()
+	public List<MapData> queryRuns()
 	{
-		return mMapDAO.getAllMapDataForParticularParticipantId(currentHuntParticipantId, currentHuntId);
+		return mHelper.queryRuns();
 	}
 	
-	private MapData insertMap(int participantId)
+	public MapData getRun(int participantId)
 	{
-		MapData map = mMapDAO.insertMapData(participantId, currentHuntId);
-		return map;
+		MapData run = null;
+		run = mHelper.queryRun(participantId);
+		return run;
 	}
 	
+	public boolean isTrackingRun(MapData run)
+	{
+		return run!=null && run.getParticipantId() == currentHuntParticipantId;
+	}
 	
-
+	public Location getLastLocationForRun(int participantId)
+	{
+		Location location = mHelper.queryLastLocationForRun(participantId);
+		return location;
+	}
+	
+	public List<Location> queryLocationForMaps(int participantId)
+	{
+		return mHelper.queryLocationsForMap(participantId);
+	}
+	
+	public LocationCursor queryLocationsForMapsAsync(int participant)
+	{
+		return mHelper.queryLocationsForMapAsync(participant);
+	}
+	
+	public List<Location> queryLocationsForMarkers(int participantId)
+	{
+		return mHelper.queryMarkersForMap(participantId);
+	}
 }

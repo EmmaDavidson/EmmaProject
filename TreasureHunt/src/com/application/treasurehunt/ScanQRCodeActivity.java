@@ -20,6 +20,7 @@ import com.dm.zbar.android.scanner.ZBarScannerActivity;
 //import com.google.zxing.integration.android.IntentResult;
 
 import Utilities.JSONParser;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,8 +29,11 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.text.format.DateUtils;
@@ -67,6 +71,7 @@ public class ScanQRCodeActivity extends Activity implements OnClickListener {
 	int userId;
 	int huntId;
 	private int huntParticipantId;
+	int currentParticipantId;
 	
 	boolean huntParticipantIdReturned;
 	
@@ -74,9 +79,10 @@ public class ScanQRCodeActivity extends Activity implements OnClickListener {
 	SharedPreferences.Editor editor;
 	
 	MapDataDAO mMapDataSource;
-	MapManager mMapManager;
 	
 	long startTime;
+	
+	private Location mLastLocation;
 	
 	GetHuntParticipantIdTask mGetHuntParticipantIdTask;
 	ScanResultTask mScanResultTask;
@@ -100,7 +106,6 @@ public class ScanQRCodeActivity extends Activity implements OnClickListener {
 		
 		mMapDataSource = new MapDataDAO(this);
 		mMapDataSource.open();
-		mMapManager = mMapManager.get(this);
 		
 		settings = getSharedPreferences("UserPreferencesFile", 0);
 		editor = settings.edit();
@@ -108,6 +113,12 @@ public class ScanQRCodeActivity extends Activity implements OnClickListener {
 		//http://developer.android.com/guide/topics/data/data-storage.html#pref
 		userId = settings.getInt("currentUserId", 0);
 		huntId = settings.getInt("currentHuntId", 0);
+		currentParticipantId = settings.getInt("userParticipantId", 0);
+		
+		if(currentParticipantId!= 0)
+		{
+			huntParticipantIdReturned = true;
+		}
 		
 		Log.d("leaderboard", "The hunt retrieved from the editor is: " + huntId);
 
@@ -208,9 +219,13 @@ public class ScanQRCodeActivity extends Activity implements OnClickListener {
 				contentText.setText(questionReturnedWithoutHuntId);
 				saveScanResult();
 				
-				//set up the map for the scan
-				//MapData newMap = new MapData();
-				//newMap = mMapDataSource.insertMapData(1);
+				if(mLastLocation !=null)
+				{
+					mMapDataSource.insertMarker(currentParticipantId, mLastLocation);
+				}
+				
+				
+				
 			}
 			else
 			{
@@ -391,5 +406,39 @@ public class ScanResultTask extends AsyncTask<String, String, String> {
 			mGetHuntParticipantIdTask = null;
 		}
 	}
+	
+	private BroadcastReceiver mLocationReceiver = new LocationReceiver()
+	{
+		@Override
+		protected void onLocationReceived(Context context, Location loc)
+		{
+			mLastLocation = loc;		
+		}
+		
+		@Override 
+		protected void onProviderEnabledChanged(boolean enabled)
+		{	//should be int
+			String toastText = enabled ? "enabled" : "disabled";
+			// R.string.gps_enabled : R.string.gps_disabled
+			Toast.makeText(ScanQRCodeActivity.this, toastText, Toast.LENGTH_LONG).show();
+		}
+	};
+	
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		ScanQRCodeActivity.this.registerReceiver(mLocationReceiver, new IntentFilter(MapManager.ACTION_LOCATION));
+	}
+	
+	@Override
+	public void onStop()
+	{
+		this.unregisterReceiver(mLocationReceiver);
+		super.onStop();
+	}
+	
+	
+	
 
 }

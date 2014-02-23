@@ -1,95 +1,50 @@
 package sqlLiteDatabase;
+import java.sql.Date;
 
-import java.util.Date;
-
-
-//Originally from Big Nerd Ranch book but adapted for my own use
 public class MapData {
-	
+
+	private Date mStartDate;
 	private int participantId;
-	private int huntId;
-	private long mLatitude;
-	private long mLongtitude;
-	private long mAltitude;
-	private long mTimeStamp;
 	
 	public MapData()
 	{
+		participantId = -1;
+		mStartDate = new Date(System.currentTimeMillis());
+	}
+
+	public Date getStartDate()
+	{
+		return mStartDate;
+	}
+	
+	public void setStartDate(Date start)
+	{
+		mStartDate = start;
+	}
+
+	
+	public int getParticipantId()
+	{
+		return participantId;
+	}
+	
+	public void setParticipantId(int id)
+	{
+		 participantId = id;
+	}
+	
+	
+	public int getDurationSeconds(long endMillis)
+	{
+		return (int)((endMillis - mStartDate.getTime()) / 1000);
+	}
+	
+	public static String formatDuration(int durationSeconds)
+	{
+		int seconds = durationSeconds%60;
+		int minutes = ((durationSeconds - seconds) / 60) % 60;
+		int hours = (durationSeconds - (minutes * 60) - seconds) / 3600;
+		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
 		
 	}
-	
-	public int getHuntId() 
-	 {
-		 return huntId;
-	 }
-
-	 public void setHuntId(int id) 
-	 {
-		 this.huntId = id;
-	 }
-	
-	 public int getParticipantId() 
-	 {
-		 return participantId;
-	 }
-
-	 public void setParticipantId(int id) 
-	 {
-		 this.participantId = id;
-	 }
-	 
-	 public long getLatitude() 
-	 {
-		 return mLatitude;
-	 }
-
-	 public void setLatitude(long latitude) 
-	 {
-		 this.mLatitude = latitude;
-	 }
-	 
-	 public long getLongtitude() 
-	 {
-		 return mLongtitude;
-	 }
-
-	 public void setLongtitude(long longtitude) 
-	 {
-		 this.mLongtitude = longtitude;
-	 }
-	 
-
-	 public long getAltitude() 
-	 {
-		 return mAltitude;
-	 }
-
-	 public void setAltitude(long altitude) 
-	 {
-		 this.mAltitude = altitude;
-	 }
-	
-	 public long getElapsedTime() 
-	 {
-		 return mTimeStamp;
-	 }
-
-	 public void setTimeStamp(long time) 
-	 {
-		 this.mTimeStamp = time;
-	 }
-	
-	public int getDurationSeconds(long timeTaken)
-	{
-		//NEED TO WORK OUT THE DURATION
-		return 0;
-	}
-	
-	public static String formDuration(int durationSeconds)
-	{
-		//Work out the complete duration here
-		//return the result here
-		return String.format("%02d:%02d:%02d", "");
-	}
-
 }

@@ -14,6 +14,7 @@ import sqlLiteDatabase.Hunt;
 import sqlLiteDatabase.HuntDAO;
 
 import com.application.treasurehunt.RegisterWithHuntActivity.GetHuntDescriptionTask;
+import com.application.treasurehunt.ScanQRCodeActivity.GetHuntParticipantIdTask;
 
 import Utilities.ExpandableListAdapter;
 import Utilities.JSONParser;
@@ -40,10 +41,15 @@ import android.widget.AdapterView.OnItemClickListener;
 public class MyHuntsActivity extends Activity implements OnChildClickListener{
 
 	ExpandableListView mListView;
+	private static JSONObject huntParticipantIdResult;
+	private int huntParticipantId;
 	
+	boolean huntParticipantIdReturned;
+	
+	private static final String getHuntParticipantIdUrl = "http://lowryhosting.com/emmad/getHuntParticipantId.php";
 	
 	ReturnUserHuntsTask mReturnUserHuntsTask;
-	
+	GetHuntParticipantIdTask mGetHuntParticipantIdTask;
 	private JSONParser jsonParser;
 	private static final String returnUserHuntsUrl =  "http://lowryhosting.com/emmad/chooseUserHunt.php";
 	private static final String tagSuccess = "success";
@@ -59,6 +65,8 @@ public class MyHuntsActivity extends Activity implements OnChildClickListener{
 	int currentUserId;
 	
 	private HuntDAO huntDataSource;
+	
+	Hunt chosenHunt;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +136,35 @@ public class MyHuntsActivity extends Activity implements OnChildClickListener{
 		}
 		, 10000);
 	}
+	
+	private void getParticipantId()
+	{
+		if (mGetHuntParticipantIdTask != null) {
+			return;
+		} 	
+		
+		mGetHuntParticipantIdTask = new GetHuntParticipantIdTask();
+		mGetHuntParticipantIdTask.execute((String) null);
+
+		Handler handlerForUserTask = new Handler();
+		handlerForUserTask.postDelayed(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				if(mGetHuntParticipantIdTask!= null)
+				{
+					if(mGetHuntParticipantIdTask.getStatus() == AsyncTask.Status.RUNNING)
+					{
+						mGetHuntParticipantIdTask.cancel(true);
+						Toast.makeText(MyHuntsActivity.this, "Connection timeout. Please try again.", Toast.LENGTH_LONG).show();
+						
+					}
+				}
+			}
+		}
+		, 10000);	
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,6 +173,8 @@ public class MyHuntsActivity extends Activity implements OnChildClickListener{
 		menu.add(Menu.NONE, 1, Menu.NONE, "Log out");
 		return true;
 	} 
+	
+
 	
 	//http://www.androidhive.info/2013/07/android-expandable-list-view-tutorial/
 	public void updateUI(final List<String> listDataHeader, HashMap<String, List<String>> listDataChild)
@@ -155,10 +194,10 @@ public class MyHuntsActivity extends Activity implements OnChildClickListener{
 				
 				//check here to make sure that user hasn't already registered with this hunt
 				//http://stackoverflow.com/questions/4508979/android-listview-get-selected-item
-				Hunt chosenHunt = huntDataSource.getParticularHunt(listDataHeader.get(groupPosition));
+				chosenHunt = huntDataSource.getParticularHunt(listDataHeader.get(groupPosition));
 			
 				if(chosenHunt != null)
-				{
+				{	
 					editor.putInt("currentHuntId", chosenHunt.getHuntId()); //NEEDS FIXED
 					editor.putString("currentHuntName", chosenHunt.getHuntName());
 					editor.commit(); 
@@ -174,11 +213,11 @@ public class MyHuntsActivity extends Activity implements OnChildClickListener{
 						Intent leaderboardActivity = new Intent(MyHuntsActivity.this, LeaderboardActivity.class);
 						startActivity(leaderboardActivity);
 					}
-					else
+					else if(childPosition ==2)
 					{
-						//Intent mapActivity = new Intent(MyHuntsActivity.this, MapActivity.class);
-						//startActivity(mapActivity);
+						getParticipantId();
 					}
+
 				}
 				return true;
 			}
@@ -306,7 +345,7 @@ public class MyHuntsActivity extends Activity implements OnChildClickListener{
 					List<String> huntOptions = new ArrayList<String>();
 					huntOptions.add("Continue");
 					huntOptions.add("Leaderboard");
-					huntOptions.add("Map");
+					huntOptions.add("Map list");
 					
 					listDataChild.put(listDataHeader.get(i), huntOptions);		
 				}
@@ -332,5 +371,78 @@ public class MyHuntsActivity extends Activity implements OnChildClickListener{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+public class GetHuntParticipantIdTask extends AsyncTask<String, String, String> {
+		
+		@Override
+		protected String doInBackground(String... args) {
+			//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
+			
+				int success;
+
+				List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+				
+				//http://stackoverflow.com/questions/8603583/sending-integer-to-http-server-using-namevaluepair
+				parameters.add(new BasicNameValuePair("huntId", Integer.toString(chosenHunt.getHuntId())));
+				parameters.add(new BasicNameValuePair("userId", Integer.toString(currentUserId)));
+				
+				try{
+					Log.d("request", "starting");
+					JSONObject jsonGetHuntParticipantId = jsonParser.makeHttpRequest(getHuntParticipantIdUrl, "POST", parameters);
+					Log.d("Get User Id Attempt", jsonGetHuntParticipantId.toString());
+					success = jsonGetHuntParticipantId.getInt(tagSuccess);
+					
+					if(success == 1)
+					{
+						huntParticipantIdResult = jsonGetHuntParticipantId.getJSONObject("result");
+						huntParticipantId = huntParticipantIdResult.getInt("HuntParticipantId");
+						huntParticipantIdReturned = true;
+						Log.d("leaderboard", "hunt participant id is: " + huntParticipantId);
+						return jsonGetHuntParticipantId.getString(tagMessage);
+						
+					}
+					else
+					{
+						Log.d("Getting hunt participant Id failed!", jsonGetHuntParticipantId.getString(tagMessage));
+						return jsonGetHuntParticipantId.getString(tagMessage);
+					}
+				
+			} catch (JSONException e) {
+			
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(final String fileUrl) {
+			mGetHuntParticipantIdTask = null;
+			
+			if(huntParticipantIdReturned)
+			{
+				//listOfLeaderboardResults = mMapDAO.getAllMapDataForParticularParticipantId(currentParticipantId, currentHuntId);
+				editor.putInt("userParticipantId", huntParticipantId);
+				editor.commit(); 
+				
+				Intent mapActivity = new Intent(MyHuntsActivity.this, MapActivity.class);
+				mapActivity.putExtra("userParticipantIdForMap", huntParticipantId);
+				startActivity(mapActivity);
+			}
+			if (fileUrl != null) {
+				Toast.makeText(MyHuntsActivity.this, fileUrl, Toast.LENGTH_LONG).show();	
+			} else {
+				Toast.makeText(MyHuntsActivity.this, "Nothing returned from the database", Toast.LENGTH_LONG).show();
+			}		
+		}
+
+		@Override
+		protected void onCancelled() {
+			mGetHuntParticipantIdTask = null;
+		}
+	}
+
+	
+
+
 
 }

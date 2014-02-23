@@ -33,6 +33,8 @@ import android.widget.Toast;
 /**
  *FILE GENERATED AUTOMATICALLY WHEN CREATING NEW LOGIN ACTIVITY, although altered to suit my needs
  */
+
+//COLOUR CHANGE IN THE BACKGROUND ON THE VIEWS - http://stackoverflow.com/questions/2748830/how-to-change-background-color-in-android-app
 public class LoginActivity extends Activity {
 	//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
 	
@@ -123,13 +125,6 @@ public class LoginActivity extends Activity {
 		mPasswordView.setText(null);
 	}
 	
-	@Override
-	protected void onResume()
-	{
-		super.onResume();
-		mEmailView.setText(null);
-		mPasswordView.setText(null);
-	}
 	
 	private void attemptLogin() {		
 

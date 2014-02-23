@@ -31,9 +31,6 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string URLField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion[] huntquestionsField;
-        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -73,16 +70,6 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
                 this.URLField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion[] huntquestions {
-            get {
-                return this.huntquestionsField;
-            }
-            set {
-                this.huntquestionsField = value;
-            }
-        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -102,18 +89,6 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private long QuestionIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt huntField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt> huntReferenceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question questionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question> questionReferenceField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -154,46 +129,6 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
                 this.QuestionIdField = value;
             }
         }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt {
-            get {
-                return this.huntField;
-            }
-            set {
-                this.huntField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt> huntReference {
-            get {
-                return this.huntReferenceField;
-            }
-            set {
-                this.huntReferenceField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question question {
-            get {
-                return this.questionField;
-            }
-            set {
-                this.questionField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.question> questionReference {
-            get {
-                return this.questionReferenceField;
-            }
-            set {
-                this.questionReferenceField = value;
-            }
-        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -216,15 +151,6 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PasswordField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntparticipant[] huntparticipantsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion[] huntquestionsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userhunt[] userhuntsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -275,34 +201,207 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
                 this.PasswordField = value;
             }
         }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="user", Namespace="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data", IsReference=true)]
+    [System.SerializableAttribute()]
+    public partial class user : System.Data.Objects.DataClasses.EntityObject, System.Runtime.Serialization.IExtensibleDataObject {
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntparticipant[] huntparticipants {
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long UserIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
-                return this.huntparticipantsField;
+                return this.extensionDataField;
             }
             set {
-                this.huntparticipantsField = value;
+                this.extensionDataField = value;
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntquestion[] huntquestions {
+        public string Email {
             get {
-                return this.huntquestionsField;
+                return this.EmailField;
             }
             set {
-                this.huntquestionsField = value;
+                this.EmailField = value;
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userhunt[] userhunts {
+        public string Name {
             get {
-                return this.userhuntsField;
+                return this.NameField;
             }
             set {
-                this.userhuntsField = value;
+                this.NameField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                this.PasswordField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                this.UserIdField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="userrole", Namespace="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data", IsReference=true)]
+    [System.SerializableAttribute()]
+    public partial class userrole : System.Data.Objects.DataClasses.EntityObject, System.Runtime.Serialization.IExtensibleDataObject {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long RoleIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long UserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long UserRoleIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long RoleId {
+            get {
+                return this.RoleIdField;
+            }
+            set {
+                this.RoleIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                this.UserIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long UserRoleId {
+            get {
+                return this.UserRoleIdField;
+            }
+            set {
+                this.UserRoleIdField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="userhunt", Namespace="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data", IsReference=true)]
+    [System.SerializableAttribute()]
+    public partial class userhunt : System.Data.Objects.DataClasses.EntityObject, System.Runtime.Serialization.IExtensibleDataObject {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long HuntIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long UserHuntIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long UserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long UserRoleIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long HuntId {
+            get {
+                return this.HuntIdField;
+            }
+            set {
+                this.HuntIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long UserHuntId {
+            get {
+                return this.UserHuntIdField;
+            }
+            set {
+                this.UserHuntIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long UserId {
+            get {
+                return this.UserIdField;
+            }
+            set {
+                this.UserIdField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long UserRoleId {
+            get {
+                return this.UserRoleIdField;
+            }
+            set {
+                this.UserRoleIdField = value;
             }
         }
     }
@@ -333,18 +432,6 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private long UserIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt huntField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt> huntReferenceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user userField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user> userReferenceField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -413,490 +500,6 @@ namespace TreasureHuntDesktopApplication.FullClient.TreasureHuntService {
             }
             set {
                 this.UserIdField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt {
-            get {
-                return this.huntField;
-            }
-            set {
-                this.huntField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt> huntReference {
-            get {
-                return this.huntReferenceField;
-            }
-            set {
-                this.huntReferenceField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user user {
-            get {
-                return this.userField;
-            }
-            set {
-                this.userField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user> userReference {
-            get {
-                return this.userReferenceField;
-            }
-            set {
-                this.userReferenceField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="userhunt", Namespace="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data", IsReference=true)]
-    [System.SerializableAttribute()]
-    public partial class userhunt : System.Data.Objects.DataClasses.EntityObject, System.Runtime.Serialization.IExtensibleDataObject {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long HuntIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long UserHuntIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long UserIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long UserRoleIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt huntField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt> huntReferenceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user userField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user> userReferenceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userrole userroleField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userrole> userroleReferenceField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long HuntId {
-            get {
-                return this.HuntIdField;
-            }
-            set {
-                this.HuntIdField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long UserHuntId {
-            get {
-                return this.UserHuntIdField;
-            }
-            set {
-                this.UserHuntIdField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long UserId {
-            get {
-                return this.UserIdField;
-            }
-            set {
-                this.UserIdField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long UserRoleId {
-            get {
-                return this.UserRoleIdField;
-            }
-            set {
-                this.UserRoleIdField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt hunt {
-            get {
-                return this.huntField;
-            }
-            set {
-                this.huntField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.hunt> huntReference {
-            get {
-                return this.huntReferenceField;
-            }
-            set {
-                this.huntReferenceField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user user {
-            get {
-                return this.userField;
-            }
-            set {
-                this.userField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user> userReference {
-            get {
-                return this.userReferenceField;
-            }
-            set {
-                this.userReferenceField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userrole userrole {
-            get {
-                return this.userroleField;
-            }
-            set {
-                this.userroleField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userrole> userroleReference {
-            get {
-                return this.userroleReferenceField;
-            }
-            set {
-                this.userroleReferenceField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="user", Namespace="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data", IsReference=true)]
-    [System.SerializableAttribute()]
-    public partial class user : System.Data.Objects.DataClasses.EntityObject, System.Runtime.Serialization.IExtensibleDataObject {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PasswordField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long UserIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntparticipant[] huntparticipantsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userhunt[] userhuntsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userrole[] userrolesField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
-            get {
-                return this.EmailField;
-            }
-            set {
-                this.EmailField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                this.NameField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Password {
-            get {
-                return this.PasswordField;
-            }
-            set {
-                this.PasswordField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long UserId {
-            get {
-                return this.UserIdField;
-            }
-            set {
-                this.UserIdField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.huntparticipant[] huntparticipants {
-            get {
-                return this.huntparticipantsField;
-            }
-            set {
-                this.huntparticipantsField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userhunt[] userhunts {
-            get {
-                return this.userhuntsField;
-            }
-            set {
-                this.userhuntsField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userrole[] userroles {
-            get {
-                return this.userrolesField;
-            }
-            set {
-                this.userrolesField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="role", Namespace="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data", IsReference=true)]
-    [System.SerializableAttribute()]
-    public partial class role : System.Data.Objects.DataClasses.EntityObject, System.Runtime.Serialization.IExtensibleDataObject {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long RoleIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userrole[] userrolesField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                this.NameField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long RoleId {
-            get {
-                return this.RoleIdField;
-            }
-            set {
-                this.RoleIdField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userrole[] userroles {
-            get {
-                return this.userrolesField;
-            }
-            set {
-                this.userrolesField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="userrole", Namespace="http://schemas.datacontract.org/2004/07/TreasureHuntDesktopApplication.Data", IsReference=true)]
-    [System.SerializableAttribute()]
-    public partial class userrole : System.Data.Objects.DataClasses.EntityObject, System.Runtime.Serialization.IExtensibleDataObject {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long RoleIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long UserIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long UserRoleIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.role roleField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.role> roleReferenceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user userField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user> userReferenceField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userhunt[] userhuntsField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long RoleId {
-            get {
-                return this.RoleIdField;
-            }
-            set {
-                this.RoleIdField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long UserId {
-            get {
-                return this.UserIdField;
-            }
-            set {
-                this.UserIdField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long UserRoleId {
-            get {
-                return this.UserRoleIdField;
-            }
-            set {
-                this.UserRoleIdField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.role role {
-            get {
-                return this.roleField;
-            }
-            set {
-                this.roleField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.role> roleReference {
-            get {
-                return this.roleReferenceField;
-            }
-            set {
-                this.roleReferenceField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user user {
-            get {
-                return this.userField;
-            }
-            set {
-                this.userField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Data.Objects.DataClasses.EntityReference<TreasureHuntDesktopApplication.FullClient.TreasureHuntService.user> userReference {
-            get {
-                return this.userReferenceField;
-            }
-            set {
-                this.userReferenceField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public TreasureHuntDesktopApplication.FullClient.TreasureHuntService.userhunt[] userhunts {
-            get {
-                return this.userhuntsField;
-            }
-            set {
-                this.userhuntsField = value;
             }
         }
     }

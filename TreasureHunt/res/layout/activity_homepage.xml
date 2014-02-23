@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".HomepageActivity" >
+    tools:context=".HomepageActivity"
+    android:background="#FFBDA78A" >
 
     <TextView
         android:id="@+id/homepage_username"
@@ -24,14 +25,17 @@
         android:layout_alignLeft="@+id/homepage_username"
         android:layout_below="@+id/homepage_username"
         android:layout_marginTop="16dp"
-        android:text="My Hunts" />
+        android:text="My Hunts"
+        android:background="#FF54C8E2"  />
 
     <Button
         android:id="@+id/browse_hunts_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/my_hunts_button"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/my_hunts_button"
+        android:layout_marginTop="32dp"
+        android:background="#FF54C8E2"
         android:text="Browse Hunts" />
 
 </RelativeLayout>

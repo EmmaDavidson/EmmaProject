@@ -1,9 +1,12 @@
 package sqlLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import Utilities.MySQLiteHelper;
+import com.application.treasurehunt.LocationCursor;
+
+import Utilities.MySQLiteHelperForMaps;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,20 +14,23 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 
+
 public class MapDataDAO {
 
 	private SQLiteDatabase database;
-	  private MySQLiteHelper dbHelper;
-	  private String[] allColumns = { MySQLiteHelper.COLUMM_MAPS_PARTICIPANT_ID, MySQLiteHelper.COLUMN_MAPS_HUNT_ID, MySQLiteHelper.COLUMN_MAPS_LATITUDE, MySQLiteHelper.COLUMN_MAPS_LONGTITUDE, MySQLiteHelper.COLUMN_MAPS_ALTITUDE , MySQLiteHelper.COLUMN_MAPS_TIME_STAMP };
+	  private MySQLiteHelperForMaps dbHelper;
+	  private String[] allColumnsLocations = { MySQLiteHelperForMaps.COLUMM_MAPS_PARTICIPANT_ID, MySQLiteHelperForMaps.COLUMN_MAPS_LATITUDE, MySQLiteHelperForMaps.COLUMN_MAPS_LONGTITUDE, MySQLiteHelperForMaps.COLUMN_MAPS_ALTITUDE , MySQLiteHelperForMaps.COLUMN_MAPS_TIME_STAMP };
+	  private String[] allColumnsMaps = { MySQLiteHelperForMaps.COLUMM_MAPS_PARTICIPANT_ID, MySQLiteHelperForMaps.COLUMN_MAPS_START_TIME};
+	  private String[] allColumnsMarkers = { MySQLiteHelperForMaps.COLUMM_MAPS_PARTICIPANT_ID, MySQLiteHelperForMaps.COLUMN_MAPS_LATITUDE, MySQLiteHelperForMaps.COLUMN_MAPS_LONGTITUDE };
 	  
 	  public MapDataDAO(Context context) {
-	    dbHelper = new MySQLiteHelper(context);
+	    dbHelper = new MySQLiteHelperForMaps(context);
 	  }
 
 	  public void open() throws SQLException {
 		  database = dbHelper.getWritableDatabase();
 		  //Unclean - drops the database each time and re-adds the table.
-		  updateDatabaseLocally();
+		  //updateDatabaseLocally();
 	  }
 	  
 	  public void updateDatabaseLocally()
@@ -36,79 +42,170 @@ public class MapDataDAO {
 	    dbHelper.close();
 	  }
 	  
-	  public MapData insertMapData(int participantId, int huntId)
+	  public int insertRun(MapData run)
 	  {
 		  ContentValues values = new ContentValues();
-		  values.put(MySQLiteHelper.COLUMM_MAPS_PARTICIPANT_ID, participantId);
-		  values.put(MySQLiteHelper.COLUMN_MAPS_HUNT_ID, huntId);
-		  values.put(MySQLiteHelper.COLUMN_MAPS_LATITUDE, 0);
-		  values.put(MySQLiteHelper.COLUMN_MAPS_LONGTITUDE, 0);
-		  values.put(MySQLiteHelper.COLUMN_MAPS_ALTITUDE, 0);
-		  values.put(MySQLiteHelper.COLUMN_MAPS_TIME_STAMP, 0);
-		  
-		  long insertId = database.insert(MySQLiteHelper.TABLE_MAPS, null, values);
-		  
-		  Cursor cursor = database.query(MySQLiteHelper.TABLE_MAPS,
-			        allColumns, null, null,
-			        null, null, null);
+		  values.put(MySQLiteHelperForMaps.COLUMM_MAPS_PARTICIPANT_ID, run.getParticipantId()); //THIS NEEDS CHANGED
+		  values.put(MySQLiteHelperForMaps.COLUMN_MAPS_START_TIME, run.getStartDate().toString());
+		  long insertId = database.insert(MySQLiteHelperForMaps.TABLE_MAPS, null, values);
+		  Cursor cursor = database.query(MySQLiteHelperForMaps.TABLE_MAPS,
+				  allColumnsMaps, null, null,
+			        null, null, null);	
+	
 			    cursor.moveToFirst();
-			    MapData newMapData = cursorToMapEntry(cursor);
+			    MapData newRun = cursorToMapEntry(cursor);
 			    cursor.close();
-			    return newMapData;
+			    return newRun.getParticipantId();
+
 	  }
 	  
-	  //Needs to be normalised more - need to create a separate table for adding the start date so not repetitive
-	  public MapData insertLocation(int participantId, Location location, int huntId)
+	  public long insertLocation(int participantId, Location location)
 	  {
-		  ContentValues values = new ContentValues();
-		  values.put(MySQLiteHelper.COLUMM_MAPS_PARTICIPANT_ID, participantId);
-		  values.put(MySQLiteHelper.COLUMN_MAPS_HUNT_ID, huntId);
-		  values.put(MySQLiteHelper.COLUMN_MAPS_LATITUDE, location.getLatitude());
-		  values.put(MySQLiteHelper.COLUMN_MAPS_LONGTITUDE, location.getLongitude());
-		  values.put(MySQLiteHelper.COLUMN_MAPS_ALTITUDE, location.getAltitude());
-		  values.put(MySQLiteHelper.COLUMN_MAPS_TIME_STAMP, location.getTime());
-		  
-		  long insertId =  database.insert(MySQLiteHelper.TABLE_MAPS, null, values);
-		  
-		  Cursor cursor = database.query(MySQLiteHelper.TABLE_MAPS,
-			        allColumns, null, null,
-			        null, null, null);
+		  ContentValues values = new ContentValues(); 
+		  values.put(MySQLiteHelperForMaps.COLUMM_MAPS_PARTICIPANT_ID, participantId);
+		  values.put(MySQLiteHelperForMaps.COLUMN_MAPS_LATITUDE, location.getLatitude());
+		  values.put(MySQLiteHelperForMaps.COLUMN_MAPS_LONGTITUDE, location.getLongitude());
+		  values.put(MySQLiteHelperForMaps.COLUMN_MAPS_ALTITUDE, location.getAltitude());
+		  values.put(MySQLiteHelperForMaps.COLUMN_MAPS_TIME_STAMP, location.getTime());
+		  long insertId = database.insert(MySQLiteHelperForMaps.TABLE_LOCATIONS, null, values);
+		  Cursor cursor = database.query(MySQLiteHelperForMaps.TABLE_LOCATIONS,
+				  allColumnsLocations, null, null,
+			        null, null, null);	
+	
 			    cursor.moveToFirst();
-			    MapData newMapData = cursorToMapEntry(cursor);
+			    MapData newRun = cursorToMapEntry(cursor);
 			    cursor.close();
-			    return newMapData;
+			    return newRun.getParticipantId();
 	  }
 	  
-	  public List<MapData> getAllMapDataForParticularParticipantId(int participantId, int huntId) {
-		    List<MapData> mapDataEntries = new ArrayList<MapData>();
+	  public void insertMarker(int participantId, Location location)
+	  {
+		  ContentValues values = new ContentValues(); 
+		  values.put(MySQLiteHelperForMaps.COLUMM_MAPS_PARTICIPANT_ID, participantId);
+		  values.put(MySQLiteHelperForMaps.COLUMN_MAPS_LATITUDE, location.getLatitude());
+		  values.put(MySQLiteHelperForMaps.COLUMN_MAPS_LONGTITUDE, location.getLongitude());
+		  long insertId = database.insert(MySQLiteHelperForMaps.TABLE_MARKERS, null, values);
+	  }
+	 
+	  private MapData cursorToMapEntry(Cursor cursor) {
+		  MapData runResult = new MapData();
+		  	runResult.setParticipantId(cursor.getInt(0));
+		  	//runResult.setStartDate(cursor.getDouble(1));
+		    
+		    return runResult;
+	  } 
+	  
+	  private Location cursorToLocationEntry(Cursor cursor) {
+		  Location locationResult = new Location("GPS");
+		  locationResult.setLatitude(cursor.getDouble(1));
+		  locationResult.setLongitude(cursor.getDouble(2));
+		  locationResult.setAltitude(cursor.getDouble(3));
+		  locationResult.setTime(cursor.getLong(4));	    
+		   
+		  return locationResult;
+	  }
+	  
+	  private Location cursorToMarkerEntry(Cursor cursor) {
+		  Location locationResult = new Location("GPS");
+		  locationResult.setLatitude(cursor.getDouble(1));
+		  locationResult.setLongitude(cursor.getDouble(2));	    
+		  return locationResult;
+	  }
+	  
+	  public List<MapData> queryRuns() {
+		    List<MapData> mapEntries = new ArrayList<MapData>();
 		    //http://stackoverflow.com/questions/12339121/multiple-orderby-in-sqlitedatabase-query-method
-		    String orderBy = MySQLiteHelper.COLUMN_MAPS_TIME_STAMP + " DESC";
-		    String arguments = "HuntParticipantId= " + participantId + ", HuntId=" + huntId;
-		    Cursor cursor = database.query(MySQLiteHelper.TABLE_MAPS,
-		    		allColumns, arguments, null, null, null, orderBy);
+		   Cursor cursor = database.query(MySQLiteHelperForMaps.TABLE_MAPS,
+				   allColumnsMaps, null, null, null, null, null);
 
 		    cursor.moveToFirst();
 		    while (!cursor.isAfterLast()) {
 		      MapData mapEntry = cursorToMapEntry(cursor);
-		      mapDataEntries.add(mapEntry);
+		      mapEntries.add(mapEntry);
 		     
 		      cursor.moveToNext();
-		    } 
-		      cursor.close();
-			    return mapDataEntries;
 		    }
-	  
-	  //http://stackoverflow.com/questions/6781954/android-3-0-couldnt-read-row-column-from-cursor-window
-	  private MapData cursorToMapEntry(Cursor cursor) {
-		  MapData mapDataResult = new MapData();
-		  	mapDataResult.setParticipantId(cursor.getInt(0));
-		  	mapDataResult.setHuntId(cursor.getInt(1));
-		    mapDataResult.setLatitude(cursor.getLong(2));
-		    mapDataResult.setLongtitude(cursor.getLong(3));
-		    mapDataResult.setAltitude(cursor.getLong(4));
-		    mapDataResult.setTimeStamp(cursor.getLong(5));
 		    
-		    return mapDataResult;
+		    cursor.close();
+		    return mapEntries;
+		  }
+	  
+	  public MapData queryRun(int participantId)
+	  {
+		  String arguments =  "HuntParticipantId = '"+participantId + "'";
+		  Cursor cursor = database.query(MySQLiteHelperForMaps.TABLE_MAPS, allColumnsMaps , arguments, null , null , null, null, "1");
+		  cursor.moveToFirst();
+		  if(!cursor.isAfterLast())
+		  {
+			  MapData run = cursorToMapEntry(cursor);
+			  return run;
+		  }
+		  return null;
+		  
 	  }
 	  
+	  public Location queryLastLocationForRun(int participantId)
+	  {
+		  String arguments =  "HuntParticipantId = '"+participantId + "'";
+		  Cursor cursor = database.query(MySQLiteHelperForMaps.TABLE_LOCATIONS, allColumnsLocations , arguments, null , null , null, MySQLiteHelperForMaps.COLUMN_MAPS_TIME_STAMP + " DESC", "1");
+		  cursor.moveToFirst();
+		  if(!cursor.isAfterLast())
+		  {
+			  Location location = cursorToLocationEntry(cursor);
+			  return location;
+		  }
+		  return null;
+		  
+	  }
+	  
+	  public List<Location> queryLocationsForMap(int participantId)
+	  {
+		  List<Location> mapEntries = new ArrayList<Location>();
+		    //http://stackoverflow.com/questions/12339121/multiple-orderby-in-sqlitedatabase-query-method
+		   String arguments =  "HuntParticipantId = '"+participantId + "'";
+		   Cursor cursor = database.query(MySQLiteHelperForMaps.TABLE_LOCATIONS,
+				   allColumnsLocations, arguments, null, null, null, null);
+
+		   cursor.moveToFirst();
+		    while (!cursor.isAfterLast()) {
+		      Location mapEntry = cursorToLocationEntry(cursor);
+		      mapEntries.add(mapEntry);
+		     
+		      cursor.moveToNext();
+		    }
+		    
+		    cursor.close();
+		    return mapEntries;
+	  }
+	  
+	  public List<Location> queryMarkersForMap(int participantId)
+	  {
+		  List<Location> mapEntries = new ArrayList<Location>();
+		    //http://stackoverflow.com/questions/12339121/multiple-orderby-in-sqlitedatabase-query-method
+		   String arguments =  "HuntParticipantId = '"+participantId + "'";
+		   Cursor cursor = database.query(MySQLiteHelperForMaps.TABLE_MARKERS,
+				   allColumnsMarkers, arguments, null, null, null, null);
+
+		   cursor.moveToFirst();
+		    while (!cursor.isAfterLast()) {
+		      Location mapEntry = cursorToMarkerEntry(cursor);
+		      mapEntries.add(mapEntry);
+		     
+		      cursor.moveToNext();
+		    }
+		    
+		    cursor.close();
+		    return mapEntries;
+	  }
+	  
+	  public LocationCursor queryLocationsForMapAsync(int participantId)
+	  {
+		  String arguments =  "HuntParticipantId = '"+participantId + "'";
+		   Cursor cursor = database.query(MySQLiteHelperForMaps.TABLE_LOCATIONS,
+				   allColumnsLocations, arguments, null, null, null, MySQLiteHelperForMaps.COLUMN_MAPS_TIME_STAMP + " asc");
+		   return new LocationCursor(cursor);
+		   
+	  }
 }
+
+

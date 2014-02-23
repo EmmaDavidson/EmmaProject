@@ -8,12 +8,4 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MapActivity" >
 
-    <ListView
-        android:id="@+id/map_list_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" >
-
-    </ListView>
-
 </RelativeLayout>

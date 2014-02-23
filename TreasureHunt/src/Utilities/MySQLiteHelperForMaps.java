@@ -7,23 +7,32 @@ import android.util.Log;
 
 public class MySQLiteHelperForMaps extends SQLiteOpenHelper {
 
-  public static final String TABLE_MAPS = "Map";
-  public static final String COLUMM_MAPS_PARTICIPANT_ID = "HuntParticipantId";
-  public static final String COLUMN_MAPS_HUNT_ID = "HuntId";
+  public static final String TABLE_LOCATIONS = "Locations";
   public static final String COLUMN_MAPS_LATITUDE = "Latitude";
   public static final String COLUMN_MAPS_LONGTITUDE = "Longtitude";
   public static final String COLUMN_MAPS_ALTITUDE = "Altitude";
   public static final String COLUMN_MAPS_TIME_STAMP= "TimeStamp";
-
-  private static final String DATABASE_NAME = "TreasureHunt.db";
+  
+  public static final String TABLE_MAPS = "Map";
+  public static final String COLUMN_MAPS_START_TIME= "StartTime";
+  public static final String COLUMM_MAPS_PARTICIPANT_ID = "HuntParticipantId";
+  
+  public static final String TABLE_MARKERS = "Markers";
+  
+  private static final String DATABASE_NAME = "TreasureHuntMaps.db";
   private static final int DATABASE_VERSION = 1;
 
   //MIGHT NEED TO CHANGE START DATE TO DOUBLE
-  private static final String DATABASE_CREATE_MAPS = "create table " + TABLE_MAPS + " (" + COLUMM_MAPS_PARTICIPANT_ID + " INTEGER NOT NULL, "
-		  									+ COLUMN_MAPS_HUNT_ID + " INTEGER NOT NULL," 
+  private static final String DATABASE_CREATE_LOCATIONS = "create table " + TABLE_LOCATIONS + " (" + COLUMM_MAPS_PARTICIPANT_ID + " INTEGER NOT NULL, " 
 		  									+ COLUMN_MAPS_LATITUDE + " real, " + COLUMN_MAPS_LONGTITUDE + " real, " 
 		  									 + COLUMN_MAPS_ALTITUDE + " real, " + COLUMN_MAPS_TIME_STAMP + " INTEGER NOT NULL); " ;
 
+  private static final String DATABASE_CREATE_MAPS = "create table " + TABLE_MAPS + " (" + COLUMM_MAPS_PARTICIPANT_ID + " INTEGER NOT NULL, " 
+		  								+ COLUMN_MAPS_START_TIME + " LONG); " ;
+  
+  private static final String DATABASE_CREATE_MARKERS = "create table " + TABLE_MARKERS + " (" + COLUMM_MAPS_PARTICIPANT_ID + " INTEGER NOT NULL, " 
+		  + COLUMN_MAPS_LATITUDE + " real, " + COLUMN_MAPS_LONGTITUDE + " real); " ;
+  
   public MySQLiteHelperForMaps(Context context) {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
   }
@@ -31,6 +40,8 @@ public class MySQLiteHelperForMaps extends SQLiteOpenHelper {
   @Override
   public void onCreate(SQLiteDatabase database) {
     database.execSQL(DATABASE_CREATE_MAPS);
+    database.execSQL(DATABASE_CREATE_LOCATIONS);
+    database.execSQL(DATABASE_CREATE_MARKERS);
   }
 
   //WE REALLY WANT A HELPER FOR EACH DIFFERENT TABLE - UPDATE LATER 
@@ -40,6 +51,8 @@ public class MySQLiteHelperForMaps extends SQLiteOpenHelper {
         "Upgrading database from version " + oldVersion + " to "
             + newVersion + ", which will destroy all old data");
     db.execSQL("DROP TABLE IF EXISTS " + TABLE_MAPS);
+    db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOCATIONS);
+    db.execSQL("DROP TABLE IF EXISTS " + TABLE_MARKERS);
     onCreate(db);
   }
   

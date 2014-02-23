@@ -1,5 +1,6 @@
 package com.application.treasurehunt;
 
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,14 +55,19 @@ public class RegisterWithHuntActivity extends Activity{
 
 	Intent scanQRCodeActivity;
 	
+	GetParticipantIdTask mGetHuntParticipantIdTask;
+	private static final String getHuntParticipantIdUrl = "http://lowryhosting.com/emmad/getHuntParticipantId.php";
+	boolean huntParticipantIdReturned;
 	private JSONParser jsonParser = new JSONParser();
 	
 	boolean startTimeSaved;
 	
+	private static JSONObject huntParticipantIdResult;
 	private static JSONObject huntIdResult;
 	private static JSONObject currentHuntDescriptionResult;
 	private static JSONObject saveStartTimeResult;
 	private static JSONObject startTimeResult;
+	private static JSONObject saveHuntParticipantResult;
 	
 	private SaveStartTimeTask mSaveStartTimeTask = null;
 	private UserRegisterWithHuntTask mAuthTask = null;
@@ -72,8 +78,11 @@ public class RegisterWithHuntActivity extends Activity{
 	
 	ProgressBar descriptionProgressBar;
 	
-	int userId;
+	private MapData mRun;
+	private MapManager mRunManager;
 	
+	int userId;
+	int currentParticipantId;
 	GetHuntIdTask mHuntIdTask;
 	
 	String currentHunt;
@@ -97,9 +106,7 @@ public class RegisterWithHuntActivity extends Activity{
 	SharedPreferences settings;
 	
 	int huntId;
-	
-	MapDataDAO mMapDataSource;
-	MapManager mMapManager;
+	int currentUserId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -119,9 +126,7 @@ public class RegisterWithHuntActivity extends Activity{
 		mRegisterButton = (Button) findViewById(R.id.register_hunt_button);
 		mRegisterButton.setEnabled(false);
 		
-		mMapDataSource = new MapDataDAO(this);
-		mMapDataSource.open();
-		mMapManager = mMapManager.get(this);
+		mRunManager = MapManager.get(this);
 		
 		mRegisterButton.setOnClickListener(
 				new View.OnClickListener() {
@@ -149,6 +154,7 @@ public class RegisterWithHuntActivity extends Activity{
 		descriptionProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
 		currentHunt = settings.getString("currentHuntName", "");
+		currentUserId = settings.getInt("currentUserId", 0);
 		mHuntNameLabelView.setText(currentHunt);
 		
 		//http://developer.android.com/guide/topics/data/data-storage.html#pref
@@ -203,11 +209,9 @@ public class RegisterWithHuntActivity extends Activity{
 						{
 							//http://stackoverflow.com/questions/3944344/how-to-display-the-time-elapsed-onto-ui-screen-of-the-android
 							attemptToSaveStartTime();
+							getParticipantId();
 							
-							MapData mMapData = new MapData();
-							mMapData = mMapDataSource.insertMapData(1, huntId);
-							
-							mMapManager.startTrackingMap(mMapData);
+							mRun = mRunManager.startNewRun(currentParticipantId);
 							
 							Log.d("leaderboard", startTime+ " = start time");
 							scanQRCodeActivity = new Intent(RegisterWithHuntActivity.this, ScanQRCodeActivity.class);
@@ -362,6 +366,35 @@ public class RegisterWithHuntActivity extends Activity{
 					{
 						mHuntIdTask.cancel(true);
 						Toast.makeText(RegisterWithHuntActivity.this, "Connection timeout. Please try again.", Toast.LENGTH_LONG).show();
+					}
+				}
+			}
+		}
+		, 10000);	
+	}
+	
+	private void getParticipantId()
+	{
+		if (mGetHuntParticipantIdTask != null) {
+			return;
+		} 	
+		
+		mGetHuntParticipantIdTask = new GetParticipantIdTask();
+		mGetHuntParticipantIdTask.execute((String) null);
+
+		Handler handlerForUserTask = new Handler();
+		handlerForUserTask.postDelayed(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				if(mGetHuntParticipantIdTask!= null)
+				{
+					if(mGetHuntParticipantIdTask.getStatus() == AsyncTask.Status.RUNNING)
+					{
+						mGetHuntParticipantIdTask.cancel(true);
+						Toast.makeText(RegisterWithHuntActivity.this, "Connection timeout. Please try again.", Toast.LENGTH_LONG).show();
+						
 					}
 				}
 			}
@@ -542,8 +575,10 @@ public class UserRegisterWithHuntTask extends AsyncTask<String, String, String> 
 				{							
 					Log.d("Registration Successful!", json.toString());
 					Log.d("leaderboard", "User has just registered with: " + huntId);
-					registrationSuccessful = true;
 					
+					saveHuntParticipantResult = json.getJSONObject("result");
+					currentParticipantId = saveHuntParticipantResult.getInt("HuntParticipantId");
+					registrationSuccessful = true;
 					return json.getString(tagMessage);
 				}
 				else
@@ -568,6 +603,8 @@ public class UserRegisterWithHuntTask extends AsyncTask<String, String, String> 
 			{
 				mBeginHuntButton.setEnabled(true);
 				mRegisterButton.setEnabled(false);
+				editor.putInt("userParticipantId", currentParticipantId);
+				editor.commit(); 
 				
 			}
 
@@ -868,4 +905,77 @@ public class CheckIfHuntStartedTask extends AsyncTask<String, String, String> {
 		mHuntStartedTask = null;
 	}
 }
+	
+public class GetParticipantIdTask extends AsyncTask<String, String, String> {
+		
+		@Override
+		protected String doInBackground(String... args) {
+			//http://www.mybringback.com/tutorial-series/13193/android-mysql-php-json-part-5-developing-the-android-application/
+			
+				int success;
+
+				List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+				
+				//http://stackoverflow.com/questions/8603583/sending-integer-to-http-server-using-namevaluepair
+				parameters.add(new BasicNameValuePair("huntId", Integer.toString(huntId)));
+				parameters.add(new BasicNameValuePair("userId", Integer.toString(userId)));
+				
+				try{
+					Log.d("request", "starting");
+					JSONObject jsonGetHuntParticipantId = jsonParser.makeHttpRequest(getHuntParticipantIdUrl, "POST", parameters);
+					Log.d("Get User Id Attempt", jsonGetHuntParticipantId.toString());
+					success = jsonGetHuntParticipantId.getInt(tagSuccess);
+					
+					if(success == 1)
+					{
+						huntParticipantIdResult = jsonGetHuntParticipantId.getJSONObject("result");
+						currentParticipantId = huntParticipantIdResult.getInt("HuntParticipantId");
+						huntParticipantIdReturned = true;
+						Log.d("leaderboard", "hunt participant id is: " + currentParticipantId);
+						return jsonGetHuntParticipantId.getString(tagMessage);
+						
+					}
+					else
+					{
+						Log.d("Getting hunt participant Id failed!", jsonGetHuntParticipantId.getString(tagMessage));
+						return jsonGetHuntParticipantId.getString(tagMessage);
+					}
+				
+			} catch (JSONException e) {
+			
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(final String fileUrl) {
+			mGetHuntParticipantIdTask = null;
+			
+			if(huntParticipantIdReturned)
+			{
+				editor.putInt(huntId + " userParticipantId", currentParticipantId);
+				editor.putBoolean(huntId + " userParticipantIdReturned", true);
+				editor.commit(); 
+			}
+			if (fileUrl != null) {
+				Toast.makeText(RegisterWithHuntActivity.this, fileUrl, Toast.LENGTH_LONG).show();	
+			} else {
+				Toast.makeText(RegisterWithHuntActivity.this, "Nothing returned from the database", Toast.LENGTH_LONG).show();
+			}		
+		}
+
+		@Override
+		protected void onCancelled() {
+			mGetHuntParticipantIdTask = null;
+		}
+	}
+	
+	//HUNT FINISHED CHECK
+	//mRunManager.stopLocationUpdates();
+
 }
+
+
+
+
